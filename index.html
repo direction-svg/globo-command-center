@@ -1056,8 +1056,8 @@ body {
                     </div>
                   </div>
                   <div style="text-align:right;">
-                    <div style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;">6 248</div>
-                    <div style="font-size:11px;color:var(--green);">+124 ↑</div>
+                    <div id="followers-linkedin" style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;">5 937</div>
+                    <div style="font-size:11px;color:var(--green);">live ↑</div>
                   </div>
                 </div>
                 <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
@@ -1069,8 +1069,8 @@ body {
                     </div>
                   </div>
                   <div style="text-align:right;">
-                    <div style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;">5 912</div>
-                    <div style="font-size:11px;color:var(--green);">+312 ↑</div>
+                    <div id="followers-facebook" style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;">—</div>
+                    <div style="font-size:11px;color:var(--text2);">bientôt</div>
                   </div>
                 </div>
                 <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;">
@@ -1082,8 +1082,8 @@ body {
                     </div>
                   </div>
                   <div style="text-align:right;">
-                    <div style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;">2 663</div>
-                    <div style="font-size:11px;color:var(--green);">+411 ↑</div>
+                    <div id="followers-instagram" style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;">—</div>
+                    <div style="font-size:11px;color:var(--text2);">bientôt</div>
                   </div>
                 </div>
               </div>
@@ -2246,7 +2246,7 @@ function updateDate() {
 // LOAD REAL DATA FROM GITHUB
 // ══════════════════════════════════
 function loadRealData() {
-  fetch('https://raw.githubusercontent.com/direction-svg/globo-command-center/main/data.json?t=' + Date.now())
+  fetch('https://direction-svg.github.io/globo-command-center/data.json?t=' + Date.now())
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (!data || !data.classement) return;
@@ -2266,9 +2266,16 @@ function loadRealData() {
           tbody.appendChild(row);
         });
       }
-      if (data.last_updated_fr) {
-        showNotif('✅ Classement mis à jour : ' + data.last_updated_fr);
+      // Mise à jour followers
+      if (data.followers) {
+        var elLI = document.getElementById('followers-linkedin');
+        var elFB = document.getElementById('followers-facebook');
+        var elIG = document.getElementById('followers-instagram');
+        if (elLI) elLI.textContent = data.followers.linkedin ? data.followers.linkedin.toLocaleString('fr-FR') : '—';
+        if (elFB) elFB.textContent = data.followers.facebook ? data.followers.facebook.toLocaleString('fr-FR') : '—';
+        if (elIG) elIG.textContent = data.followers.instagram ? data.followers.instagram.toLocaleString('fr-FR') : '—';
       }
+      showNotif('✅ Dashboard mis à jour : ' + data.updated);
     })
     .catch(function(e) { console.log('data.json pas encore disponible'); });
 }
@@ -2282,3 +2289,4 @@ function initDashboard() {
 </script>
 </body>
 </html>
+
