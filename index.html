@@ -385,10 +385,11 @@ body {
 }
 
 .kpi-value {
-  font-family: 'Syne', sans-serif;
-  font-size: 32px; font-weight: 800;
+  font-family: 'DM Mono', monospace;
+  font-size: 36px; font-weight: 500;
   line-height: 1;
   margin-bottom: 6px;
+  letter-spacing: -0.02em;
 }
 
 .kpi-label {
@@ -2240,9 +2241,43 @@ function updateDate() {
 // ══════════════════════════════════
 // INIT
 // ══════════════════════════════════
+
+// ══════════════════════════════════
+// LOAD REAL DATA FROM GITHUB
+// ══════════════════════════════════
+function loadRealData() {
+  fetch('https://direction-svg.github.io/globo-command-center/data.json?t=' + Date.now())
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!data || !data.classement) return;
+      var tbody = document.getElementById('challenge-tbody');
+      if (tbody && data.classement.length > 0) {
+        tbody.innerHTML = '';
+        data.classement.forEach(function(e, i) {
+          var rankClass = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : 'rank-n';
+          var row = document.createElement('tr');
+          row.innerHTML = '<td><div class="rank-badge ' + rankClass + '">' + (i+1) + '</div></td>' +
+            '<td><strong>' + e.Prenom + ' ' + e.Nom + '</strong></td>' +
+            '<td>' + e.Total_Likes + '</td>' +
+            '<td>' + e.Total_Commentaires + '</td>' +
+            '<td>' + (e.Total_Invitations || 0) + '</td>' +
+            '<td>' + e.Total_Reposts + '</td>' +
+            '<td><div class="points-pill">' + e.Total_Points + ' pts</div></td>';
+          tbody.appendChild(row);
+        });
+      }
+      if (data.last_updated_fr) {
+        showNotif('✅ Classement mis à jour : ' + data.last_updated_fr);
+      }
+    })
+    .catch(function(e) { console.log('data.json pas encore disponible'); });
+}
+
 function initDashboard() {
   updateDate();
   buildCalendar();
+  loadRealData();
+  setInterval(loadRealData, 5 * 60 * 1000);
 }
 </script>
 </body>
