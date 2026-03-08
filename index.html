@@ -1609,41 +1609,14 @@ body {
 </div>
 
 <script>
-var GITHUB_TOKEN = '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';
-var GITHUB_REPO = 'direction-svg/globo-command-center';
-var GITHUB_FILE = 'data.json';
-
 var USERS = {
   'christopher': { pass: 'GloboAdmin2026!', name: 'Christopher Chaudey', role: 'superadmin', initial: 'C' },
   'gallad': { pass: 'AI2026@', name: 'Gallad', role: 'editor', initial: 'G' },
   'vilane': { pass: 'AIVilane2026', name: 'Vilane', role: 'editor', initial: 'V' },
 };
 
-async function saveUsersToGitHub() {
-  try {
-    // 1. Lire le data.json actuel pour avoir le SHA
-    const getResp = await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + GITHUB_FILE, {
-      headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Accept': 'application/vnd.github.v3+json' }
-    });
-    const getJson = await getResp.json();
-    const sha = getJson.sha;
-    const currentContent = JSON.parse(atob(getJson.content.replace(/\n/g, '')));
-    
-    // 2. Mettre à jour la clé users
-    currentContent.users = USERS;
-    
-    // 3. Push
-    const newContent = btoa(unescape(encodeURIComponent(JSON.stringify(currentContent, null, 2))));
-    await fetch('https://api.github.com/repos/' + GITHUB_REPO + '/contents/' + GITHUB_FILE, {
-      method: 'PUT',
-      headers: { 'Authorization': 'token ' + GITHUB_TOKEN, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: 'Update users', content: newContent, sha: sha })
-    });
-    showNotif('✅ Comptes sauvegardés');
-  } catch(e) {
-    console.error('Erreur save users:', e);
-    showNotif('⚠️ Erreur sauvegarde comptes');
-  }
+function saveUsersToGitHub() {
+  // Persistance via n8n webhook — à implémenter
 }
 
 function addUser(username, password, name, role) {
@@ -1727,38 +1700,17 @@ function doLogout() {
   document.getElementById('login-pass').value = '';
 }
 
-// Charger les users depuis data.json au démarrage
+// Restaurer la session au chargement
 (function() {
   if (window.location.search.includes('reset=1')) sessionStorage.clear();
-  
-  fetch('https://direction-svg.github.io/globo-command-center/data.json?t=' + Date.now())
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      if (data.users) {
-        // Fusionner avec les users locaux (christopher toujours présent)
-        Object.assign(USERS, data.users);
-      }
-      // Restaurer session
-      var saved = sessionStorage.getItem('globo_user');
-      if (saved) {
-        try {
-          var user = JSON.parse(saved);
-          // Re-valider le user contre USERS chargés
-          if (USERS[user.username] && USERS[user.username].pass === user.pass) {
-            applySession(user);
-          } else {
-            sessionStorage.removeItem('globo_user');
-          }
-        } catch(e) { sessionStorage.removeItem('globo_user'); }
-      }
-    })
-    .catch(function() {
-      // Fallback si data.json inaccessible
-      var saved = sessionStorage.getItem('globo_user');
-      if (saved) {
-        try { applySession(JSON.parse(saved)); } catch(e) {}
-      }
-    });
+  var saved = sessionStorage.getItem('globo_user');
+  if (saved) {
+    try {
+      var user = JSON.parse(saved);
+      if (USERS[user.username]) applySession(user);
+      else sessionStorage.removeItem('globo_user');
+    } catch(e) { sessionStorage.removeItem('globo_user'); }
+  }
 })();
 
 document.addEventListener('keydown', function(e) {
