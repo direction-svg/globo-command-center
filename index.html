@@ -1235,30 +1235,26 @@ body {
       <div class="section" id="section-pipeline">
         <div class="section-header">
           <div><h2>Pipeline Contenu</h2><p>Gestion du flux éditorial — Idées → Rédaction → Validation → Publication</p></div>
-          <button class="btn btn-primary" onclick="addContent()">+ Nouveau Contenu</button>
+          <div style="font-size:12px;color:var(--text2);" id="pipeline-updated">—</div>
+        </div>
+        <div class="grid-2" style="margin-bottom:16px;">
+          <div class="card">
+            <div class="card-header"><div class="card-title" id="pipeline-review-title">🟡 À Valider</div></div>
+            <div id="pipeline-review"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Chargement...</div></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title" id="pipeline-scheduled-title">🔵 Planifiés</div></div>
+            <div id="pipeline-scheduled"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Chargement...</div></div>
+          </div>
         </div>
         <div class="grid-2">
           <div class="card">
-            <div class="card-header"><div class="card-title">🟡 À Valider (3)</div></div>
-            <div>
-              <div class="pipeline-item"><div class="pipe-status review"></div><div class="pipe-content"><div class="pipe-title">TotalEnergies Sénégal — Case Study déploiement 200 véhicules</div><div class="pipe-meta"><span class="pipe-tag linkedin">LinkedIn</span><span class="pipe-tag facebook">Facebook</span></div></div><div class="pipe-date">08/03</div></div>
-              <div class="pipeline-item"><div class="pipe-status review"></div><div class="pipe-content"><div class="pipe-title">Certification ISO 45001 — Globo Engineering obtient la certification</div><div class="pipe-meta"><span class="pipe-tag linkedin">LinkedIn</span></div></div><div class="pipe-date">09/03</div></div>
-              <div class="pipeline-item"><div class="pipe-status review"></div><div class="pipe-content"><div class="pipe-title">5 raisons pour lesquelles les stations-service en Afrique ont besoin de la géolocalisation</div><div class="pipe-meta"><span class="pipe-tag instagram">Instagram</span></div></div><div class="pipe-date">10/03</div></div>
-            </div>
+            <div class="card-header"><div class="card-title" id="pipeline-draft-title">✏️ Brouillons</div></div>
+            <div id="pipeline-draft"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Chargement...</div></div>
           </div>
           <div class="card">
-            <div class="card-header"><div class="card-title">🔵 Planifiés (2)</div></div>
-            <div>
-              <div class="pipeline-item"><div class="pipe-status scheduled"></div><div class="pipe-content"><div class="pipe-title">Vivo Energy CI — Nouveau partenariat fleet management Côte d'Ivoire</div><div class="pipe-meta"><span class="pipe-tag linkedin">LinkedIn</span><span class="pipe-tag facebook">Facebook</span><span class="pipe-tag instagram">Instagram</span></div></div><div class="pipe-date">11/03</div></div>
-              <div class="pipeline-item"><div class="pipe-status scheduled"></div><div class="pipe-content"><div class="pipe-title">Newsletter Mars 2026 — Résumé des actualités Globo + offre spéciale</div><div class="pipe-meta"><span class="pipe-tag" style="background:rgba(251,191,36,0.1);color:var(--yellow);">Newsletter</span></div></div><div class="pipe-date">15/03</div></div>
-            </div>
-          </div>
-        </div>
-        <div class="card" style="margin-top:16px;">
-          <div class="card-header"><div class="card-title">✅ Publiés cette semaine</div></div>
-          <div>
-            <div class="pipeline-item"><div class="pipe-status published"></div><div class="pipe-content"><div class="pipe-title">Fleet Management & Sécurité en Afrique de l'Ouest — Les nouvelles réglementations 2026</div><div class="pipe-meta"><span class="pipe-tag linkedin">LinkedIn</span><span style="font-size:11px;color:var(--green);">💬 47 réactions · 12 commentaires</span></div></div><div class="pipe-date">07/03</div></div>
-            <div class="pipeline-item"><div class="pipe-status published"></div><div class="pipe-content"><div class="pipe-title">Petrosen — Globo assure la sécurité incendie de 3 nouveaux sites</div><div class="pipe-meta"><span class="pipe-tag facebook">Facebook</span><span style="font-size:11px;color:var(--green);">💬 89 réactions · 24 commentaires</span></div></div><div class="pipe-date">06/03</div></div>
+            <div class="card-header"><div class="card-title" id="pipeline-published-title">✅ Publiés</div></div>
+            <div id="pipeline-published"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Chargement...</div></div>
           </div>
         </div>
       </div>
@@ -1713,6 +1709,77 @@ function loadRealData() {
             feedEl.appendChild(feedItem);
           });
         }
+      }
+
+      // Pipeline Contenu dynamique
+      if (data.pipeline !== undefined) {
+        var statuts = {
+          'review':    { id: 'pipeline-review',    titleId: 'pipeline-review-title',    emoji: '🟡', label: 'À Valider' },
+          'scheduled': { id: 'pipeline-scheduled', titleId: 'pipeline-scheduled-title', emoji: '🔵', label: 'Planifiés' },
+          'draft':     { id: 'pipeline-draft',     titleId: 'pipeline-draft-title',     emoji: '✏️', label: 'Brouillons' },
+          'published': { id: 'pipeline-published', titleId: 'pipeline-published-title', emoji: '✅', label: 'Publiés' }
+        };
+        var tagColors = {
+          'linkedin':   'var(--accent)',
+          'facebook':   '#1877F2',
+          'instagram':  'var(--purple)',
+          'newsletter': 'var(--yellow)',
+          'twitter':    '#1DA1F2'
+        };
+        Object.keys(statuts).forEach(function(statut) {
+          var cfg = statuts[statut];
+          var items = data.pipeline.filter(function(p) { return (p.statut || '').toLowerCase() === statut; });
+          var titleEl = document.getElementById(cfg.titleId);
+          if (titleEl) titleEl.textContent = cfg.emoji + ' ' + cfg.label + ' (' + items.length + ')';
+          var container = document.getElementById(cfg.id);
+          if (!container) return;
+          container.innerHTML = '';
+          if (items.length === 0) {
+            var empty = document.createElement('div');
+            empty.style.cssText = 'color:var(--text2);font-size:13px;padding:12px 0;';
+            empty.textContent = 'Aucun contenu';
+            container.appendChild(empty);
+            return;
+          }
+          items.forEach(function(p) {
+            var item = document.createElement('div');
+            item.className = 'pipeline-item';
+            var dot = document.createElement('div');
+            dot.className = 'pipe-status ' + statut;
+            var body = document.createElement('div');
+            body.className = 'pipe-content';
+            var title = document.createElement('div');
+            title.className = 'pipe-title';
+            title.textContent = p.titre;
+            var meta = document.createElement('div');
+            meta.className = 'pipe-meta';
+            if (p.plateformes) {
+              p.plateformes.split(',').forEach(function(pl) {
+                pl = pl.trim().toLowerCase();
+                var tag = document.createElement('span');
+                tag.className = 'pipe-tag';
+                tag.textContent = pl.charAt(0).toUpperCase() + pl.slice(1);
+                tag.style.background = (tagColors[pl] || 'var(--accent)') + '22';
+                tag.style.color = tagColors[pl] || 'var(--accent)';
+                meta.appendChild(tag);
+              });
+            }
+            body.appendChild(title);
+            body.appendChild(meta);
+            var dateEl = document.createElement('div');
+            dateEl.className = 'pipe-date';
+            if (p.date) {
+              var parts = p.date.split('/');
+              dateEl.textContent = parts.length >= 2 ? parts[0] + '/' + parts[1] : p.date;
+            }
+            item.appendChild(dot);
+            item.appendChild(body);
+            item.appendChild(dateEl);
+            container.appendChild(item);
+          });
+        });
+        var puEl = document.getElementById('pipeline-updated');
+        if (puEl) puEl.textContent = 'MAJ ' + (data.updated || '');
       }
 
     })
