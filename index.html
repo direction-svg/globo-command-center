@@ -1780,6 +1780,16 @@ function loadRealData() {
         });
         var puEl = document.getElementById('pipeline-updated');
         if (puEl) puEl.textContent = 'MAJ ' + (data.updated || '');
+
+        // Badge nav + KPI home
+        var actifs = data.pipeline.filter(function(p) {
+          var s = (p.statut || '').toLowerCase();
+          return s === 'review' || s === 'scheduled' || s === 'draft';
+        }).length;
+        var badge = document.getElementById('pipeline-badge');
+        if (badge) badge.textContent = actifs;
+        var kpiPipe = document.getElementById('kpi-pipeline');
+        if (kpiPipe) kpiPipe.textContent = actifs;
       }
 
     })
