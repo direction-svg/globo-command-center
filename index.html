@@ -1453,21 +1453,27 @@ var USERS = {
 };
 var currentUser = null;
 
+function applySession(user) {
+  currentUser = user;
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('sidebar-name').textContent = currentUser.name.split(' ')[0];
+  document.getElementById('sidebar-role').textContent = currentUser.role === 'superadmin' ? 'Super Admin' : currentUser.role === 'admin' ? 'Administrateur' : currentUser.role === 'editor' ? 'Éditeur' : 'Lecteur';
+  document.getElementById('sidebar-avatar').textContent = currentUser.initial;
+  document.querySelectorAll('.admin-only').forEach(function(el) {
+    if (currentUser.role !== 'superadmin' && currentUser.role !== 'admin') el.style.display = 'none';
+  });
+  initDashboard();
+}
+
 function doLogin() {
   var u = document.getElementById('login-user').value.trim();
   var p = document.getElementById('login-pass').value;
   var err = document.getElementById('login-error');
   if (USERS[u] && USERS[u].pass === p) {
-    currentUser = Object.assign({ username: u }, USERS[u]);
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    document.getElementById('sidebar-name').textContent = currentUser.name.split(' ')[0];
-    document.getElementById('sidebar-role').textContent = currentUser.role === 'superadmin' ? 'Super Admin' : currentUser.role === 'admin' ? 'Administrateur' : currentUser.role === 'editor' ? 'Éditeur' : 'Lecteur';
-    document.getElementById('sidebar-avatar').textContent = currentUser.initial;
-    document.querySelectorAll('.admin-only').forEach(function(el) {
-      if (currentUser.role !== 'superadmin' && currentUser.role !== 'admin') el.style.display = 'none';
-    });
-    initDashboard();
+    var user = Object.assign({ username: u }, USERS[u]);
+    sessionStorage.setItem('globo_user', JSON.stringify(user));
+    applySession(user);
   } else {
     err.style.display = 'block';
     setTimeout(function() { err.style.display = 'none'; }, 3000);
@@ -1476,11 +1482,23 @@ function doLogin() {
 
 function doLogout() {
   currentUser = null;
+  sessionStorage.removeItem('globo_user');
   document.getElementById('app').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('login-user').value = '';
   document.getElementById('login-pass').value = '';
 }
+
+// Restaurer la session au chargement
+(function() {
+  var saved = sessionStorage.getItem('globo_user');
+  if (saved) {
+    try {
+      var user = JSON.parse(saved);
+      document.addEventListener('DOMContentLoaded', function() { applySession(user); });
+    } catch(e) { sessionStorage.removeItem('globo_user'); }
+  }
+})();
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') doLogin();
@@ -1705,7 +1723,7 @@ function initDashboard() {
   updateDate();
   buildCalendar();
   loadRealData();
-  setInterval(loadRealData, 60 * 1000);
+  setInterval(loadRealData, 15 * 1000);
 }
 </script>
 </body>
