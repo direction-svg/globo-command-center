@@ -1001,7 +1001,7 @@ body {
             <div class="kpi-icon">⏳</div>
             <div class="kpi-value" id="kpi-pipeline">5</div>
             <div class="kpi-label">Contenus en Pipeline</div>
-            <div class="kpi-delta neutral">3 à valider · 2 planifiés</div>
+            <div class="kpi-delta neutral" id="kpi-pipeline-detail">—</div>
           </div>
         </div>
 
@@ -1790,6 +1790,11 @@ function loadRealData() {
         if (badge) badge.textContent = actifs;
         var kpiPipe = document.getElementById('kpi-pipeline');
         if (kpiPipe) kpiPipe.textContent = actifs;
+        var reviewCount = data.pipeline.filter(function(p) { return (p.statut||'').toLowerCase() === 'review'; }).length;
+        var scheduledCount = data.pipeline.filter(function(p) { return (p.statut||'').toLowerCase() === 'scheduled'; }).length;
+        var draftCount = data.pipeline.filter(function(p) { return (p.statut||'').toLowerCase() === 'draft'; }).length;
+        var detail = document.getElementById('kpi-pipeline-detail');
+        if (detail) detail.textContent = reviewCount + ' à valider · ' + scheduledCount + ' planifiés · ' + draftCount + ' brouillons';
       }
 
     })
