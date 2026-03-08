@@ -749,6 +749,9 @@ body {
 
 .veille-item:hover { border-color: var(--border2); }
 
+.veille-item.statut-en_cours { border-color: rgba(251,191,36,0.35); }
+.veille-item.statut-traite { opacity: 0.45; }
+
 .veille-header {
   display: flex; align-items: flex-start; justify-content: space-between;
   gap: 12px; margin-bottom: 8px;
@@ -764,6 +767,18 @@ body {
   font-size: 13px; font-weight: 600; line-height: 1.4;
 }
 
+.veille-gravite {
+  display: flex; gap: 2px; flex-shrink: 0; margin-top: 2px;
+}
+.veille-gravite span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--border2);
+}
+.veille-gravite span.active { background: var(--red); }
+.veille-gravite.g3 span.active { background: var(--orange); }
+.veille-gravite.g2 span.active { background: var(--yellow); }
+.veille-gravite.g1 span.active { background: var(--text3); }
+
 .veille-tag {
   font-size: 10px; font-weight: 700;
   padding: 3px 8px; border-radius: 20px; flex-shrink: 0;
@@ -772,9 +787,37 @@ body {
 .veille-tag.fleet { background: rgba(0,196,255,0.1); color: var(--accent); }
 .veille-tag.security { background: rgba(168,85,247,0.1); color: var(--purple); }
 .veille-tag.energy { background: rgba(255,124,42,0.1); color: var(--orange); }
+.veille-tag.nouveau { background: rgba(0,196,255,0.08); color: var(--accent); }
+.veille-tag.en_cours { background: rgba(251,191,36,0.12); color: var(--yellow); }
 
 .veille-summary {
   font-size: 12px; color: var(--text2); line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.veille-actions {
+  display: flex; gap: 8px; margin-top: 10px;
+}
+
+.veille-btn {
+  font-size: 11px; font-weight: 600; padding: 5px 12px;
+  border-radius: 6px; border: none; cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.veille-btn:hover { opacity: 0.8; transform: translateY(-1px); }
+.veille-btn:active { transform: translateY(0); }
+
+.veille-btn.btn-encours {
+  background: rgba(251,191,36,0.15); color: var(--yellow);
+  border: 1px solid rgba(251,191,36,0.3);
+}
+.veille-btn.btn-pipeline {
+  background: rgba(0,196,255,0.12); color: var(--accent);
+  border: 1px solid rgba(0,196,255,0.25);
+}
+.veille-btn.btn-done {
+  background: rgba(34,197,94,0.1); color: var(--green);
+  border: 1px solid rgba(34,197,94,0.25);
 }
 
 /* ── ADMIN ── */
@@ -1436,18 +1479,45 @@ body {
       <div class="section" id="section-veille">
         <div class="section-header">
           <div><h2>Veille Concurrentielle</h2><p>Monitoring Georis · Fleeti · ON TRACK · Mapping Control · SAGAM · IT Mobile · Iris Afrique · Teletrack · Camtrack</p></div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span id="veille-count-badge" style="background:rgba(0,196,255,0.1);color:var(--accent);font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;border:1px solid rgba(0,196,255,0.2);">— signaux</span>
+            <span style="font-size:11px;color:var(--text3);" id="veille-updated"></span>
+          </div>
         </div>
         <div class="grid-2">
-          <div class="card">
-            <div class="card-header"><div class="card-title">🔔 Signaux Récents</div><span style="font-size:12px;color:var(--text2);">8 nouveaux</span></div>
-            <div>
-              <div class="veille-item"><div class="veille-header"><div><div class="veille-source">Fleeti · LinkedIn</div><div class="veille-title">Fleeti annonce une levée de fonds de 3M€ pour son expansion en Afrique francophone</div></div><div class="veille-tag fleet">Fleet</div></div><div class="veille-summary">Notre principal concurrent dans le fleet management lève des fonds. À surveiller pour leur expansion géographique.</div></div>
-              <div class="veille-item"><div class="veille-header"><div><div class="veille-source">Africa Energy Forum · Site</div><div class="veille-title">Nouvelles réglementations sécurité incendie en Côte d'Ivoire — entrée en vigueur Q2 2026</div></div><div class="veille-tag security">Sécurité</div></div><div class="veille-summary">Opportunité marché significative pour Globo Engineering & Security. Préparer une communication ciblée CI.</div></div>
-              <div class="veille-item"><div class="veille-header"><div><div class="veille-source">ON TRACK · Site web</div><div class="veille-title">ON TRACK lance une nouvelle offre de géolocalisation "low cost" pour le marché Sénégalais</div></div><div class="veille-tag fleet">Fleet</div></div><div class="veille-summary">Positionnement prix agressif sur notre marché principal. Différencier sur la valeur ajoutée GLOBO 360.</div></div>
-              <div class="veille-item"><div class="veille-header"><div><div class="veille-source">Petrosen · Communiqué</div><div class="veille-title">Petrosen annonce l'extension de son réseau de distribution — 15 nouvelles stations en 2026</div></div><div class="veille-tag energy">Énergie</div></div><div class="veille-summary">Client existant en expansion. Opportunité de renouvellement et d'extension de contrat fleet + sécurité.</div></div>
+          <div class="card" style="max-height:720px;overflow-y:auto;">
+            <div class="card-header">
+              <div class="card-title">🔔 Signaux Actifs</div>
+              <div style="display:flex;gap:6px;">
+                <button onclick="filterVeille('all')" id="vf-all" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--accent);color:#000;cursor:pointer;font-weight:700;">Tous</button>
+                <button onclick="filterVeille('nouveau')" id="vf-nouveau" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;">Nouveaux</button>
+                <button onclick="filterVeille('en_cours')" id="vf-en_cours" style="font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;">En cours</button>
+              </div>
             </div>
+            <div id="veille-feed"></div>
           </div>
           <div>
+            <div class="card" style="margin-bottom:16px;">
+              <div class="card-header"><div class="card-title">📊 Résumé Veille</div></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+                <div style="background:var(--bg2);border-radius:8px;padding:12px;text-align:center;">
+                  <div style="font-size:22px;font-weight:800;color:var(--red);" id="veille-stat-critique">—</div>
+                  <div style="font-size:11px;color:var(--text2);">Gravité haute</div>
+                </div>
+                <div style="background:var(--bg2);border-radius:8px;padding:12px;text-align:center;">
+                  <div style="font-size:22px;font-weight:800;color:var(--yellow);" id="veille-stat-encours">—</div>
+                  <div style="font-size:11px;color:var(--text2);">En cours</div>
+                </div>
+                <div style="background:var(--bg2);border-radius:8px;padding:12px;text-align:center;">
+                  <div style="font-size:22px;font-weight:800;color:var(--accent);" id="veille-stat-action">—</div>
+                  <div style="font-size:11px;color:var(--text2);">Action requise</div>
+                </div>
+                <div style="background:var(--bg2);border-radius:8px;padding:12px;text-align:center;">
+                  <div style="font-size:22px;font-weight:800;color:var(--green);" id="veille-stat-pipeline">—</div>
+                  <div style="font-size:11px;color:var(--text2);">→ Pipeline</div>
+                </div>
+              </div>
+            </div>
             <div class="card" style="margin-bottom:16px;">
               <div class="card-header"><div class="card-title">📡 Sources Surveillées</div></div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
@@ -1897,11 +1967,141 @@ function loadRealData() {
         if (detail) detail.textContent = reviewCount + ' à valider · ' + scheduledCount + ' planifiés · ' + draftCount + ' brouillons';
       }
 
+      // Veille Concurrentielle dynamique
+      if (data.signaux !== undefined) {
+        window._signauxData = data.signaux;
+        window._signauxPipelineCount = window._signauxPipelineCount || 0;
+        renderVeille(data.signaux, window._veilleFilter || 'all');
+        var countBadge = document.getElementById('veille-count-badge');
+        if (countBadge) countBadge.textContent = data.signaux.length + ' signaux';
+        var upd = document.getElementById('veille-updated');
+        if (upd) upd.textContent = 'MAJ ' + (data.updated || '');
+        // Stats
+        var critique = data.signaux.filter(function(s) { return s.gravite >= 4; }).length;
+        var encours = data.signaux.filter(function(s) { return (s.statut||'') === 'en_cours'; }).length;
+        var action = data.signaux.filter(function(s) { return (s.action_requise||'').toUpperCase() === 'OUI'; }).length;
+        var set2 = function(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
+        set2('veille-stat-critique', critique);
+        set2('veille-stat-encours', encours);
+        set2('veille-stat-action', action);
+        set2('veille-stat-pipeline', window._signauxPipelineCount || 0);
+      }
+}
+
     })
     .catch(function(e) { console.log('data.json non disponible:', e); });
 }
 
-function initDashboard() {
+// ══════════════════════════════════
+// VEILLE — RENDU & ACTIONS
+// ══════════════════════════════════
+window._veilleFilter = 'all';
+window._signauxPipelineCount = 0;
+window._signauxStates = {}; // statuts modifiés localement en attente de sync
+
+function graviteStars(g) {
+  var html = '<div class="veille-gravite' + (g >= 4 ? '' : g === 3 ? ' g3' : g === 2 ? ' g2' : ' g1') + '">';
+  for (var i = 1; i <= 4; i++) {
+    html += '<span class="' + (i <= g ? 'active' : '') + '"></span>';
+  }
+  return html + '</div>';
+}
+
+function renderVeille(signaux, filter) {
+  var feed = document.getElementById('veille-feed');
+  if (!feed) return;
+  feed.innerHTML = '';
+  var filtered = signaux.filter(function(s) {
+    var statut = window._signauxStates[s.concurrent] || s.statut || 'nouveau';
+    if (filter === 'nouveau') return statut === 'nouveau';
+    if (filter === 'en_cours') return statut === 'en_cours';
+    return true;
+  });
+  if (filtered.length === 0) {
+    feed.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:20px 0;text-align:center;">Aucun signal pour ce filtre</div>';
+    return;
+  }
+  filtered.forEach(function(s) {
+    var statut = window._signauxStates[s.concurrent] || s.statut || 'nouveau';
+    var item = document.createElement('div');
+    item.className = 'veille-item statut-' + statut;
+    item.dataset.concurrent = s.concurrent;
+    var gravite = parseInt(s.gravite) || 1;
+    var resume = s.resume || '';
+    var shortResume = resume.length > 160 ? resume.substring(0, 160) + '...' : resume;
+    var actionHtml = '';
+    if (statut === 'nouveau') {
+      actionHtml = '<div class="veille-actions">' +
+        '<button class="veille-btn btn-encours" onclick="actionVeille(\'en_cours\',\'' + escapeQ(s.concurrent) + '\',\'' + escapeQ(s.resume.substring(0,80)) + '\')">⏳ En cours</button>' +
+        '<button class="veille-btn btn-pipeline" onclick="actionVeille(\'pipeline\',\'' + escapeQ(s.concurrent) + '\',\'' + escapeQ(s.resume.substring(0,80)) + '\')">📝 → Pipeline</button>' +
+        '</div>';
+    } else if (statut === 'en_cours') {
+      actionHtml = '<div class="veille-actions">' +
+        '<button class="veille-btn btn-pipeline" onclick="actionVeille(\'pipeline\',\'' + escapeQ(s.concurrent) + '\',\'' + escapeQ(s.resume.substring(0,80)) + '\')">📝 → Pipeline</button>' +
+        '<button class="veille-btn btn-done" onclick="actionVeille(\'traite\',\'' + escapeQ(s.concurrent) + '\',\'' + escapeQ(s.resume.substring(0,80)) + '\')">✅ Traité</button>' +
+        '</div>';
+    }
+    var statutLabel = statut === 'en_cours' ? '⏳ En cours' : statut === 'traite' ? '✅ Traité' : '';
+    item.innerHTML =
+      '<div class="veille-header">' +
+        '<div>' +
+          '<div class="veille-source">' + s.concurrent + ' · ' + (s.date || '') + '</div>' +
+          '<div class="veille-title">' + shortResume + '</div>' +
+        '</div>' +
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">' +
+          graviteStars(gravite) +
+          (statutLabel ? '<span class="veille-tag ' + statut + '">' + statutLabel + '</span>' : '') +
+        '</div>' +
+      '</div>' +
+      (s.action_requise && s.action_requise.toUpperCase() === 'OUI' ? '<div style="font-size:11px;color:var(--orange);margin-bottom:6px;">⚡ Action requise</div>' : '') +
+      actionHtml;
+    feed.appendChild(item);
+  });
+}
+
+function escapeQ(str) {
+  return (str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+function filterVeille(f) {
+  window._veilleFilter = f;
+  var btns = ['all','nouveau','en_cours'];
+  btns.forEach(function(b) {
+    var el = document.getElementById('vf-' + b);
+    if (!el) return;
+    if (b === f) {
+      el.style.background = 'var(--accent)'; el.style.color = '#000'; el.style.fontWeight = '700';
+    } else {
+      el.style.background = 'transparent'; el.style.color = 'var(--text2)'; el.style.fontWeight = '400';
+    }
+  });
+  if (window._signauxData) renderVeille(window._signauxData, f);
+}
+
+function actionVeille(action, concurrent, titre) {
+  // Mise à jour locale immédiate
+  window._signauxStates[concurrent] = action === 'pipeline' ? 'en_cours' : action;
+  if (action === 'pipeline') {
+    window._signauxPipelineCount = (window._signauxPipelineCount || 0) + 1;
+    var el = document.getElementById('veille-stat-pipeline');
+    if (el) el.textContent = window._signauxPipelineCount;
+    showNotif('📝 Signal envoyé vers Pipeline — ' + concurrent);
+  } else if (action === 'traite') {
+    showNotif('✅ Signal traité — ' + concurrent);
+  } else if (action === 'en_cours') {
+    showNotif('⏳ Signal en cours — ' + concurrent);
+  }
+  // Re-render immédiat
+  if (window._signauxData) renderVeille(window._signauxData, window._veilleFilter || 'all');
+  var encours = Object.values(window._signauxStates).filter(function(v) { return v === 'en_cours'; }).length;
+  var el2 = document.getElementById('veille-stat-encours');
+  if (el2) el2.textContent = encours;
+  // Webhook n8n (optionnel — activer quand le workflow Action Veille est créé)
+  // fetch('https://globocorps-itl.app.n8n.cloud/webhook/veille-action', {
+  //   method: 'POST', headers: {'Content-Type':'application/json'},
+  //   body: JSON.stringify({ action: action, concurrent: concurrent, titre: titre })
+  // });
+}
   updateDate();
   buildCalendar();
   loadRealData();
