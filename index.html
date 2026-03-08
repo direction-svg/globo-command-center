@@ -1657,6 +1657,9 @@ function doLogout() {
 
 // Restaurer la session au chargement
 (function() {
+  if (window.location.search.includes('reset=1')) {
+    sessionStorage.clear();
+  }
   var saved = sessionStorage.getItem('globo_user');
   if (saved) {
     try {
@@ -2030,15 +2033,16 @@ function renderVeille(signaux, filter) {
     var resume = s.resume || '';
     var shortResume = resume.length > 160 ? resume.substring(0, 160) + '...' : resume;
     var actionHtml = '';
+    var idx = window._signauxData ? window._signauxData.indexOf(s) : -1;
     if (statut === 'nouveau') {
       actionHtml = '<div class="veille-actions">' +
-        '<button class="veille-btn btn-encours" onclick="actionVeille(\'en_cours\',\'' + escapeQ(s.concurrent) + '\',\'' + escapeQ(s.resume.substring(0,80)) + '\')">⏳ En cours</button>' +
-        '<button class="veille-btn btn-pipeline" onclick="actionVeille(\'pipeline\',\'' + escapeQ(s.concurrent) + '\',\'' + escapeQ(s.resume.substring(0,80)) + '\')">📝 → Pipeline</button>' +
+        '<button class="veille-btn btn-encours" data-action="en_cours" data-idx="' + idx + '">⏳ En cours</button>' +
+        '<button class="veille-btn btn-pipeline" data-action="pipeline" data-idx="' + idx + '">📝 → Pipeline</button>' +
         '</div>';
     } else if (statut === 'en_cours') {
       actionHtml = '<div class="veille-actions">' +
-        '<button class="veille-btn btn-pipeline" onclick="actionVeille(\'pipeline\',\'' + escapeQ(s.concurrent) + '\',\'' + escapeQ(s.resume.substring(0,80)) + '\')">📝 → Pipeline</button>' +
-        '<button class="veille-btn btn-done" onclick="actionVeille(\'traite\',\'' + escapeQ(s.concurrent) + '\',\'' + escapeQ(s.resume.substring(0,80)) + '\')">✅ Traité</button>' +
+        '<button class="veille-btn btn-pipeline" data-action="pipeline" data-idx="' + idx + '">📝 → Pipeline</button>' +
+        '<button class="veille-btn btn-done" data-action="traite" data-idx="' + idx + '">✅ Traité</button>' +
         '</div>';
     }
     var statutLabel = statut === 'en_cours' ? '⏳ En cours' : statut === 'traite' ? '✅ Traité' : '';
@@ -2057,10 +2061,16 @@ function renderVeille(signaux, filter) {
       actionHtml;
     feed.appendChild(item);
   });
-}
-
-function escapeQ(str) {
-  return (str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+  // Event delegation pour les boutons
+  feed.onclick = function(e) {
+    var btn = e.target.closest('.veille-btn');
+    if (!btn) return;
+    var action = btn.dataset.action;
+    var idx = parseInt(btn.dataset.idx);
+    if (isNaN(idx) || !window._signauxData[idx]) return;
+    var s = window._signauxData[idx];
+    actionVeille(action, s.concurrent, s.resume.substring(0, 80));
+  };
 }
 
 function filterVeille(f) {
