@@ -896,9 +896,6 @@ body {
 </head>
 <body>
 
-<!-- ══════════════════════════════════
-     LOGIN SCREEN
-══════════════════════════════════ -->
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">
@@ -919,12 +916,8 @@ body {
   </div>
 </div>
 
-<!-- ══════════════════════════════════
-     MAIN APP
-══════════════════════════════════ -->
 <div id="app">
 
-  <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="sidebar-logo">
       <div class="logo-mark">G</div>
@@ -933,45 +926,21 @@ body {
         <p>Command Center</p>
       </div>
     </div>
-
     <nav class="sidebar-nav">
       <div class="nav-section-label">Vue d'ensemble</div>
-      <div class="nav-item active" onclick="showSection('overview')">
-        <span class="nav-icon">⚡</span> Command Center
-      </div>
-      <div class="nav-item" onclick="showSection('platforms')">
-        <span class="nav-icon">📡</span> Plateformes
-      </div>
-
+      <div class="nav-item active" onclick="showSection('overview')"><span class="nav-icon">⚡</span> Command Center</div>
+      <div class="nav-item" onclick="showSection('platforms')"><span class="nav-icon">📡</span> Plateformes</div>
       <div class="nav-section-label">Contenu</div>
-      <div class="nav-item" onclick="showSection('pipeline')">
-        <span class="nav-icon">📝</span> Pipeline Contenu
-        <span class="nav-badge" id="pipeline-badge">5</span>
-      </div>
-      <div class="nav-item" onclick="showSection('calendar')">
-        <span class="nav-icon">📅</span> Plan Éditorial
-      </div>
-      <div class="nav-item" onclick="showSection('agents')">
-        <span class="nav-icon">🤖</span> AI Team
-      </div>
-
+      <div class="nav-item" onclick="showSection('pipeline')"><span class="nav-icon">📝</span> Pipeline Contenu<span class="nav-badge" id="pipeline-badge">5</span></div>
+      <div class="nav-item" onclick="showSection('calendar')"><span class="nav-icon">📅</span> Plan Éditorial</div>
+      <div class="nav-item" onclick="showSection('agents')"><span class="nav-icon">🤖</span> AI Team</div>
       <div class="nav-section-label">Engagement</div>
-      <div class="nav-item" onclick="showSection('challenge')">
-        <span class="nav-icon">🏆</span> Challenge Ambassadeurs
-      </div>
-      <div class="nav-item" onclick="showSection('veille')">
-        <span class="nav-icon">🔭</span> Veille Concurrentielle
-      </div>
-
+      <div class="nav-item" onclick="showSection('challenge')"><span class="nav-icon">🏆</span> Challenge Ambassadeurs</div>
+      <div class="nav-item" onclick="showSection('veille')"><span class="nav-icon">🔭</span> Veille Concurrentielle</div>
       <div class="nav-section-label">Administration</div>
-      <div class="nav-item" onclick="showSection('analytics')">
-        <span class="nav-icon">📊</span> Analytics
-      </div>
-      <div class="nav-item admin-only" onclick="showSection('admin')">
-        <span class="nav-icon">⚙️</span> Administration
-      </div>
+      <div class="nav-item" onclick="showSection('analytics')"><span class="nav-icon">📊</span> Analytics</div>
+      <div class="nav-item admin-only" onclick="showSection('admin')"><span class="nav-icon">⚙️</span> Administration</div>
     </nav>
-
     <div class="sidebar-footer">
       <div class="user-card">
         <div class="user-avatar" id="sidebar-avatar">C</div>
@@ -984,15 +953,11 @@ body {
     </div>
   </div>
 
-  <!-- MAIN -->
   <div class="main">
     <div class="topbar">
       <div class="topbar-title" id="page-title">⚡ Command Center</div>
       <div class="topbar-right">
-        <div class="live-badge">
-          <div class="live-dot"></div>
-          LIVE
-        </div>
+        <div class="live-badge"><div class="live-dot"></div>LIVE</div>
         <div style="font-size:13px;color:var(--text2)" id="topbar-date"></div>
       </div>
     </div>
@@ -1013,21 +978,24 @@ body {
         <div class="grid-4" style="margin-bottom:20px;">
           <div class="kpi-card" data-tip="Somme des followers LinkedIn + Facebook + Instagram">
             <div class="kpi-icon">👥</div>
-            <div class="kpi-value" id="kpi-reach">14 823</div>
+            <div class="kpi-value" id="kpi-reach">—</div>
             <div class="kpi-label">Reach Total Communauté</div>
-            <div class="kpi-delta up">↑ +847 ce mois</div>
+            <!-- PATCHED: delta remplacé par date MAJ -->
+            <div class="kpi-delta neutral" id="kpi-reach-delta">—</div>
           </div>
-          <div class="kpi-card green" data-tip="Nombre de posts publiés sur toutes les plateformes ce mois">
+          <div class="kpi-card green" data-tip="Nombre de posts publiés sur LinkedIn ce mois (source Apify)">
             <div class="kpi-icon">📤</div>
-            <div class="kpi-value" id="kpi-posts">38</div>
-            <div class="kpi-label">Posts Publiés (Mars)</div>
-            <div class="kpi-delta up">↑ +12 vs Feb</div>
+            <div class="kpi-value" id="kpi-posts">—</div>
+            <div class="kpi-label">Posts Publiés LinkedIn (Mars)</div>
+            <!-- PATCHED: delta remplacé par date MAJ -->
+            <div class="kpi-delta neutral" id="kpi-posts-delta">—</div>
           </div>
-          <div class="kpi-card orange" data-tip="Taux d'engagement moyen (likes + commentaires + partages / impressions)">
+          <div class="kpi-card orange" data-tip="Taux d'engagement LinkedIn (likes + commentaires + partages / impressions)">
             <div class="kpi-icon">💬</div>
-            <div class="kpi-value" id="kpi-engage">4.7%</div>
-            <div class="kpi-label">Taux d'Engagement Moyen</div>
-            <div class="kpi-delta up">↑ +0.8% vs Feb</div>
+            <div class="kpi-value" id="kpi-engage">—</div>
+            <div class="kpi-label">Taux d'Engagement LinkedIn</div>
+            <!-- PATCHED: delta remplacé par date MAJ -->
+            <div class="kpi-delta neutral" id="kpi-engage-delta">—</div>
           </div>
           <div class="kpi-card purple" data-tip="Contenus en attente de validation ou de publication dans le pipeline">
             <div class="kpi-icon">⏳</div>
@@ -1040,7 +1008,6 @@ body {
         <!-- Plateformes + Feed -->
         <div class="grid-1-2" style="margin-bottom:20px;">
           <div>
-            <!-- Mini plateformes -->
             <div class="card" style="margin-bottom:16px;">
               <div class="card-header">
                 <div class="card-title">Plateformes</div>
@@ -1056,7 +1023,7 @@ body {
                     </div>
                   </div>
                   <div style="text-align:right;">
-                    <div id="followers-linkedin" style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;">5 937</div>
+                    <div id="followers-linkedin" style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;">—</div>
                     <div style="font-size:11px;color:var(--green);">live ↑</div>
                   </div>
                 </div>
@@ -1070,7 +1037,8 @@ body {
                   </div>
                   <div style="text-align:right;">
                     <div id="followers-facebook" style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;">—</div>
-                    <div style="font-size:11px;color:var(--text2);">bientôt</div>
+                    <!-- PATCHED: "bientôt" remplacé par date MAJ -->
+                    <div id="followers-facebook-updated" style="font-size:11px;color:var(--text2);">—</div>
                   </div>
                 </div>
                 <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;">
@@ -1083,7 +1051,8 @@ body {
                   </div>
                   <div style="text-align:right;">
                     <div id="followers-instagram" style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;">—</div>
-                    <div style="font-size:11px;color:var(--text2);">bientôt</div>
+                    <!-- PATCHED: "bientôt" remplacé par date MAJ -->
+                    <div id="followers-instagram-updated" style="font-size:11px;color:var(--text2);">—</div>
                   </div>
                 </div>
               </div>
@@ -1093,14 +1062,14 @@ body {
             <div class="card">
               <div class="card-header">
                 <div class="card-title">Objectif LinkedIn 10K</div>
-                <span style="font-size:12px;color:var(--text2);">6 248 / 10 000</span>
+                <span id="linkedin-10k-label" style="font-size:12px;color:var(--text2);">— / 10 000</span>
               </div>
               <div class="progress-bar">
-                <div class="progress-fill" style="width:62.5%"></div>
+                <div class="progress-fill" id="linkedin-10k-bar" style="width:0%"></div>
               </div>
               <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--text2);">
-                <span>62.5% atteint</span>
-                <span style="color:var(--accent);">+3 752 restants</span>
+                <span id="linkedin-10k-pct">—% atteint</span>
+                <span id="linkedin-10k-rest" style="color:var(--accent);">— restants</span>
               </div>
             </div>
           </div>
@@ -1109,16 +1078,14 @@ body {
           <div class="card">
             <div class="card-header">
               <div class="card-title">Activity Feed</div>
-              <div class="live-badge" style="font-size:11px;padding:3px 8px;">
-                <div class="live-dot"></div> LIVE
-              </div>
+              <div class="live-badge" style="font-size:11px;padding:3px 8px;"><div class="live-dot"></div> LIVE</div>
             </div>
             <div id="activity-feed">
               <div class="feed-item">
                 <div class="feed-dot" style="background:var(--green)"></div>
                 <div class="feed-content">
-                  <div class="msg">🏆 Nouveau classement ambassadeurs généré — <strong>Christopher Chaudey</strong> en tête avec 22 pts</div>
-                  <div class="time">Aujourd'hui 08:01</div>
+                  <div class="msg" id="feed-classement">🏆 Classement ambassadeurs — chargement...</div>
+                  <div class="time" id="feed-classement-time">—</div>
                 </div>
               </div>
               <div class="feed-item">
@@ -1193,154 +1160,73 @@ body {
       <!-- ══ PLATEFORMES ══ -->
       <div class="section" id="section-platforms">
         <div class="section-header">
-          <div>
-            <h2>Plateformes Sociales</h2>
-            <p>Métriques détaillées LinkedIn · Facebook · Instagram</p>
-          </div>
+          <div><h2>Plateformes Sociales</h2><p>Métriques détaillées LinkedIn · Facebook · Instagram</p></div>
         </div>
-
         <div class="grid-3" style="margin-bottom:20px;">
           <div class="platform-card">
             <div class="platform-header">
               <div class="platform-logo linkedin">💼</div>
-              <div>
-                <div class="platform-name">LinkedIn</div>
-                <div class="platform-handle">Globo Afrique · Globo Corps</div>
-              </div>
+              <div><div class="platform-name">LinkedIn</div><div class="platform-handle">Globo Afrique · Globo Corps</div></div>
             </div>
             <div class="platform-stats">
-              <div class="platform-stat">
-                <div class="val">6 248</div>
-                <div class="lbl">Followers</div>
-              </div>
-              <div class="platform-stat">
-                <div class="val" style="color:var(--green);">+124</div>
-                <div class="lbl">Ce mois</div>
-              </div>
-              <div class="platform-stat">
-                <div class="val">5.2%</div>
-                <div class="lbl">Engagement</div>
-              </div>
-              <div class="platform-stat">
-                <div class="val">18</div>
-                <div class="lbl">Posts (Mars)</div>
-              </div>
+              <div class="platform-stat"><div class="val" id="plat-linkedin-followers">—</div><div class="lbl">Followers</div></div>
+              <div class="platform-stat"><div class="val" style="color:var(--text2);">—</div><div class="lbl">Ce mois</div></div>
+              <div class="platform-stat"><div class="val" id="plat-linkedin-engage">—</div><div class="lbl">Engagement</div></div>
+              <div class="platform-stat"><div class="val" id="plat-linkedin-posts">—</div><div class="lbl">Posts (Mars)</div></div>
             </div>
             <div style="margin-top:14px;">
               <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px;">
-                <span>Objectif 10 000 followers</span>
-                <span>62.5%</span>
+                <span>Objectif 10 000 followers</span><span id="plat-linkedin-pct">—%</span>
               </div>
-              <div class="progress-bar"><div class="progress-fill" style="width:62.5%"></div></div>
+              <div class="progress-bar"><div class="progress-fill" id="plat-linkedin-bar" style="width:0%"></div></div>
             </div>
           </div>
-
           <div class="platform-card">
             <div class="platform-header">
               <div class="platform-logo facebook">📘</div>
-              <div>
-                <div class="platform-name">Facebook</div>
-                <div class="platform-handle">Globo Afrique</div>
-              </div>
+              <div><div class="platform-name">Facebook</div><div class="platform-handle">Globo Afrique</div></div>
             </div>
             <div class="platform-stats">
-              <div class="platform-stat">
-                <div class="val">5 912</div>
-                <div class="lbl">Abonnés</div>
-              </div>
-              <div class="platform-stat">
-                <div class="val" style="color:var(--green);">+312</div>
-                <div class="lbl">Ce mois</div>
-              </div>
-              <div class="platform-stat">
-                <div class="val">3.8%</div>
-                <div class="lbl">Engagement</div>
-              </div>
-              <div class="platform-stat">
-                <div class="val">12</div>
-                <div class="lbl">Posts (Mars)</div>
-              </div>
+              <div class="platform-stat"><div class="val" id="plat-facebook-followers">—</div><div class="lbl">Abonnés</div></div>
+              <div class="platform-stat"><div class="val" style="color:var(--text2);">—</div><div class="lbl">Ce mois</div></div>
+              <div class="platform-stat"><div class="val">—</div><div class="lbl">Engagement</div></div>
+              <div class="platform-stat"><div class="val">—</div><div class="lbl">Posts (Mars)</div></div>
             </div>
             <div style="margin-top:14px;">
               <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px;">
-                <span>Objectif 8 000 abonnés</span>
-                <span>73.9%</span>
+                <span>Objectif 8 000 abonnés</span><span id="plat-facebook-pct">—%</span>
               </div>
-              <div class="progress-bar"><div class="progress-fill green" style="width:73.9%"></div></div>
+              <div class="progress-bar"><div class="progress-fill green" id="plat-facebook-bar" style="width:0%"></div></div>
             </div>
           </div>
-
           <div class="platform-card">
             <div class="platform-header">
               <div class="platform-logo instagram">📸</div>
-              <div>
-                <div class="platform-name">Instagram</div>
-                <div class="platform-handle">@globoafrique</div>
-              </div>
+              <div><div class="platform-name">Instagram</div><div class="platform-handle">@globoafrique</div></div>
             </div>
             <div class="platform-stats">
-              <div class="platform-stat">
-                <div class="val">2 663</div>
-                <div class="lbl">Abonnés</div>
-              </div>
-              <div class="platform-stat">
-                <div class="val" style="color:var(--green);">+411</div>
-                <div class="lbl">Ce mois</div>
-              </div>
-              <div class="platform-stat">
-                <div class="val">6.1%</div>
-                <div class="lbl">Engagement</div>
-              </div>
-              <div class="platform-stat">
-                <div class="val">8</div>
-                <div class="lbl">Posts (Mars)</div>
-              </div>
+              <div class="platform-stat"><div class="val" id="plat-instagram-followers">—</div><div class="lbl">Abonnés</div></div>
+              <div class="platform-stat"><div class="val" style="color:var(--text2);">—</div><div class="lbl">Ce mois</div></div>
+              <div class="platform-stat"><div class="val">—</div><div class="lbl">Engagement</div></div>
+              <div class="platform-stat"><div class="val">—</div><div class="lbl">Posts (Mars)</div></div>
             </div>
             <div style="margin-top:14px;">
               <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px;">
-                <span>Objectif 5 000 abonnés</span>
-                <span>53.3%</span>
+                <span>Objectif 5 000 abonnés</span><span id="plat-instagram-pct">—%</span>
               </div>
-              <div class="progress-bar"><div class="progress-fill orange" style="width:53.3%"></div></div>
+              <div class="progress-bar"><div class="progress-fill orange" id="plat-instagram-bar" style="width:0%"></div></div>
             </div>
           </div>
         </div>
-
         <div class="card">
-          <div class="card-header">
-            <div class="card-title">Piliers de Contenu — Performance</div>
-          </div>
+          <div class="card-header"><div class="card-title">Piliers de Contenu — Performance</div></div>
           <div class="grid-3">
-            <div>
-              <div style="font-size:13px;font-weight:600;margin-bottom:8px;">🚗 Fleet Management</div>
-              <div style="font-size:12px;color:var(--text2);">Meilleure performance — 6.8% engagement moyen</div>
-              <div class="progress-bar" style="margin-top:8px;"><div class="progress-fill" style="width:68%"></div></div>
-            </div>
-            <div>
-              <div style="font-size:13px;font-weight:600;margin-bottom:8px;">🔥 Sécurité & Incendie</div>
-              <div style="font-size:12px;color:var(--text2);">Forte croissance — 5.2% engagement moyen</div>
-              <div class="progress-bar" style="margin-top:8px;"><div class="progress-fill green" style="width:52%"></div></div>
-            </div>
-            <div>
-              <div style="font-size:13px;font-weight:600;margin-bottom:8px;">⚙️ Ingénierie & Industrie</div>
-              <div style="font-size:12px;color:var(--text2);">En développement — 3.1% engagement moyen</div>
-              <div class="progress-bar" style="margin-top:8px;"><div class="progress-fill orange" style="width:31%"></div></div>
-            </div>
-            <div>
-              <div style="font-size:13px;font-weight:600;margin-bottom:8px;">🌍 Actualité Afrique</div>
-              <div style="font-size:12px;color:var(--text2);">Fort reach — 4.7% engagement moyen</div>
-              <div class="progress-bar" style="margin-top:8px;"><div class="progress-fill" style="width:47%"></div></div>
-            </div>
-            <div>
-              <div style="font-size:13px;font-weight:600;margin-bottom:8px;">🏢 Culture d'Entreprise</div>
-              <div style="font-size:12px;color:var(--text2);">Humanise la marque — 5.8% engagement moyen</div>
-              <div class="progress-bar" style="margin-top:8px;"><div class="progress-fill green" style="width:58%"></div></div>
-            </div>
-            <div>
-              <div style="font-size:13px;font-weight:600;margin-bottom:8px;">💡 Innovation & IA</div>
-              <div style="font-size:12px;color:var(--text2);">Tendance montante — 4.2% engagement moyen</div>
-              <div class="progress-bar" style="margin-top:8px;"><div class="progress-fill" style="width:42%"></div></div>
-            </div>
+            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">🚗 Fleet Management</div><div style="font-size:12px;color:var(--text2);">Meilleure performance — 6.8% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill" style="width:68%"></div></div></div>
+            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">🔥 Sécurité & Incendie</div><div style="font-size:12px;color:var(--text2);">Forte croissance — 5.2% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill green" style="width:52%"></div></div></div>
+            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">⚙️ Ingénierie & Industrie</div><div style="font-size:12px;color:var(--text2);">En développement — 3.1% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill orange" style="width:31%"></div></div></div>
+            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">🌍 Actualité Afrique</div><div style="font-size:12px;color:var(--text2);">Fort reach — 4.7% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill" style="width:47%"></div></div></div>
+            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">🏢 Culture d'Entreprise</div><div style="font-size:12px;color:var(--text2);">Humanise la marque — 5.8% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill green" style="width:58%"></div></div></div>
+            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">💡 Innovation & IA</div><div style="font-size:12px;color:var(--text2);">Tendance montante — 4.2% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill" style="width:42%"></div></div></div>
           </div>
         </div>
       </div>
@@ -1348,111 +1234,31 @@ body {
       <!-- ══ PIPELINE ══ -->
       <div class="section" id="section-pipeline">
         <div class="section-header">
-          <div>
-            <h2>Pipeline Contenu</h2>
-            <p>Gestion du flux éditorial — Idées → Rédaction → Validation → Publication</p>
-          </div>
+          <div><h2>Pipeline Contenu</h2><p>Gestion du flux éditorial — Idées → Rédaction → Validation → Publication</p></div>
           <button class="btn btn-primary" onclick="addContent()">+ Nouveau Contenu</button>
         </div>
-
         <div class="grid-2">
           <div class="card">
-            <div class="card-header">
-              <div class="card-title">🟡 À Valider (3)</div>
-            </div>
-            <div id="pipeline-review">
-              <div class="pipeline-item">
-                <div class="pipe-status review"></div>
-                <div class="pipe-content">
-                  <div class="pipe-title">TotalEnergies Sénégal — Case Study déploiement 200 véhicules</div>
-                  <div class="pipe-meta">
-                    <span class="pipe-tag linkedin">LinkedIn</span>
-                    <span class="pipe-tag facebook">Facebook</span>
-                  </div>
-                </div>
-                <div class="pipe-date">08/03</div>
-              </div>
-              <div class="pipeline-item">
-                <div class="pipe-status review"></div>
-                <div class="pipe-content">
-                  <div class="pipe-title">Certification ISO 45001 — Globo Engineering obtient la certification</div>
-                  <div class="pipe-meta">
-                    <span class="pipe-tag linkedin">LinkedIn</span>
-                  </div>
-                </div>
-                <div class="pipe-date">09/03</div>
-              </div>
-              <div class="pipeline-item">
-                <div class="pipe-status review"></div>
-                <div class="pipe-content">
-                  <div class="pipe-title">5 raisons pour lesquelles les stations-service en Afrique ont besoin de la géolocalisation</div>
-                  <div class="pipe-meta">
-                    <span class="pipe-tag instagram">Instagram</span>
-                  </div>
-                </div>
-                <div class="pipe-date">10/03</div>
-              </div>
+            <div class="card-header"><div class="card-title">🟡 À Valider (3)</div></div>
+            <div>
+              <div class="pipeline-item"><div class="pipe-status review"></div><div class="pipe-content"><div class="pipe-title">TotalEnergies Sénégal — Case Study déploiement 200 véhicules</div><div class="pipe-meta"><span class="pipe-tag linkedin">LinkedIn</span><span class="pipe-tag facebook">Facebook</span></div></div><div class="pipe-date">08/03</div></div>
+              <div class="pipeline-item"><div class="pipe-status review"></div><div class="pipe-content"><div class="pipe-title">Certification ISO 45001 — Globo Engineering obtient la certification</div><div class="pipe-meta"><span class="pipe-tag linkedin">LinkedIn</span></div></div><div class="pipe-date">09/03</div></div>
+              <div class="pipeline-item"><div class="pipe-status review"></div><div class="pipe-content"><div class="pipe-title">5 raisons pour lesquelles les stations-service en Afrique ont besoin de la géolocalisation</div><div class="pipe-meta"><span class="pipe-tag instagram">Instagram</span></div></div><div class="pipe-date">10/03</div></div>
             </div>
           </div>
-
           <div class="card">
-            <div class="card-header">
-              <div class="card-title">🔵 Planifiés (2)</div>
-            </div>
+            <div class="card-header"><div class="card-title">🔵 Planifiés (2)</div></div>
             <div>
-              <div class="pipeline-item">
-                <div class="pipe-status scheduled"></div>
-                <div class="pipe-content">
-                  <div class="pipe-title">Vivo Energy CI — Nouveau partenariat fleet management Côte d'Ivoire</div>
-                  <div class="pipe-meta">
-                    <span class="pipe-tag linkedin">LinkedIn</span>
-                    <span class="pipe-tag facebook">Facebook</span>
-                    <span class="pipe-tag instagram">Instagram</span>
-                  </div>
-                </div>
-                <div class="pipe-date">11/03</div>
-              </div>
-              <div class="pipeline-item">
-                <div class="pipe-status scheduled"></div>
-                <div class="pipe-content">
-                  <div class="pipe-title">Newsletter Mars 2026 — Résumé des actualités Globo + offre spéciale</div>
-                  <div class="pipe-meta">
-                    <span class="pipe-tag" style="background:rgba(251,191,36,0.1);color:var(--yellow);">Newsletter</span>
-                  </div>
-                </div>
-                <div class="pipe-date">15/03</div>
-              </div>
+              <div class="pipeline-item"><div class="pipe-status scheduled"></div><div class="pipe-content"><div class="pipe-title">Vivo Energy CI — Nouveau partenariat fleet management Côte d'Ivoire</div><div class="pipe-meta"><span class="pipe-tag linkedin">LinkedIn</span><span class="pipe-tag facebook">Facebook</span><span class="pipe-tag instagram">Instagram</span></div></div><div class="pipe-date">11/03</div></div>
+              <div class="pipeline-item"><div class="pipe-status scheduled"></div><div class="pipe-content"><div class="pipe-title">Newsletter Mars 2026 — Résumé des actualités Globo + offre spéciale</div><div class="pipe-meta"><span class="pipe-tag" style="background:rgba(251,191,36,0.1);color:var(--yellow);">Newsletter</span></div></div><div class="pipe-date">15/03</div></div>
             </div>
           </div>
         </div>
-
         <div class="card" style="margin-top:16px;">
-          <div class="card-header">
-            <div class="card-title">✅ Publiés cette semaine</div>
-          </div>
+          <div class="card-header"><div class="card-title">✅ Publiés cette semaine</div></div>
           <div>
-            <div class="pipeline-item">
-              <div class="pipe-status published"></div>
-              <div class="pipe-content">
-                <div class="pipe-title">Fleet Management & Sécurité en Afrique de l'Ouest — Les nouvelles réglementations 2026</div>
-                <div class="pipe-meta">
-                  <span class="pipe-tag linkedin">LinkedIn</span>
-                  <span style="font-size:11px;color:var(--green);">💬 47 réactions · 12 commentaires</span>
-                </div>
-              </div>
-              <div class="pipe-date">07/03</div>
-            </div>
-            <div class="pipeline-item">
-              <div class="pipe-status published"></div>
-              <div class="pipe-content">
-                <div class="pipe-title">Petrosen — Globo assure la sécurité incendie de 3 nouveaux sites</div>
-                <div class="pipe-meta">
-                  <span class="pipe-tag facebook">Facebook</span>
-                  <span style="font-size:11px;color:var(--green);">💬 89 réactions · 24 commentaires</span>
-                </div>
-              </div>
-              <div class="pipe-date">06/03</div>
-            </div>
+            <div class="pipeline-item"><div class="pipe-status published"></div><div class="pipe-content"><div class="pipe-title">Fleet Management & Sécurité en Afrique de l'Ouest — Les nouvelles réglementations 2026</div><div class="pipe-meta"><span class="pipe-tag linkedin">LinkedIn</span><span style="font-size:11px;color:var(--green);">💬 47 réactions · 12 commentaires</span></div></div><div class="pipe-date">07/03</div></div>
+            <div class="pipeline-item"><div class="pipe-status published"></div><div class="pipe-content"><div class="pipe-title">Petrosen — Globo assure la sécurité incendie de 3 nouveaux sites</div><div class="pipe-meta"><span class="pipe-tag facebook">Facebook</span><span style="font-size:11px;color:var(--green);">💬 89 réactions · 24 commentaires</span></div></div><div class="pipe-date">06/03</div></div>
           </div>
         </div>
       </div>
@@ -1460,33 +1266,17 @@ body {
       <!-- ══ CALENDRIER ══ -->
       <div class="section" id="section-calendar">
         <div class="section-header">
-          <div>
-            <h2>Plan Éditorial — Mars 2026</h2>
-            <p>Calendrier de publication multi-plateformes</p>
-          </div>
-          <div style="display:flex;gap:8px;">
-            <button class="btn btn-secondary">← Février</button>
-            <button class="btn btn-secondary">Avril →</button>
-          </div>
+          <div><h2>Plan Éditorial — Mars 2026</h2><p>Calendrier de publication multi-plateformes</p></div>
+          <div style="display:flex;gap:8px;"><button class="btn btn-secondary">← Février</button><button class="btn btn-secondary">Avril →</button></div>
         </div>
-
         <div class="card">
           <div class="calendar-grid" style="margin-bottom:8px;">
-            <div class="cal-day-header">Lun</div>
-            <div class="cal-day-header">Mar</div>
-            <div class="cal-day-header">Mer</div>
-            <div class="cal-day-header">Jeu</div>
-            <div class="cal-day-header">Ven</div>
-            <div class="cal-day-header">Sam</div>
-            <div class="cal-day-header">Dim</div>
+            <div class="cal-day-header">Lun</div><div class="cal-day-header">Mar</div><div class="cal-day-header">Mer</div><div class="cal-day-header">Jeu</div><div class="cal-day-header">Ven</div><div class="cal-day-header">Sam</div><div class="cal-day-header">Dim</div>
           </div>
           <div class="calendar-grid" id="cal-grid"></div>
         </div>
-
         <div class="card" style="margin-top:16px;">
-          <div class="card-header">
-            <div class="card-title">Légende & Piliers</div>
-          </div>
+          <div class="card-header"><div class="card-title">Légende & Piliers</div></div>
           <div style="display:flex;gap:16px;flex-wrap:wrap;">
             <div style="display:flex;align-items:center;gap:6px;"><div style="width:10px;height:10px;border-radius:2px;background:rgba(0,119,181,0.4);"></div><span style="font-size:12px;">LinkedIn</span></div>
             <div style="display:flex;align-items:center;gap:6px;"><div style="width:10px;height:10px;border-radius:2px;background:rgba(24,119,242,0.4);"></div><span style="font-size:12px;">Facebook</span></div>
@@ -1499,207 +1289,48 @@ body {
       <!-- ══ AI TEAM ══ -->
       <div class="section" id="section-agents">
         <div class="section-header">
-          <div>
-            <h2>AI Team</h2>
-            <p>5 agents IA orchestrés par n8n — Veille, Création, Validation, Publication, Analytics</p>
-          </div>
+          <div><h2>AI Team</h2><p>5 agents IA orchestrés par n8n — Veille, Création, Validation, Publication, Analytics</p></div>
         </div>
-
         <div class="grid-3" style="margin-bottom:20px;">
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar" style="background:rgba(0,196,255,0.1);">🔍</div>
-              <div>
-                <div class="agent-name">Researcher</div>
-                <div class="agent-status">
-                  <div class="status-dot active"></div>
-                  <span style="color:var(--green);font-size:11px;">Actif</span>
-                </div>
-              </div>
-            </div>
-            <div class="agent-task">Surveille 15 sources RSS + 13 Google Alerts. Détecte les signaux concurrentiels et sectoriels. Rapport Slack chaque lundi.</div>
-            <div class="agent-progress-label"><span>Signaux cette semaine</span><span style="color:var(--accent);">8 / 15</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:53%"></div></div>
-          </div>
-
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar" style="background:rgba(168,85,247,0.1);">✍️</div>
-              <div>
-                <div class="agent-name">Scriptwriter</div>
-                <div class="agent-status">
-                  <div class="status-dot active"></div>
-                  <span style="color:var(--green);font-size:11px;">Actif</span>
-                </div>
-              </div>
-            </div>
-            <div class="agent-task">Rédige les posts LinkedIn, Facebook, Instagram à partir des briefs hebdomadaires. Adapte le ton par plateforme. Cross-sell automatique.</div>
-            <div class="agent-progress-label"><span>Posts rédigés ce mois</span><span style="color:var(--accent);">38 / 60</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:63%"></div></div>
-          </div>
-
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar" style="background:rgba(251,191,36,0.1);">✅</div>
-              <div>
-                <div class="agent-name">Editor</div>
-                <div class="agent-status">
-                  <div class="status-dot idle"></div>
-                  <span style="color:var(--yellow);font-size:11px;">En attente</span>
-                </div>
-              </div>
-            </div>
-            <div class="agent-task">Relit et valide les contenus avant publication. Vérifie la conformité brand, le ton, les hashtags. Envoie vers Slack pour validation humaine.</div>
-            <div class="agent-progress-label"><span>Contenus en file</span><span style="color:var(--yellow);">3 en attente</span></div>
-            <div class="progress-bar"><div class="progress-fill orange" style="width:30%"></div></div>
-          </div>
-
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar" style="background:rgba(0,229,160,0.1);">📅</div>
-              <div>
-                <div class="agent-name">Scheduler</div>
-                <div class="agent-status">
-                  <div class="status-dot active"></div>
-                  <span style="color:var(--green);font-size:11px;">Actif</span>
-                </div>
-              </div>
-            </div>
-            <div class="agent-task">Planifie les publications dans SocialBee aux meilleurs créneaux. Gère les files d'attente LinkedIn, Facebook, Instagram. Confirmation Slack.</div>
-            <div class="agent-progress-label"><span>Posts planifiés</span><span style="color:var(--green);">2 actifs</span></div>
-            <div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div>
-          </div>
-
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar" style="background:rgba(255,124,42,0.1);">📊</div>
-              <div>
-                <div class="agent-name">Analytics</div>
-                <div class="agent-status">
-                  <div class="status-dot active"></div>
-                  <span style="color:var(--green);font-size:11px;">Actif</span>
-                </div>
-              </div>
-            </div>
-            <div class="agent-task">Collecte les métriques LinkedIn, Facebook, Instagram chaque vendredi. Génère le rapport de performance hebdomadaire envoyé sur Slack.</div>
-            <div class="agent-progress-label"><span>Prochain rapport</span><span style="color:var(--orange);">Vendredi 17h</span></div>
-            <div class="progress-bar"><div class="progress-fill orange" style="width:70%"></div></div>
-          </div>
-
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar" style="background:rgba(0,119,255,0.1);">💬</div>
-              <div>
-                <div class="agent-name">WhatsApp Bot</div>
-                <div class="agent-status">
-                  <div class="status-dot active"></div>
-                  <span style="color:var(--green);font-size:11px;">Actif</span>
-                </div>
-              </div>
-            </div>
-            <div class="agent-task">Reçoit les déclarations d'invitations LinkedIn des employés par WhatsApp. Validation admin. Mise à jour automatique du classement ambassadeurs.</div>
-            <div class="agent-progress-label"><span>Déclarations ce mois</span><span style="color:var(--accent);">14 traitées</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
-          </div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(0,196,255,0.1);">🔍</div><div><div class="agent-name">Researcher</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif</span></div></div></div><div class="agent-task">Surveille 15 sources RSS + 13 Google Alerts. Détecte les signaux concurrentiels et sectoriels. Rapport Slack chaque lundi.</div><div class="agent-progress-label"><span>Signaux cette semaine</span><span style="color:var(--accent);">8 / 15</span></div><div class="progress-bar"><div class="progress-fill" style="width:53%"></div></div></div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(168,85,247,0.1);">✍️</div><div><div class="agent-name">Scriptwriter</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif</span></div></div></div><div class="agent-task">Rédige les posts LinkedIn, Facebook, Instagram à partir des briefs hebdomadaires. Adapte le ton par plateforme.</div><div class="agent-progress-label"><span>Posts rédigés ce mois</span><span style="color:var(--accent);">38 / 60</span></div><div class="progress-bar"><div class="progress-fill" style="width:63%"></div></div></div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(251,191,36,0.1);">✅</div><div><div class="agent-name">Editor</div><div class="agent-status"><div class="status-dot idle"></div><span style="color:var(--yellow);font-size:11px;">En attente</span></div></div></div><div class="agent-task">Relit et valide les contenus avant publication. Vérifie la conformité brand, le ton, les hashtags.</div><div class="agent-progress-label"><span>Contenus en file</span><span style="color:var(--yellow);">3 en attente</span></div><div class="progress-bar"><div class="progress-fill orange" style="width:30%"></div></div></div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(0,229,160,0.1);">📅</div><div><div class="agent-name">Scheduler</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif</span></div></div></div><div class="agent-task">Planifie les publications dans SocialBee aux meilleurs créneaux. Gère les files d'attente LinkedIn, Facebook, Instagram.</div><div class="agent-progress-label"><span>Posts planifiés</span><span style="color:var(--green);">2 actifs</span></div><div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div></div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(255,124,42,0.1);">📊</div><div><div class="agent-name">Analytics</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif</span></div></div></div><div class="agent-task">Collecte les métriques LinkedIn, Facebook, Instagram chaque vendredi. Génère le rapport de performance hebdomadaire.</div><div class="agent-progress-label"><span>Prochain rapport</span><span style="color:var(--orange);">Vendredi 17h</span></div><div class="progress-bar"><div class="progress-fill orange" style="width:70%"></div></div></div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(0,119,255,0.1);">💬</div><div><div class="agent-name">WhatsApp Bot</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif</span></div></div></div><div class="agent-task">Reçoit les déclarations d'invitations LinkedIn des employés par WhatsApp. Validation admin. Mise à jour automatique du classement.</div><div class="agent-progress-label"><span>Déclarations ce mois</span><span style="color:var(--accent);">14 traitées</span></div><div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div></div>
         </div>
       </div>
 
       <!-- ══ CHALLENGE AMBASSADEURS ══ -->
       <div class="section" id="section-challenge">
         <div class="section-header">
-          <div>
-            <h2>Challenge Ambassadeurs</h2>
-            <p>Classement hebdomadaire — 1 pt/like · 2 pts/commentaire · 2 pts/invitation · 3 pts/repost</p>
-          </div>
+          <div><h2>Challenge Ambassadeurs</h2><p>Classement hebdomadaire — 1 pt/like · 2 pts/commentaire · 2 pts/invitation · 3 pts/repost</p></div>
           <div style="font-size:12px;color:var(--text2);">Semaine du 07/03/2026</div>
         </div>
-
         <div class="grid-2-1">
           <div class="card">
-            <div class="card-header">
-              <div class="card-title">🏆 Classement Semaine</div>
-            </div>
+            <div class="card-header"><div class="card-title">🏆 Classement Semaine</div></div>
             <table class="challenge-table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Employé</th>
-                  <th>Likes</th>
-                  <th>Comm.</th>
-                  <th>Invit.</th>
-                  <th>Reposts</th>
-                  <th>Total</th>
-                </tr>
-              </thead>
+              <thead><tr><th>#</th><th>Employé</th><th>Likes</th><th>Comm.</th><th>Invit.</th><th>Reposts</th><th>Total</th></tr></thead>
               <tbody id="challenge-tbody">
-                <tr>
-                  <td><div class="rank-badge rank-1">1</div></td>
-                  <td><strong>Christopher Chaudey</strong></td>
-                  <td>7</td><td>0</td><td>0</td><td>5</td>
-                  <td><div class="points-pill">22 pts</div></td>
-                </tr>
-                <tr>
-                  <td><div class="rank-badge rank-2">2</div></td>
-                  <td><strong>Moustapha Ndiaye</strong></td>
-                  <td>4</td><td>0</td><td>0</td><td>4</td>
-                  <td><div class="points-pill">16 pts</div></td>
-                </tr>
-                <tr>
-                  <td><div class="rank-badge rank-3">3</div></td>
-                  <td><strong>Roman M.</strong></td>
-                  <td>6</td><td>0</td><td>0</td><td>0</td>
-                  <td><div class="points-pill">6 pts</div></td>
-                </tr>
-                <tr>
-                  <td><div class="rank-badge rank-n">4</div></td>
-                  <td><strong>Aurelia Jean Maume</strong></td>
-                  <td>2</td><td>0</td><td>0</td><td>0</td>
-                  <td><div class="points-pill">2 pts</div></td>
-                </tr>
+                <tr><td colspan="7" style="text-align:center;color:var(--text2);padding:20px;">Chargement...</td></tr>
               </tbody>
             </table>
           </div>
-
           <div>
             <div class="card" style="margin-bottom:16px;">
-              <div class="card-header">
-                <div class="card-title">📊 Stats Globales</div>
-              </div>
+              <div class="card-header"><div class="card-title">📊 Stats Globales</div></div>
               <div style="display:flex;flex-direction:column;gap:12px;">
-                <div>
-                  <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px;">
-                    <span>Participants actifs</span><span style="color:var(--accent);">4 / 12</span>
-                  </div>
-                  <div class="progress-bar"><div class="progress-fill" style="width:33%"></div></div>
-                </div>
-                <div>
-                  <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px;">
-                    <span>Total points distribués</span><span style="color:var(--accent);">46 pts</span>
-                  </div>
-                </div>
-                <div>
-                  <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px;">
-                    <span>Invitations en attente</span><span style="color:var(--yellow);">3</span>
-                  </div>
-                </div>
+                <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px;"><span>Participants actifs</span><span style="color:var(--accent);">4 / 12</span></div><div class="progress-bar"><div class="progress-fill" style="width:33%"></div></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px;"><span>Total points distribués</span><span id="stats-total-pts" style="color:var(--accent);">—</span></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px;"><span>Invitations en attente</span><span style="color:var(--yellow);">3</span></div></div>
               </div>
             </div>
-
             <div class="card">
-              <div class="card-header">
-                <div class="card-title">📱 Déclarations WhatsApp</div>
-              </div>
-              <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">
-                Employés déclarent leurs invitations LinkedIn en envoyant un nombre au numéro WhatsApp dédié.
-              </div>
-              <div style="background:var(--bg2);border-radius:8px;padding:12px;margin-bottom:8px;">
-                <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">Numéro actif</div>
-                <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--accent);">+1 555 718 9862</div>
-              </div>
-              <div style="background:var(--bg2);border-radius:8px;padding:12px;">
-                <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">Numéro dédié (en attente Meta)</div>
-                <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--yellow);">+1 302 343 2720</div>
-              </div>
+              <div class="card-header"><div class="card-title">📱 Déclarations WhatsApp</div></div>
+              <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">Employés déclarent leurs invitations LinkedIn en envoyant un nombre au numéro WhatsApp dédié.</div>
+              <div style="background:var(--bg2);border-radius:8px;padding:12px;margin-bottom:8px;"><div style="font-size:11px;color:var(--text3);margin-bottom:4px;">Numéro actif</div><div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--accent);">+1 555 718 9862</div></div>
+              <div style="background:var(--bg2);border-radius:8px;padding:12px;"><div style="font-size:11px;color:var(--text3);margin-bottom:4px;">Numéro dédié (en attente Meta)</div><div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--yellow);">+1 302 343 2720</div></div>
             </div>
           </div>
         </div>
@@ -1708,70 +1339,21 @@ body {
       <!-- ══ VEILLE ══ -->
       <div class="section" id="section-veille">
         <div class="section-header">
-          <div>
-            <h2>Veille Concurrentielle</h2>
-            <p>Monitoring Georis · Fleeti · ON TRACK · Mapping Control · SAGAM · IT Mobile · Iris Afrique · Teletrack · Camtrack</p>
-          </div>
+          <div><h2>Veille Concurrentielle</h2><p>Monitoring Georis · Fleeti · ON TRACK · Mapping Control · SAGAM · IT Mobile · Iris Afrique · Teletrack · Camtrack</p></div>
         </div>
-
         <div class="grid-2">
           <div class="card">
-            <div class="card-header">
-              <div class="card-title">🔔 Signaux Récents</div>
-              <span style="font-size:12px;color:var(--text2);">8 nouveaux</span>
-            </div>
+            <div class="card-header"><div class="card-title">🔔 Signaux Récents</div><span style="font-size:12px;color:var(--text2);">8 nouveaux</span></div>
             <div>
-              <div class="veille-item">
-                <div class="veille-header">
-                  <div>
-                    <div class="veille-source">Fleeti · LinkedIn</div>
-                    <div class="veille-title">Fleeti annonce une levée de fonds de 3M€ pour son expansion en Afrique francophone</div>
-                  </div>
-                  <div class="veille-tag fleet">Fleet</div>
-                </div>
-                <div class="veille-summary">Notre principal concurrent dans le fleet management lève des fonds. À surveiller pour leur expansion géographique.</div>
-              </div>
-
-              <div class="veille-item">
-                <div class="veille-header">
-                  <div>
-                    <div class="veille-source">Africa Energy Forum · Site</div>
-                    <div class="veille-title">Nouvelles réglementations sécurité incendie en Côte d'Ivoire — entrée en vigueur Q2 2026</div>
-                  </div>
-                  <div class="veille-tag security">Sécurité</div>
-                </div>
-                <div class="veille-summary">Opportunité marché significative pour Globo Engineering & Security. Préparer une communication ciblée CI.</div>
-              </div>
-
-              <div class="veille-item">
-                <div class="veille-header">
-                  <div>
-                    <div class="veille-source">ON TRACK · Site web</div>
-                    <div class="veille-title">ON TRACK lance une nouvelle offre de géolocalisation "low cost" pour le marché Sénégalais</div>
-                  </div>
-                  <div class="veille-tag fleet">Fleet</div>
-                </div>
-                <div class="veille-summary">Positionnement prix agressif sur notre marché principal. Différencier sur la valeur ajoutée GLOBO 360.</div>
-              </div>
-
-              <div class="veille-item">
-                <div class="veille-header">
-                  <div>
-                    <div class="veille-source">Petrosen · Communiqué</div>
-                    <div class="veille-title">Petrosen annonce l'extension de son réseau de distribution — 15 nouvelles stations en 2026</div>
-                  </div>
-                  <div class="veille-tag energy">Énergie</div>
-                </div>
-                <div class="veille-summary">Client existant en expansion. Opportunité de renouvellement et d'extension de contrat fleet + sécurité.</div>
-              </div>
+              <div class="veille-item"><div class="veille-header"><div><div class="veille-source">Fleeti · LinkedIn</div><div class="veille-title">Fleeti annonce une levée de fonds de 3M€ pour son expansion en Afrique francophone</div></div><div class="veille-tag fleet">Fleet</div></div><div class="veille-summary">Notre principal concurrent dans le fleet management lève des fonds. À surveiller pour leur expansion géographique.</div></div>
+              <div class="veille-item"><div class="veille-header"><div><div class="veille-source">Africa Energy Forum · Site</div><div class="veille-title">Nouvelles réglementations sécurité incendie en Côte d'Ivoire — entrée en vigueur Q2 2026</div></div><div class="veille-tag security">Sécurité</div></div><div class="veille-summary">Opportunité marché significative pour Globo Engineering & Security. Préparer une communication ciblée CI.</div></div>
+              <div class="veille-item"><div class="veille-header"><div><div class="veille-source">ON TRACK · Site web</div><div class="veille-title">ON TRACK lance une nouvelle offre de géolocalisation "low cost" pour le marché Sénégalais</div></div><div class="veille-tag fleet">Fleet</div></div><div class="veille-summary">Positionnement prix agressif sur notre marché principal. Différencier sur la valeur ajoutée GLOBO 360.</div></div>
+              <div class="veille-item"><div class="veille-header"><div><div class="veille-source">Petrosen · Communiqué</div><div class="veille-title">Petrosen annonce l'extension de son réseau de distribution — 15 nouvelles stations en 2026</div></div><div class="veille-tag energy">Énergie</div></div><div class="veille-summary">Client existant en expansion. Opportunité de renouvellement et d'extension de contrat fleet + sécurité.</div></div>
             </div>
           </div>
-
           <div>
             <div class="card" style="margin-bottom:16px;">
-              <div class="card-header">
-                <div class="card-title">📡 Sources Surveillées</div>
-              </div>
+              <div class="card-header"><div class="card-title">📡 Sources Surveillées</div></div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <div style="background:var(--bg2);border-radius:6px;padding:8px;font-size:12px;">🔍 Georis</div>
                 <div style="background:var(--bg2);border-radius:6px;padding:8px;font-size:12px;">🔍 Fleeti</div>
@@ -1784,18 +1366,10 @@ body {
                 <div style="background:var(--bg2);border-radius:6px;padding:8px;font-size:12px;">🔍 Camtrack</div>
               </div>
             </div>
-
             <div class="card">
-              <div class="card-header">
-                <div class="card-title">📋 Rapport Hebdo PDF</div>
-              </div>
-              <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">
-                Chaque lundi, générez le rapport de veille à partir des 4 fichiers : Phantombuster CSV (followers), Apify CSV (posts), Google Sheet "Signaux", Google Sheet "Bulletins".
-              </div>
-              <div style="background:rgba(251,191,36,0.05);border:1px solid rgba(251,191,36,0.2);border-radius:8px;padding:12px;">
-                <div style="font-size:12px;font-weight:600;color:var(--yellow);margin-bottom:6px;">📌 Rappel Lundi</div>
-                <div style="font-size:12px;color:var(--text2);">Générer le rapport PDF avec les 4 fichiers de veille dans Claude Pro.</div>
-              </div>
+              <div class="card-header"><div class="card-title">📋 Rapport Hebdo PDF</div></div>
+              <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">Chaque lundi, générez le rapport de veille à partir des 4 fichiers : Phantombuster CSV (followers), Apify CSV (posts), Google Sheet "Signaux", Google Sheet "Bulletins".</div>
+              <div style="background:rgba(251,191,36,0.05);border:1px solid rgba(251,191,36,0.2);border-radius:8px;padding:12px;"><div style="font-size:12px;font-weight:600;color:var(--yellow);margin-bottom:6px;">📌 Rappel Lundi</div><div style="font-size:12px;color:var(--text2);">Générer le rapport PDF avec les 4 fichiers de veille dans Claude Pro.</div></div>
             </div>
           </div>
         </div>
@@ -1803,261 +1377,96 @@ body {
 
       <!-- ══ ANALYTICS ══ -->
       <div class="section" id="section-analytics">
-        <div class="section-header">
-          <div>
-            <h2>Analytics</h2>
-            <p>Performance globale — 30 derniers jours</p>
-          </div>
-        </div>
-
+        <div class="section-header"><div><h2>Analytics</h2><p>Performance globale — 30 derniers jours</p></div></div>
         <div class="grid-4" style="margin-bottom:20px;">
-          <div class="kpi-card">
-            <div class="kpi-icon">👁️</div>
-            <div class="kpi-value">184K</div>
-            <div class="kpi-label">Impressions Totales</div>
-            <div class="kpi-delta up">↑ +22% vs mois préc.</div>
-          </div>
-          <div class="kpi-card green">
-            <div class="kpi-icon">💬</div>
-            <div class="kpi-value">8 632</div>
-            <div class="kpi-label">Interactions Totales</div>
-            <div class="kpi-delta up">↑ +18%</div>
-          </div>
-          <div class="kpi-card orange">
-            <div class="kpi-icon">🔗</div>
-            <div class="kpi-value">1 247</div>
-            <div class="kpi-label">Clics sur Liens</div>
-            <div class="kpi-delta up">↑ +31%</div>
-          </div>
-          <div class="kpi-card purple">
-            <div class="kpi-icon">📧</div>
-            <div class="kpi-value">24.3%</div>
-            <div class="kpi-label">Taux ouverture Newsletter</div>
-            <div class="kpi-delta up">↑ +3.1%</div>
-          </div>
+          <div class="kpi-card"><div class="kpi-icon">👁️</div><div class="kpi-value">184K</div><div class="kpi-label">Impressions Totales</div><div class="kpi-delta up">↑ +22% vs mois préc.</div></div>
+          <div class="kpi-card green"><div class="kpi-icon">💬</div><div class="kpi-value">8 632</div><div class="kpi-label">Interactions Totales</div><div class="kpi-delta up">↑ +18%</div></div>
+          <div class="kpi-card orange"><div class="kpi-icon">🔗</div><div class="kpi-value">1 247</div><div class="kpi-label">Clics sur Liens</div><div class="kpi-delta up">↑ +31%</div></div>
+          <div class="kpi-card purple"><div class="kpi-icon">📧</div><div class="kpi-value">24.3%</div><div class="kpi-label">Taux ouverture Newsletter</div><div class="kpi-delta up">↑ +3.1%</div></div>
         </div>
-
         <div class="card">
-          <div class="card-header">
-            <div class="card-title">Top Posts du Mois</div>
-          </div>
+          <div class="card-header"><div class="card-title">Top Posts du Mois</div></div>
           <div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);">
-              <div style="display:flex;align-items:center;gap:12px;">
-                <div style="background:var(--bg2);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text2);">💼 LinkedIn</div>
-                <div style="font-size:13px;">Fleet Management & Sécurité en Afrique de l'Ouest</div>
-              </div>
-              <div style="display:flex;gap:16px;font-size:12px;color:var(--text2);">
-                <span>👍 47</span><span>💬 12</span><span>↗️ 8.4%</span>
-              </div>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);">
-              <div style="display:flex;align-items:center;gap:12px;">
-                <div style="background:var(--bg2);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text2);">📘 Facebook</div>
-                <div style="font-size:13px;">Petrosen — Globo assure la sécurité incendie de 3 nouveaux sites</div>
-              </div>
-              <div style="display:flex;gap:16px;font-size:12px;color:var(--text2);">
-                <span>👍 89</span><span>💬 24</span><span>↗️ 7.2%</span>
-              </div>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;">
-              <div style="display:flex;align-items:center;gap:12px;">
-                <div style="background:var(--bg2);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text2);">📸 Instagram</div>
-                <div style="font-size:13px;">Behind the scenes — Installation système anti-incendie TotalEnergies</div>
-              </div>
-              <div style="display:flex;gap:16px;font-size:12px;color:var(--text2);">
-                <span>👍 134</span><span>💬 18</span><span>↗️ 9.1%</span>
-              </div>
-            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);"><div style="display:flex;align-items:center;gap:12px;"><div style="background:var(--bg2);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text2);">💼 LinkedIn</div><div style="font-size:13px;">Fleet Management & Sécurité en Afrique de l'Ouest</div></div><div style="display:flex;gap:16px;font-size:12px;color:var(--text2);"><span>👍 47</span><span>💬 12</span><span>↗️ 8.4%</span></div></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);"><div style="display:flex;align-items:center;gap:12px;"><div style="background:var(--bg2);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text2);">📘 Facebook</div><div style="font-size:13px;">Petrosen — Globo assure la sécurité incendie de 3 nouveaux sites</div></div><div style="display:flex;gap:16px;font-size:12px;color:var(--text2);"><span>👍 89</span><span>💬 24</span><span>↗️ 7.2%</span></div></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;"><div style="display:flex;align-items:center;gap:12px;"><div style="background:var(--bg2);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text2);">📸 Instagram</div><div style="font-size:13px;">Behind the scenes — Installation système anti-incendie TotalEnergies</div></div><div style="display:flex;gap:16px;font-size:12px;color:var(--text2);"><span>👍 134</span><span>💬 18</span><span>↗️ 9.1%</span></div></div>
           </div>
         </div>
       </div>
 
       <!-- ══ ADMINISTRATION ══ -->
       <div class="section" id="section-admin">
-        <div class="section-header">
-          <div>
-            <h2>Administration</h2>
-            <p>Gestion des accès, paramètres et configuration du dashboard</p>
-          </div>
-        </div>
-
+        <div class="section-header"><div><h2>Administration</h2><p>Gestion des accès, paramètres et configuration du dashboard</p></div></div>
         <div class="admin-section">
           <h3>👥 Utilisateurs & Accès</h3>
           <div id="users-list">
             <div class="admin-user-row">
-              <div class="admin-user-info">
-                <div class="admin-avatar">C</div>
-                <div>
-                  <div style="font-size:13px;font-weight:600;">Christopher Chaudey</div>
-                  <div style="font-size:12px;color:var(--text2);">christopher · Globo Corps</div>
-                </div>
-              </div>
-              <div style="display:flex;align-items:center;gap:10px;">
-                <div class="admin-role-badge superadmin">Super Admin</div>
-              </div>
+              <div class="admin-user-info"><div class="admin-avatar">C</div><div><div style="font-size:13px;font-weight:600;">Christopher Chaudey</div><div style="font-size:12px;color:var(--text2);">christopher · Globo Corps</div></div></div>
+              <div style="display:flex;align-items:center;gap:10px;"><div class="admin-role-badge superadmin">Super Admin</div></div>
             </div>
           </div>
-
           <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);">
             <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:16px;">+ Ajouter un Utilisateur</div>
             <div class="grid-3">
-              <div class="form-field">
-                <label>Nom complet</label>
-                <input type="text" id="new-name" placeholder="Prénom Nom">
-              </div>
-              <div class="form-field">
-                <label>Identifiant</label>
-                <input type="text" id="new-user" placeholder="login">
-              </div>
-              <div class="form-field">
-                <label>Mot de passe</label>
-                <input type="password" id="new-pass" placeholder="••••••••">
-              </div>
-              <div class="form-field">
-                <label>Rôle</label>
-                <select id="new-role">
-                  <option value="admin">Admin</option>
-                  <option value="editor">Éditeur</option>
-                  <option value="viewer">Lecteur</option>
-                </select>
-              </div>
+              <div class="form-field"><label>Nom complet</label><input type="text" id="new-name" placeholder="Prénom Nom"></div>
+              <div class="form-field"><label>Identifiant</label><input type="text" id="new-user" placeholder="login"></div>
+              <div class="form-field"><label>Mot de passe</label><input type="password" id="new-pass" placeholder="••••••••"></div>
+              <div class="form-field"><label>Rôle</label><select id="new-role"><option value="admin">Admin</option><option value="editor">Éditeur</option><option value="viewer">Lecteur</option></select></div>
             </div>
             <button class="btn btn-primary" onclick="addUser()">Ajouter l'utilisateur</button>
           </div>
         </div>
-
         <div class="admin-section">
           <h3>⚙️ Configuration Dashboard</h3>
           <div class="grid-2">
             <div>
-              <div class="form-field">
-                <label>Objectif LinkedIn (followers)</label>
-                <input type="number" id="cfg-linkedin-goal" value="10000">
-              </div>
-              <div class="form-field">
-                <label>Objectif Facebook (abonnés)</label>
-                <input type="number" id="cfg-fb-goal" value="8000">
-              </div>
-              <div class="form-field">
-                <label>Objectif Instagram (abonnés)</label>
-                <input type="number" id="cfg-ig-goal" value="5000">
-              </div>
+              <div class="form-field"><label>Objectif LinkedIn (followers)</label><input type="number" id="cfg-linkedin-goal" value="10000"></div>
+              <div class="form-field"><label>Objectif Facebook (abonnés)</label><input type="number" id="cfg-fb-goal" value="8000"></div>
+              <div class="form-field"><label>Objectif Instagram (abonnés)</label><input type="number" id="cfg-ig-goal" value="5000"></div>
             </div>
             <div>
-              <div class="form-field">
-                <label>Posts LinkedIn / semaine</label>
-                <input type="number" id="cfg-li-posts" value="4">
-              </div>
-              <div class="form-field">
-                <label>Posts Facebook / semaine</label>
-                <input type="number" id="cfg-fb-posts" value="3">
-              </div>
-              <div class="form-field">
-                <label>Posts Instagram / semaine</label>
-                <input type="number" id="cfg-ig-posts" value="2">
-              </div>
+              <div class="form-field"><label>Posts LinkedIn / semaine</label><input type="number" id="cfg-li-posts" value="4"></div>
+              <div class="form-field"><label>Posts Facebook / semaine</label><input type="number" id="cfg-fb-posts" value="3"></div>
+              <div class="form-field"><label>Posts Instagram / semaine</label><input type="number" id="cfg-ig-posts" value="2"></div>
             </div>
           </div>
           <button class="btn btn-primary" onclick="saveConfig()">Sauvegarder la Configuration</button>
         </div>
-
         <div class="admin-section">
           <h3>🔗 Intégrations</h3>
           <div class="grid-2">
-            <div style="background:var(--bg2);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;">
-              <div style="display:flex;align-items:center;gap:10px;">
-                <span style="font-size:20px;">🔧</span>
-                <div>
-                  <div style="font-size:13px;font-weight:600;">n8n Cloud</div>
-                  <div style="font-size:11px;color:var(--text2);">globocorps-itl.app.n8n.cloud</div>
-                </div>
-              </div>
-              <div style="display:flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-weight:600;">
-                <div class="status-dot active"></div> Connecté
-              </div>
-            </div>
-            <div style="background:var(--bg2);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;">
-              <div style="display:flex;align-items:center;gap:10px;">
-                <span style="font-size:20px;">💬</span>
-                <div>
-                  <div style="font-size:13px;font-weight:600;">WhatsApp / Twilio</div>
-                  <div style="font-size:11px;color:var(--text2);">+1 555 718 9862 (actif)</div>
-                </div>
-              </div>
-              <div style="display:flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-weight:600;">
-                <div class="status-dot active"></div> Actif
-              </div>
-            </div>
-            <div style="background:var(--bg2);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;">
-              <div style="display:flex;align-items:center;gap:10px;">
-                <span style="font-size:20px;">📊</span>
-                <div>
-                  <div style="font-size:13px;font-weight:600;">Google Sheets</div>
-                  <div style="font-size:11px;color:var(--text2);">Challenge · Classement · Historique</div>
-                </div>
-              </div>
-              <div style="display:flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-weight:600;">
-                <div class="status-dot active"></div> Connecté
-              </div>
-            </div>
-            <div style="background:var(--bg2);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;">
-              <div style="display:flex;align-items:center;gap:10px;">
-                <span style="font-size:20px;">📧</span>
-                <div>
-                  <div style="font-size:13px;font-weight:600;">Slack</div>
-                  <div style="font-size:11px;color:var(--text2);">#challenge-employés-lkdk</div>
-                </div>
-              </div>
-              <div style="display:flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-weight:600;">
-                <div class="status-dot active"></div> Connecté
-              </div>
-            </div>
+            <div style="background:var(--bg2);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">🔧</span><div><div style="font-size:13px;font-weight:600;">n8n Cloud</div><div style="font-size:11px;color:var(--text2);">globocorps-itl.app.n8n.cloud</div></div></div><div style="display:flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-weight:600;"><div class="status-dot active"></div> Connecté</div></div>
+            <div style="background:var(--bg2);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">💬</span><div><div style="font-size:13px;font-weight:600;">WhatsApp / Twilio</div><div style="font-size:11px;color:var(--text2);">+1 555 718 9862 (actif)</div></div></div><div style="display:flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-weight:600;"><div class="status-dot active"></div> Actif</div></div>
+            <div style="background:var(--bg2);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">📊</span><div><div style="font-size:13px;font-weight:600;">Google Sheets</div><div style="font-size:11px;color:var(--text2);">Challenge · Classement · Historique</div></div></div><div style="display:flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-weight:600;"><div class="status-dot active"></div> Connecté</div></div>
+            <div style="background:var(--bg2);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">📧</span><div><div style="font-size:13px;font-weight:600;">Slack</div><div style="font-size:11px;color:var(--text2);">#challenge-employés-lkdk</div></div></div><div style="display:flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-weight:600;"><div class="status-dot active"></div> Connecté</div></div>
           </div>
         </div>
       </div>
 
-    </div><!-- /content -->
-  </div><!-- /main -->
-</div><!-- /app -->
+    </div>
+  </div>
+</div>
 
 <script>
-// ══════════════════════════════════
-// USERS DATABASE (extensible)
-// ══════════════════════════════════
 var USERS = {
   'christopher': { pass: 'GloboAdmin2026!', name: 'Christopher Chaudey', role: 'superadmin', initial: 'C' },
 };
-
 var currentUser = null;
 
-// ══════════════════════════════════
-// AUTH
-// ══════════════════════════════════
 function doLogin() {
   var u = document.getElementById('login-user').value.trim();
   var p = document.getElementById('login-pass').value;
   var err = document.getElementById('login-error');
-
   if (USERS[u] && USERS[u].pass === p) {
-    currentUser = { username: u, ...USERS[u] };
+    currentUser = Object.assign({ username: u }, USERS[u]);
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
     document.getElementById('sidebar-name').textContent = currentUser.name.split(' ')[0];
-    document.getElementById('sidebar-role').textContent =
-      currentUser.role === 'superadmin' ? 'Super Admin' :
-      currentUser.role === 'admin' ? 'Administrateur' :
-      currentUser.role === 'editor' ? 'Éditeur' : 'Lecteur';
+    document.getElementById('sidebar-role').textContent = currentUser.role === 'superadmin' ? 'Super Admin' : currentUser.role === 'admin' ? 'Administrateur' : currentUser.role === 'editor' ? 'Éditeur' : 'Lecteur';
     document.getElementById('sidebar-avatar').textContent = currentUser.initial;
-
-    // Hide admin for non-admins
-    var adminLinks = document.querySelectorAll('.admin-only');
-    adminLinks.forEach(function(el) {
-      if (currentUser.role !== 'superadmin' && currentUser.role !== 'admin') {
-        el.style.display = 'none';
-      }
+    document.querySelectorAll('.admin-only').forEach(function(el) {
+      if (currentUser.role !== 'superadmin' && currentUser.role !== 'admin') el.style.display = 'none';
     });
-
     initDashboard();
   } else {
     err.style.display = 'block';
@@ -2073,174 +1482,93 @@ function doLogout() {
   document.getElementById('login-pass').value = '';
 }
 
-// Enter key login
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') {
-    doLogin();
-  }
+  if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') doLogin();
 });
 
-// ══════════════════════════════════
-// NAVIGATION
-// ══════════════════════════════════
 var titles = {
-  'overview': '⚡ Command Center',
-  'platforms': '📡 Plateformes Sociales',
-  'pipeline': '📝 Pipeline Contenu',
-  'calendar': '📅 Plan Éditorial',
-  'agents': '🤖 AI Team',
-  'challenge': '🏆 Challenge Ambassadeurs',
-  'veille': '🔭 Veille Concurrentielle',
-  'analytics': '📊 Analytics',
-  'admin': '⚙️ Administration'
+  'overview': '⚡ Command Center', 'platforms': '📡 Plateformes Sociales',
+  'pipeline': '📝 Pipeline Contenu', 'calendar': '📅 Plan Éditorial',
+  'agents': '🤖 AI Team', 'challenge': '🏆 Challenge Ambassadeurs',
+  'veille': '🔭 Veille Concurrentielle', 'analytics': '📊 Analytics', 'admin': '⚙️ Administration'
 };
 
 function showSection(id) {
   document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
   document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
-
   var section = document.getElementById('section-' + id);
   if (section) section.classList.add('active');
   document.title = 'Globo Corps — ' + (titles[id] || id);
   document.getElementById('page-title').textContent = titles[id] || id;
-
-  // Highlight nav
   document.querySelectorAll('.nav-item').forEach(function(item) {
-    if (item.getAttribute('onclick') && item.getAttribute('onclick').includes("'" + id + "'")) {
-      item.classList.add('active');
-    }
+    if (item.getAttribute('onclick') && item.getAttribute('onclick').includes("'" + id + "'")) item.classList.add('active');
   });
 }
 
-// ══════════════════════════════════
-// CALENDAR
-// ══════════════════════════════════
 function buildCalendar() {
   var grid = document.getElementById('cal-grid');
   if (!grid) return;
-
-  var march2026 = [
-    { d: 1, empty: false },
-  ];
-
-  // March 2026 starts on Sunday (day 0) => shift = 6 for Mon-first
-  var startDay = new Date(2026, 2, 1).getDay(); // 0=Sun
+  var startDay = new Date(2026, 2, 1).getDay();
   var shift = startDay === 0 ? 6 : startDay - 1;
-
   var posts = {
-    2: [{type:'linkedin', text:'Veille concurrentielle hebdo'}],
-    3: [{type:'facebook', text:'Actualité sécurité Afrique'}],
-    4: [{type:'instagram', text:'Behind the scenes'}],
-    6: [{type:'linkedin', text:'Fleet Management & Sécurité'},{type:'facebook', text:'Fleet Management'}],
-    7: [{type:'linkedin', text:'Command Center lancé 🎉'},{type:'newsletter', text:'Newsletter Mars'}],
-    9: [{type:'linkedin', text:'TotalEnergies Case Study'},{type:'facebook', text:'TotalEnergies'}],
-    10: [{type:'instagram', text:'Certification ISO 45001'}],
-    11: [{type:'linkedin', text:'Vivo Energy CI Partenariat'}],
-    13: [{type:'linkedin', text:'Réglementation CI 2026'}],
-    14: [{type:'facebook', text:'Petrosen expansion réseau'}],
-    16: [{type:'linkedin', text:'GLOBO 360 — IA & Fleet'}],
-    17: [{type:'instagram', text:'Culture d\'entreprise'}],
-    18: [{type:'facebook', text:'Témoignage client'}],
-    20: [{type:'linkedin', text:'Sécurité incendie Q2 2026'}],
-    23: [{type:'linkedin', text:'Recap challenge ambassadeurs'}],
-    24: [{type:'instagram', text:'Equipe Globo Corps'}],
-    25: [{type:'facebook', text:'Actualité Africa Tech'}],
-    27: [{type:'linkedin', text:'ACTD Guinée — nouvelles installations'}],
-    30: [{type:'linkedin', text:'Bilan Mars 2026'},{type:'newsletter', text:'Newsletter Avril preview'}],
+    2:[{type:'linkedin',text:'Veille concurrentielle hebdo'}],3:[{type:'facebook',text:'Actualité sécurité Afrique'}],
+    4:[{type:'instagram',text:'Behind the scenes'}],6:[{type:'linkedin',text:'Fleet Management & Sécurité'},{type:'facebook',text:'Fleet Management'}],
+    7:[{type:'linkedin',text:'Command Center lancé 🎉'},{type:'newsletter',text:'Newsletter Mars'}],
+    9:[{type:'linkedin',text:'TotalEnergies Case Study'},{type:'facebook',text:'TotalEnergies'}],
+    10:[{type:'instagram',text:'Certification ISO 45001'}],11:[{type:'linkedin',text:'Vivo Energy CI Partenariat'}],
+    13:[{type:'linkedin',text:'Réglementation CI 2026'}],14:[{type:'facebook',text:'Petrosen expansion réseau'}],
+    16:[{type:'linkedin',text:'GLOBO 360 — IA & Fleet'}],17:[{type:'instagram',text:'Culture d\'entreprise'}],
+    18:[{type:'facebook',text:'Témoignage client'}],20:[{type:'linkedin',text:'Sécurité incendie Q2 2026'}],
+    23:[{type:'linkedin',text:'Recap challenge ambassadeurs'}],24:[{type:'instagram',text:'Equipe Globo Corps'}],
+    25:[{type:'facebook',text:'Actualité Africa Tech'}],27:[{type:'linkedin',text:'ACTD Guinée — nouvelles installations'}],
+    30:[{type:'linkedin',text:'Bilan Mars 2026'},{type:'newsletter',text:'Newsletter Avril preview'}]
   };
-
-  var today = 7; // March 7
-
-  // Empty cells
-  for (var i = 0; i < shift; i++) {
-    var empty = document.createElement('div');
-    empty.style.minHeight = '80px';
-    grid.appendChild(empty);
-  }
-
+  var today = new Date().getDate();
+  for (var i = 0; i < shift; i++) { var e = document.createElement('div'); e.style.minHeight='80px'; grid.appendChild(e); }
   for (var d = 1; d <= 31; d++) {
     var cell = document.createElement('div');
     cell.className = 'cal-day' + (d === today ? ' today' : '');
-
-    var dateDiv = document.createElement('div');
-    dateDiv.className = 'cal-date';
-    dateDiv.textContent = d;
-    cell.appendChild(dateDiv);
-
-    if (posts[d]) {
-      posts[d].forEach(function(p) {
-        var tag = document.createElement('div');
-        tag.className = 'cal-post ' + p.type;
-        tag.textContent = p.text;
-        cell.appendChild(tag);
-      });
-    }
-
+    var dd = document.createElement('div'); dd.className = 'cal-date'; dd.textContent = d;
+    cell.appendChild(dd);
+    if (posts[d]) posts[d].forEach(function(p) { var t = document.createElement('div'); t.className = 'cal-post ' + p.type; t.textContent = p.text; cell.appendChild(t); });
     grid.appendChild(cell);
   }
 }
 
-// ══════════════════════════════════
-// ADMIN FUNCTIONS
-// ══════════════════════════════════
 function addUser() {
   var name = document.getElementById('new-name').value.trim();
   var user = document.getElementById('new-user').value.trim();
   var pass = document.getElementById('new-pass').value;
   var role = document.getElementById('new-role').value;
-
-  if (!name || !user || !pass) {
-    alert('Remplissez tous les champs');
-    return;
-  }
-
+  if (!name || !user || !pass) { alert('Remplissez tous les champs'); return; }
   USERS[user] = { pass: pass, name: name, role: role, initial: name[0].toUpperCase() };
-
   var list = document.getElementById('users-list');
-  var row = document.createElement('div');
-  row.className = 'admin-user-row';
-  row.innerHTML = '<div class="admin-user-info"><div class="admin-avatar" style="background:linear-gradient(135deg,var(--green),var(--accent2))">' + name[0].toUpperCase() + '</div><div><div style="font-size:13px;font-weight:600;">' + name + '</div><div style="font-size:12px;color:var(--text2);">' + user + '</div></div></div><div><div class="admin-role-badge ' + role + '">' + (role === 'admin' ? 'Admin' : role === 'editor' ? 'Éditeur' : 'Lecteur') + '</div></div>';
+  var row = document.createElement('div'); row.className = 'admin-user-row';
+  row.innerHTML = '<div class="admin-user-info"><div class="admin-avatar" style="background:linear-gradient(135deg,var(--green),var(--accent2))">' + name[0].toUpperCase() + '</div><div><div style="font-size:13px;font-weight:600;">' + name + '</div><div style="font-size:12px;color:var(--text2);">' + user + '</div></div></div><div><div class="admin-role-badge ' + role + '">' + (role==='admin'?'Admin':role==='editor'?'Éditeur':'Lecteur') + '</div></div>';
   list.appendChild(row);
-
-  document.getElementById('new-name').value = '';
-  document.getElementById('new-user').value = '';
-  document.getElementById('new-pass').value = '';
-
+  document.getElementById('new-name').value = ''; document.getElementById('new-user').value = ''; document.getElementById('new-pass').value = '';
   showNotif('✅ Utilisateur "' + user + '" ajouté avec succès');
 }
 
-function saveConfig() {
-  showNotif('✅ Configuration sauvegardée');
-}
-
-function addContent() {
-  showNotif('✏️ Fonctionnalité disponible dans la prochaine version — utilisez n8n pour créer du contenu');
-}
+function saveConfig() { showNotif('✅ Configuration sauvegardée'); }
+function addContent() { showNotif('✏️ Fonctionnalité disponible dans la prochaine version'); }
 
 function refreshData() {
-  showNotif('↻ Données actualisées — ' + new Date().toLocaleTimeString('fr-FR'));
+  loadRealData();
+  showNotif('↻ Actualisation en cours...');
 }
 
 function showNotif(msg) {
   var n = document.createElement('div');
-  n.style.cssText = 'position:fixed;bottom:24px;right:24px;background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:12px 18px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.3);animation:fadeInUp 0.2s ease;';
-  n.textContent = msg;
-  document.body.appendChild(n);
+  n.style.cssText = 'position:fixed;bottom:24px;right:24px;background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:12px 18px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.3);';
+  n.textContent = msg; document.body.appendChild(n);
   setTimeout(function() { n.remove(); }, 3000);
 }
 
-// ══════════════════════════════════
-// DATE
-// ══════════════════════════════════
 function updateDate() {
   var now = new Date();
-  var opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  document.getElementById('topbar-date').textContent = now.toLocaleDateString('fr-FR', opts);
+  document.getElementById('topbar-date').textContent = now.toLocaleDateString('fr-FR', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
 }
-
-// ══════════════════════════════════
-// INIT
-// ══════════════════════════════════
 
 // ══════════════════════════════════
 // LOAD REAL DATA FROM GITHUB
@@ -2249,91 +1577,109 @@ function loadRealData() {
   fetch('https://direction-svg.github.io/globo-command-center/data.json?t=' + Date.now())
     .then(function(r) { return r.json(); })
     .then(function(data) {
-      if (!data || !data.classement) return;
-      var tbody = document.getElementById('challenge-tbody');
-      if (tbody && data.classement.length > 0) {
-        tbody.innerHTML = '';
-        data.classement.forEach(function(e, i) {
-          var rankClass = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : 'rank-n';
-          var row = document.createElement('tr');
-          row.innerHTML = '<td><div class="rank-badge ' + rankClass + '">' + (i+1) + '</div></td>' +
-            '<td><strong>' + e.Prenom + ' ' + e.Nom + '</strong></td>' +
-            '<td>' + e.Total_Likes + '</td>' +
-            '<td>' + e.Total_Commentaires + '</td>' +
-            '<td>' + (e.Total_Invitations || 0) + '</td>' +
-            '<td>' + e.Total_Reposts + '</td>' +
-            '<td><div class="points-pill">' + e.Total_Points + ' pts</div></td>';
-          tbody.appendChild(row);
-        });
-      }
-      // Mise à jour followers
+      if (!data) return;
+      var updLabel = data.updated || '—';
+
+      // ── Followers ──
       if (data.followers) {
         var li = data.followers.linkedin || 0;
         var fb = data.followers.facebook || 0;
         var ig = data.followers.instagram || 0;
         var total = li + fb + ig;
 
-        var elLI = document.getElementById('followers-linkedin');
-        var elFB = document.getElementById('followers-facebook');
-        var elIG = document.getElementById('followers-instagram');
-        if (elLI) elLI.textContent = li.toLocaleString('fr-FR');
-        if (elFB) elFB.textContent = fb ? fb.toLocaleString('fr-FR') : '—';
-        if (elIG) elIG.textContent = ig ? ig.toLocaleString('fr-FR') : '—';
+        var set = function(id, val) { var el = document.getElementById(id); if (el) el.textContent = val; };
+
+        // Mini plateformes
+        set('followers-linkedin', li.toLocaleString('fr-FR'));
+        set('followers-facebook', fb ? fb.toLocaleString('fr-FR') : '—');
+        set('followers-instagram', ig ? ig.toLocaleString('fr-FR') : '—');
+
+        // PATCHED: "bientôt" → date MAJ pour FB et IG
+        set('followers-facebook-updated', 'MAJ ' + updLabel);
+        set('followers-instagram-updated', 'MAJ ' + updLabel);
 
         // KPI Reach total
-        var elReach = document.getElementById('kpi-reach');
-        if (elReach) elReach.textContent = total.toLocaleString('fr-FR');
+        set('kpi-reach', total.toLocaleString('fr-FR'));
+        set('kpi-reach-delta', 'MAJ ' + updLabel);
 
         // Objectif LinkedIn 10K
-        var pct = Math.round((li / 10000) * 100 * 10) / 10;
+        var pct = Math.round((li / 10000) * 1000) / 10;
         var restants = 10000 - li;
-        var elLi10k = document.querySelector('[style*="6 248 / 10 000"]');
-        // Progress bar LinkedIn 10K
-        var allProgressFills = document.querySelectorAll('.progress-fill');
-        if (allProgressFills.length > 0) {
-          allProgressFills[0].style.width = pct + '%';
-        }
-        // Textes objectif
-        var spans10k = document.querySelectorAll('.card');
-        spans10k.forEach(function(card) {
-          if (card.innerHTML.indexOf('Objectif LinkedIn 10K') !== -1) {
-            var header = card.querySelector('.card-header span');
-            if (header) header.textContent = li.toLocaleString('fr-FR') + ' / 10 000';
-            var divs = card.querySelectorAll('div');
-            divs.forEach(function(d) {
-              if (d.textContent.indexOf('% atteint') !== -1) d.textContent = pct + '% atteint';
-              if (d.textContent.indexOf('restants') !== -1) d.textContent = '+' + restants.toLocaleString('fr-FR') + ' restants';
-            });
-          }
-        });
+        set('linkedin-10k-label', li.toLocaleString('fr-FR') + ' / 10 000');
+        set('linkedin-10k-pct', pct + '% atteint');
+        set('linkedin-10k-rest', '+' + restants.toLocaleString('fr-FR') + ' restants');
+        var bar = document.getElementById('linkedin-10k-bar');
+        if (bar) bar.style.width = pct + '%';
 
-        // Section Plateformes - valeur LinkedIn
-        var valEls = document.querySelectorAll('.val');
-        valEls.forEach(function(el) {
-          if (el.textContent.trim() === '6 248' || el.textContent.trim() === li.toLocaleString('fr-FR')) {
-            el.textContent = li.toLocaleString('fr-FR');
-          }
-        });
+        // Section Plateformes
+        set('plat-linkedin-followers', li.toLocaleString('fr-FR'));
+        set('plat-facebook-followers', fb ? fb.toLocaleString('fr-FR') : '—');
+        set('plat-instagram-followers', ig ? ig.toLocaleString('fr-FR') : '—');
+
+        var pctFB = Math.round((fb / 8000) * 1000) / 10;
+        var pctIG = Math.round((ig / 5000) * 1000) / 10;
+        set('plat-linkedin-pct', pct + '%');
+        set('plat-facebook-pct', pctFB + '%');
+        set('plat-instagram-pct', pctIG + '%');
+        var liBar = document.getElementById('plat-linkedin-bar');
+        var fbBar = document.getElementById('plat-facebook-bar');
+        var igBar = document.getElementById('plat-instagram-bar');
+        if (liBar) liBar.style.width = pct + '%';
+        if (fbBar) fbBar.style.width = pctFB + '%';
+        if (igBar) igBar.style.width = pctIG + '%';
       }
 
-      // Activity feed - dernier classement
+      // ── LinkedIn Stats (source Apify) ──
+      // PATCHED: Posts publiés et taux engagement depuis linkedin_stats
+      if (data.linkedin_stats) {
+        var posts = data.linkedin_stats.posts_mois;
+        var engage = data.linkedin_stats.engagement_rate;
+        var set2 = function(id, val) { var el = document.getElementById(id); if (el) el.textContent = val; };
+
+        set2('kpi-posts', posts !== undefined ? posts : '—');
+        set2('kpi-engage', engage !== undefined ? engage.toFixed(1) + '%' : '—');
+        set2('kpi-posts-delta', 'LinkedIn · MAJ ' + updLabel);
+        set2('kpi-engage-delta', 'LinkedIn · MAJ ' + updLabel);
+
+        // Section Plateformes
+        set2('plat-linkedin-posts', posts !== undefined ? posts : '—');
+        set2('plat-linkedin-engage', engage !== undefined ? engage.toFixed(1) + '%' : '—');
+      }
+
+      // ── Classement ──
       if (data.classement && data.classement.length > 0) {
-        var leader = data.classement[0];
-        var feedEl = document.getElementById('activity-feed');
-        if (feedEl) {
-          var firstItem = feedEl.querySelector('.feed-item');
-          if (firstItem) {
-            var msgEl = firstItem.querySelector('.msg');
-            if (msgEl) msgEl.innerHTML = '🏆 Classement ambassadeurs mis à jour — <strong>' + leader.Prenom + ' ' + leader.Nom + '</strong> en tête avec ' + leader.Total_Points + ' pts';
-            var timeEl = firstItem.querySelector('.time');
-            if (timeEl) timeEl.textContent = data.updated;
-          }
+        var tbody = document.getElementById('challenge-tbody');
+        if (tbody) {
+          tbody.innerHTML = '';
+          var totalPts = 0;
+          data.classement.forEach(function(e, i) {
+            totalPts += (parseInt(e.Total_Points) || 0);
+            var rankClass = i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-n';
+            var row = document.createElement('tr');
+            row.innerHTML =
+              '<td><div class="rank-badge ' + rankClass + '">' + (i+1) + '</div></td>' +
+              '<td><strong>' + e.Prenom + ' ' + e.Nom + '</strong></td>' +
+              '<td>' + (e.Total_Likes||0) + '</td>' +
+              '<td>' + (e.Total_Commentaires||0) + '</td>' +
+              '<td>' + (e.Total_Invitations||0) + '</td>' +
+              '<td>' + (e.Total_Reposts||0) + '</td>' +
+              '<td><div class="points-pill">' + (e.Total_Points||0) + ' pts</div></td>';
+            tbody.appendChild(row);
+          });
+          var stPts = document.getElementById('stats-total-pts');
+          if (stPts) stPts.textContent = totalPts + ' pts';
         }
+
+        // Activity feed — leader
+        var leader = data.classement[0];
+        var feedMsg = document.getElementById('feed-classement');
+        var feedTime = document.getElementById('feed-classement-time');
+        if (feedMsg) feedMsg.innerHTML = '🏆 Classement ambassadeurs mis à jour — <strong>' + leader.Prenom + ' ' + leader.Nom + '</strong> en tête avec ' + leader.Total_Points + ' pts';
+        if (feedTime) feedTime.textContent = updLabel;
       }
 
-      showNotif('✅ Dashboard mis à jour : ' + data.updated);
     })
-    .catch(function(e) { console.log('data.json pas encore disponible'); });
+    .catch(function(e) { console.log('data.json non disponible:', e); });
 }
 
 function initDashboard() {
