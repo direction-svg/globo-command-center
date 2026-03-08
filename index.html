@@ -1285,15 +1285,115 @@ body {
       <!-- ══ AI TEAM ══ -->
       <div class="section" id="section-agents">
         <div class="section-header">
-          <div><h2>AI Team</h2><p>5 agents IA orchestrés par n8n — Veille, Création, Validation, Publication, Analytics</p></div>
+          <div><h2>AI Team</h2><p>8 workflows n8n actifs — Veille, Social Media, Challenge Ambassadeurs, Synthèse IA</p></div>
+          <a href="https://globocorps-itl.app.n8n.cloud" target="_blank" class="btn btn-secondary" style="font-size:12px;">Ouvrir n8n →</a>
         </div>
         <div class="grid-3" style="margin-bottom:20px;">
-          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(0,196,255,0.1);">🔍</div><div><div class="agent-name">Researcher</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif</span></div></div></div><div class="agent-task">Surveille 15 sources RSS + 13 Google Alerts. Détecte les signaux concurrentiels et sectoriels. Rapport Slack chaque lundi.</div><div class="agent-progress-label"><span>Signaux cette semaine</span><span style="color:var(--accent);">8 / 15</span></div><div class="progress-bar"><div class="progress-fill" style="width:53%"></div></div></div>
-          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(168,85,247,0.1);">✍️</div><div><div class="agent-name">Scriptwriter</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif</span></div></div></div><div class="agent-task">Rédige les posts LinkedIn, Facebook, Instagram à partir des briefs hebdomadaires. Adapte le ton par plateforme.</div><div class="agent-progress-label"><span>Posts rédigés ce mois</span><span style="color:var(--accent);">38 / 60</span></div><div class="progress-bar"><div class="progress-fill" style="width:63%"></div></div></div>
-          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(251,191,36,0.1);">✅</div><div><div class="agent-name">Editor</div><div class="agent-status"><div class="status-dot idle"></div><span style="color:var(--yellow);font-size:11px;">En attente</span></div></div></div><div class="agent-task">Relit et valide les contenus avant publication. Vérifie la conformité brand, le ton, les hashtags.</div><div class="agent-progress-label"><span>Contenus en file</span><span style="color:var(--yellow);">3 en attente</span></div><div class="progress-bar"><div class="progress-fill orange" style="width:30%"></div></div></div>
-          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(0,229,160,0.1);">📅</div><div><div class="agent-name">Scheduler</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif</span></div></div></div><div class="agent-task">Planifie les publications dans SocialBee aux meilleurs créneaux. Gère les files d'attente LinkedIn, Facebook, Instagram.</div><div class="agent-progress-label"><span>Posts planifiés</span><span style="color:var(--green);">2 actifs</span></div><div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div></div>
-          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(255,124,42,0.1);">📊</div><div><div class="agent-name">Analytics</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif</span></div></div></div><div class="agent-task">Collecte les métriques LinkedIn, Facebook, Instagram chaque vendredi. Génère le rapport de performance hebdomadaire.</div><div class="agent-progress-label"><span>Prochain rapport</span><span style="color:var(--orange);">Vendredi 17h</span></div><div class="progress-bar"><div class="progress-fill orange" style="width:70%"></div></div></div>
-          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(0,119,255,0.1);">💬</div><div><div class="agent-name">WhatsApp Bot</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif</span></div></div></div><div class="agent-task">Reçoit les déclarations d'invitations LinkedIn des employés par WhatsApp. Validation admin. Mise à jour automatique du classement.</div><div class="agent-progress-label"><span>Déclarations ce mois</span><span style="color:var(--accent);">14 traitées</span></div><div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div></div>
+
+          <div class="agent-card">
+            <div class="agent-header">
+              <div class="agent-avatar" style="background:rgba(0,229,160,0.1);">🔄</div>
+              <div>
+                <div class="agent-name">Sync Classement → GitHub</div>
+                <div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · toutes les heures</span></div>
+              </div>
+            </div>
+            <div class="agent-task">Lit Classement, Employés, Activity depuis Google Sheets + followers FB/IG via API + posts LinkedIn via Apify. Génère et pousse le data.json sur GitHub Pages.</div>
+            <div class="agent-progress-label"><span>Dernière exécution</span><span style="color:var(--green);">il y a 24 min</span></div>
+            <div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div>
+          </div>
+
+          <div class="agent-card">
+            <div class="agent-header">
+              <div class="agent-avatar" style="background:rgba(0,119,255,0.1);">💬</div>
+              <div>
+                <div class="agent-name">Invitations LinkedIn WhatsApp</div>
+                <div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · webhook Twilio</span></div>
+              </div>
+            </div>
+            <div class="agent-task">Reçoit les déclarations (envoi d'un chiffre) et validations ("ok Prénom Nom") via WhatsApp. Met à jour le Classement Google Sheets, envoie confirmation Slack et enregistre dans Activity.</div>
+            <div class="agent-progress-label"><span>Numéro actif</span><span style="color:var(--accent);">+1 555 718 9862</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+          </div>
+
+          <div class="agent-card">
+            <div class="agent-header">
+              <div class="agent-avatar" style="background:rgba(251,191,36,0.1);">🏆</div>
+              <div>
+                <div class="agent-name">Challenge Ambassadeurs Globo</div>
+                <div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · Apify scraper</span></div>
+              </div>
+            </div>
+            <div class="agent-task">Scrape les posts LinkedIn des employés via Apify (Posts, Reactions, Comments). Calcule les points (1pt/like, 2pts/commentaire, 3pts/repost). Met à jour le Classement et poste le leaderboard Slack chaque lundi.</div>
+            <div class="agent-progress-label"><span>Participants actifs</span><span style="color:var(--yellow);">4 employés</span></div>
+            <div class="progress-bar"><div class="progress-fill orange" style="width:33%"></div></div>
+          </div>
+
+          <div class="agent-card">
+            <div class="agent-header">
+              <div class="agent-avatar" style="background:rgba(168,85,247,0.1);">🔭</div>
+              <div>
+                <div class="agent-name">Veille LinkedIn Concurrentielle</div>
+                <div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · Apify LinkedIn</span></div>
+              </div>
+            </div>
+            <div class="agent-task">Scrape les posts LinkedIn des 9 concurrents (Georis, Fleeti, ON TRACK, Mapping Control, SAGAM, IT Mobile, Iris Afrique, Teletrack, Camtrack) via Apify. Alimente la Google Sheet Signaux.</div>
+            <div class="agent-progress-label"><span>Concurrents surveillés</span><span style="color:var(--purple);">9 profils</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:100%;background:linear-gradient(90deg,var(--purple),var(--accent2));"></div></div>
+          </div>
+
+          <div class="agent-card">
+            <div class="agent-header">
+              <div class="agent-avatar" style="background:rgba(0,196,255,0.1);">🌐</div>
+              <div>
+                <div class="agent-name">Veille Sites Concurrents</div>
+                <div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · quotidien</span></div>
+              </div>
+            </div>
+            <div class="agent-task">Scrape 15 pages web des concurrents chaque jour. Détecte les nouveautés (offres, pages, actualités). Enregistre les signaux dans Google Sheet et notifie via Slack.</div>
+            <div class="agent-progress-label"><span>Pages surveillées</span><span style="color:var(--accent);">15 sources</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+          </div>
+
+          <div class="agent-card">
+            <div class="agent-header">
+              <div class="agent-avatar" style="background:rgba(255,124,42,0.1);">📡</div>
+              <div>
+                <div class="agent-name">Veille Google Alerts</div>
+                <div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · quotidien</span></div>
+              </div>
+            </div>
+            <div class="agent-task">Lit 13 flux RSS Google Alerts sur les concurrents et le secteur. Filtre les signaux pertinents, déduplique, enregistre dans Google Sheet Signaux et notifie Slack.</div>
+            <div class="agent-progress-label"><span>Flux RSS actifs</span><span style="color:var(--orange);">13 alertes</span></div>
+            <div class="progress-bar"><div class="progress-fill orange" style="width:100%"></div></div>
+          </div>
+
+          <div class="agent-card">
+            <div class="agent-header">
+              <div class="agent-avatar" style="background:rgba(0,229,160,0.1);">🧠</div>
+              <div>
+                <div class="agent-name">Synthèse Hebdomadaire IA</div>
+                <div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · lundi 9h</span></div>
+              </div>
+            </div>
+            <div class="agent-task">Chaque lundi à 9h, lit les signaux de la semaine depuis Google Sheet et génère un rapport IA via Claude Sonnet. Distribue le bulletin en PDF par Slack et Gmail.</div>
+            <div class="agent-progress-label"><span>Prochain rapport</span><span style="color:var(--green);">Lundi 09:00</span></div>
+            <div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div>
+          </div>
+
+          <div class="agent-card">
+            <div class="agent-header">
+              <div class="agent-avatar" style="background:rgba(255,61,90,0.1);">📲</div>
+              <div>
+                <div class="agent-name">Suivi Déploiement Social Media</div>
+                <div class="agent-status"><div class="status-dot idle"></div><span style="color:var(--yellow);font-size:11px;">En cours de déploiement</span></div>
+              </div>
+            </div>
+            <div class="agent-task">Suivi du déploiement de la stratégie social media sur 15 jours : SocialBee, Canva Teams, n8n Cloud, Brevo. Coordination avec la personne dédiée en exécution.</div>
+            <div class="agent-progress-label"><span>Déploiement</span><span style="color:var(--yellow);">En cours</span></div>
+            <div class="progress-bar"><div class="progress-fill orange" style="width:60%"></div></div>
+          </div>
+
         </div>
       </div>
 
