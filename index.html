@@ -1491,7 +1491,7 @@ function doLogout() {
   if (saved) {
     try {
       var user = JSON.parse(saved);
-      document.addEventListener('DOMContentLoaded', function() { applySession(user); });
+      applySession(user);
     } catch(e) { sessionStorage.removeItem('globo_user'); }
   }
 })();
