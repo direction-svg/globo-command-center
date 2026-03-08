@@ -2105,11 +2105,21 @@ function actionVeille(action, concurrent, titre) {
   var encours = Object.values(window._signauxStates).filter(function(v) { return v === 'en_cours'; }).length;
   var el2 = document.getElementById('veille-stat-encours');
   if (el2) el2.textContent = encours;
-  // Webhook n8n (optionnel — activer quand le workflow Action Veille est créé)
-  // fetch('https://globocorps-itl.app.n8n.cloud/webhook/veille-action', {
-  //   method: 'POST', headers: {'Content-Type':'application/json'},
-  //   body: JSON.stringify({ action: action, concurrent: concurrent, titre: titre })
-  // });
+  // Webhook n8n — persiste le statut dans Google Sheets
+  var statutAEnvoyer = action === 'pipeline' ? 'en_cours' : action;
+  fetch('https://globocorps-itl.app.n8n.cloud/webhook/veille-action', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ action: statutAEnvoyer, concurrent: concurrent, titre: titre })
+  }).then(function(r) { return r.json(); }).then(function(data) {
+    if (data.ok) {
+      console.log('[Veille] Statut mis à jour dans Sheets:', concurrent, '\u2192', statutAEnvoyer);
+    } else {
+      console.warn('[Veille] Erreur webhook:', data.error);
+    }
+  }).catch(function(err) {
+    console.warn('[Veille] Webhook inaccessible:', err);
+  });
 }
 
 function initDashboard() {
