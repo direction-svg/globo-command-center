@@ -1655,7 +1655,7 @@ function renderUsersList() {
     html += '<div><div style="font-size:13px;font-weight:600;">' + user.name + '</div>';
     html += '<div style="font-size:12px;color:var(--text2);">' + u + ' · <span style="color:' + roleColor + '">' + roleLabel + '</span></div></div></div>';
     if (u !== 'christopher') {
-      html += '<button onclick="deleteUser('' + u + '')" style="background:rgba(255,61,90,0.15);border:none;color:var(--red);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;">Supprimer</button>';
+      html += '<button onclick="deleteUser(\'' + u + '\')" style="background:rgba(255,61,90,0.15);border:none;color:var(--red);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;">Supprimer</button>';
     }
     html += '</div>';
   });
