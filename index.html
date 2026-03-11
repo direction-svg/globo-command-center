@@ -1475,12 +1475,27 @@ function addUser(username, password, name, role) {
   if (!username || !password || !name) { showNotif('⚠️ Tous les champs sont requis'); return; }
   if (USERS[username]) { showNotif('⚠️ Cet identifiant existe déjà'); return; }
   sha256(password).then(function(hash) {
-    USERS[username] = { hash: hash, name: name, role: role || 'editor', initial: name.charAt(0).toUpperCase() };
-    renderUsersList();
-    document.getElementById('new-user').value = '';
-    document.getElementById('new-pass').value = '';
-    var nn = document.getElementById('new-name'); if (nn) nn.value = '';
-    showNotif('✅ Compte créé : ' + username);
+    fetch('https://globocorps-itl.app.n8n.cloud/webhook/create-user', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: username, password_hash: hash, role: role || 'editor', name: name })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(res) {
+      if (res.success) {
+        USERS[username] = { hash: hash, name: name, role: role || 'editor', initial: name.charAt(0).toUpperCase() };
+        renderUsersList();
+        document.getElementById('new-user').value = '';
+        document.getElementById('new-pass').value = '';
+        var nn = document.getElementById('new-name'); if (nn) nn.value = '';
+        showNotif('✅ Compte créé et sauvegardé : ' + username);
+      } else {
+        showNotif('⚠️ ' + (res.message || 'Erreur lors de la création'));
+      }
+    })
+    .catch(function() {
+      showNotif('⚠️ Erreur réseau — compte non sauvegardé');
+    });
   });
 }
 
