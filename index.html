@@ -1538,9 +1538,24 @@ function addUser(username, password, name, role) {
 function deleteUser(username) {
   if (username === 'christopher') { showNotif('⚠️ Impossible de supprimer le Super Admin'); return; }
   if (!confirm('Supprimer le compte ' + username + ' ?')) return;
-  delete USERS[username];
-  renderUsersList();
-  showNotif('🗑️ Compte supprimé : ' + username);
+  fetch('https://globocorps-itl.app.n8n.cloud/webhook/delete-user', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: username })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(res) {
+    if (res.success) {
+      delete USERS[username];
+      renderUsersList();
+      showNotif('🗑️ Compte supprimé : ' + username);
+    } else {
+      showNotif('⚠️ ' + (res.message || 'Erreur suppression'));
+    }
+  })
+  .catch(function() {
+    showNotif('⚠️ Erreur réseau — compte non supprimé sur GitHub');
+  });
 }
 
 function renderUsersList() {
