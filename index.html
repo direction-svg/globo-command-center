@@ -1319,14 +1319,6 @@ var USERS = {
   'christopher': {
     hash: '521c518f7706b96493b5d9d2b40fbd3c83b4dc2cbb516099c568ead4e7e7e2fa',
     name: 'Christopher Chaudey', role: 'superadmin', initial: 'C'
-  },
-  'gallad': {
-    hash: '567a6182704d8c8cc120d6b275b2d8de6e7610d9520e5c12a140f287338b47e1',
-    name: 'Gallad', role: 'editor', initial: 'G'
-  },
-  'vilane': {
-    hash: '9767c761a6c7c6b24fff5b91d0a2c4269acab71e0c40b1eca8953533cba92abf',
-    name: 'Vilane', role: 'editor', initial: 'V'
   }
 };
 
@@ -1351,37 +1343,75 @@ function applySession(user) {
   initDashboard();
 }
 
-function doLogin() {
-  var u = document.getElementById('login-user').value.trim();
-  var p = document.getElementById('login-pass').value;
-  var remember = document.getElementById('login-remember').checked;
+function tryAuth(u, p, remember) {
   var err = document.getElementById('login-error');
-
-  if (!USERS[u]) {
-    err.style.display = 'block';
-    setTimeout(function() { err.style.display = 'none'; }, 3000);
-    return;
-  }
-
   sha256(p).then(function(hash) {
-    if (hash === USERS[u].hash) {
+    if (USERS[u] && hash === USERS[u].hash) {
       var user = Object.assign({ username: u }, USERS[u]);
-      delete user.hash; // never store hash in session
+      delete user.hash;
       var payload = JSON.stringify(user);
-      // Session always stored for current tab
       sessionStorage.setItem(SESSION_KEY, payload);
-      // localStorage only if "remember me"
-      if (remember) {
-        localStorage.setItem(REMEMBER_KEY, payload);
-      } else {
-        localStorage.removeItem(REMEMBER_KEY);
-      }
+      if (remember) { localStorage.setItem(REMEMBER_KEY, payload); }
+      else { localStorage.removeItem(REMEMBER_KEY); }
       applySession(user);
     } else {
       err.style.display = 'block';
       setTimeout(function() { err.style.display = 'none'; }, 3000);
     }
   });
+}
+
+function doLogin() {
+  var u = document.getElementById('login-user').value.trim();
+  var p = document.getElementById('login-pass').value;
+  var remember = document.getElementById('login-remember').checked;
+  var err = document.getElementById('login-error');
+
+  if (USERS[u]) {
+    // Compte connu en mémoire : auth directe
+    tryAuth(u, p, remember);
+    return;
+  }
+
+  // Compte inconnu : chercher dans data.json (comptes créés via Admin)
+  fetch('https://direction-svg.github.io/globo-command-center/data.json?t=' + Date.now())
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data && data.users) {
+        var remoteUsers = data.users;
+        // Normaliser array (format n8n) → objet
+        if (Array.isArray(remoteUsers)) {
+          var obj = {};
+          remoteUsers.forEach(function(ru) {
+            if (ru.username) obj[ru.username] = {
+              hash: ru.password_hash || ru.hash || '',
+              name: ru.name || ru.username,
+              role: ru.role || 'viewer',
+              initial: ru.initial || ru.username.charAt(0).toUpperCase()
+            };
+          });
+          remoteUsers = obj;
+        }
+        // Charger uniquement le compte demandé s'il existe
+        if (remoteUsers[u] && (remoteUsers[u].hash || remoteUsers[u].password_hash)) {
+          USERS[u] = {
+            hash: remoteUsers[u].hash || remoteUsers[u].password_hash,
+            name: remoteUsers[u].name || u,
+            role: remoteUsers[u].role || 'viewer',
+            initial: remoteUsers[u].initial || u.charAt(0).toUpperCase()
+          };
+          tryAuth(u, p, remember);
+          return;
+        }
+      }
+      // Compte introuvable partout
+      err.style.display = 'block';
+      setTimeout(function() { err.style.display = 'none'; }, 3000);
+    })
+    .catch(function() {
+      err.style.display = 'block';
+      setTimeout(function() { err.style.display = 'none'; }, 3000);
+    });
 }
 
 function doLogout() {
