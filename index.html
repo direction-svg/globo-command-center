@@ -1478,23 +1478,29 @@ function addUser(username, password, name, role) {
     fetch('https://globocorps-itl.app.n8n.cloud/webhook/create-user', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: username, password_hash: hash, role: role || 'editor', name: name })
+      body: JSON.stringify({
+        username:      username,
+        password_hash: hash,
+        role:          role || 'editor',
+        name:          name,
+        initial:       name.charAt(0).toUpperCase()
+      })
     })
     .then(function(r) { return r.json(); })
     .then(function(res) {
       if (res.success) {
-        USERS[username] = { hash: hash, name: name, role: role || 'editor', initial: name.charAt(0).toUpperCase() };
+        USERS[username] = { hash: hash, name: name, role: role || 'editor', initial: name.charAt(0).toUpperCase(), remote: true };
         renderUsersList();
         document.getElementById('new-user').value = '';
         document.getElementById('new-pass').value = '';
         var nn = document.getElementById('new-name'); if (nn) nn.value = '';
-        showNotif('✅ Compte créé et sauvegardé : ' + username);
+        showNotif('✅ Compte créé et sauvegardé sur GitHub : ' + username);
       } else {
         showNotif('⚠️ ' + (res.message || 'Erreur lors de la création'));
       }
     })
     .catch(function() {
-      showNotif('⚠️ Erreur réseau — compte non sauvegardé');
+      showNotif('⚠️ Erreur réseau — compte non sauvegardé sur GitHub');
     });
   });
 }
@@ -1514,10 +1520,15 @@ function renderUsersList() {
   Object.keys(USERS).forEach(function(u) {
     var user = USERS[u];
     var roleLabel = user.role === 'superadmin' ? 'Super Admin' : user.role === 'admin' ? 'Admin' : user.role === 'editor' ? 'Éditeur' : 'Lecteur';
+    var sourceBadge = u === 'christopher'
+      ? '<span style="font-size:10px;font-weight:700;padding:2px 6px;border-radius:2px;background:var(--orange-dim);color:var(--orange2);border:1px solid rgba(232,80,10,0.2);margin-left:6px;">Protégé</span>'
+      : user.remote
+        ? '<span style="font-size:10px;font-weight:700;padding:2px 6px;border-radius:2px;background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,0.2);margin-left:6px;">GitHub ✓</span>'
+        : '<span style="font-size:10px;font-weight:700;padding:2px 6px;border-radius:2px;background:rgba(122,150,176,0.1);color:var(--text3);border:1px solid var(--border);margin-left:6px;">Local</span>';
     html += '<div class="admin-user-row">' +
       '<div class="admin-user-info">' +
         '<div class="admin-avatar">' + user.initial + '</div>' +
-        '<div><div style="font-size:13px;font-weight:700;color:var(--white);">' + user.name + '</div>' +
+        '<div><div style="font-size:13px;font-weight:700;color:var(--white);">' + user.name + sourceBadge + '</div>' +
         '<div style="font-size:12px;color:var(--text2);margin-top:2px;">' + u + ' · <span class="admin-role-badge ' + user.role + '">' + roleLabel + '</span></div></div>' +
       '</div>';
     if (u !== 'christopher') {
@@ -1715,6 +1726,44 @@ function loadRealData() {
         var action=data.signaux.filter(function(s){return(s.action_requise||'').toUpperCase()==='OUI';}).length;
         set('veille-stat-critique',critique);set('veille-stat-encours',encours);set('veille-stat-action',action);
         set('veille-stat-pipeline',window._signauxPipelineCount||0);
+      }
+
+      /* ── CHARGEMENT UTILISATEURS DISTANTS ──
+         data.users peut être :
+         - un objet  { "alice": { hash, name, role, initial } }
+         - un array  [ { username, password_hash, name, role } ]  (format n8n)
+         On normalise toujours vers l'objet USERS existant.
+         Les comptes hardcodés (christopher) ne sont jamais écrasés.
+      */
+      if (data.users) {
+        var remoteUsers = data.users;
+        // Normalisation array → objet
+        if (Array.isArray(remoteUsers)) {
+          var obj = {};
+          remoteUsers.forEach(function(u) {
+            if (u.username) {
+              obj[u.username] = {
+                hash:    u.password_hash || u.hash || '',
+                name:    u.name || u.username,
+                role:    u.role || 'viewer',
+                initial: u.initial || (u.name ? u.name.charAt(0).toUpperCase() : u.username.charAt(0).toUpperCase()),
+                remote:  true
+              };
+            }
+          });
+          remoteUsers = obj;
+        }
+        // Merge : on ajoute/met à jour sans écraser les comptes protégés
+        var PROTECTED = ['christopher'];
+        Object.keys(remoteUsers).forEach(function(u) {
+          if (PROTECTED.indexOf(u) === -1) {
+            USERS[u] = Object.assign({}, remoteUsers[u], { remote: true });
+          }
+        });
+        // Rafraîchir la liste admin si elle est visible
+        if (currentUser && (currentUser.role === 'superadmin' || currentUser.role === 'admin')) {
+          renderUsersList();
+        }
       }
     })
     .catch(function(e) { console.log('[Globo] data.json indisponible:', e); });
