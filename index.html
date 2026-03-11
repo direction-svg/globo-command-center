@@ -2,7 +2,11 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Globo Corps">
+<meta name="theme-color" content="#070d1a">
 <title>Globo Corps — Social Command Center</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -25,10 +29,16 @@
   --text2: #8a9ab5;
   --text3: #4a5a75;
   --glow: 0 0 30px rgba(0,196,255,0.15);
-  --glow2: 0 0 60px rgba(0,119,255,0.1);
+  --sidebar-w: 240px;
+  --bnav-h: 56px;
+  /* iPhone safe areas */
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
 }
 
-* { margin:0; padding:0; box-sizing:border-box; }
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
 body {
   font-family: 'DM Sans', sans-serif;
@@ -36,240 +46,123 @@ body {
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ── LOGIN SCREEN ── */
+/* ════════════
+   LOGIN
+════════════ */
 #login-screen {
   position: fixed; inset: 0;
   background: var(--bg);
   display: flex; align-items: center; justify-content: center;
   z-index: 1000;
-  background-image: radial-gradient(ellipse at 20% 50%, rgba(0,119,255,0.08) 0%, transparent 60%),
-                    radial-gradient(ellipse at 80% 20%, rgba(0,196,255,0.06) 0%, transparent 50%);
+  padding: max(20px, var(--sat)) 20px max(20px, var(--sab));
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(0,119,255,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(0,196,255,0.06) 0%, transparent 50%);
 }
-
 .login-box {
-  width: 420px;
-  background: var(--card);
-  border: 1px solid var(--border2);
-  border-radius: 20px;
-  padding: 48px 40px;
+  width: 100%; max-width: 420px;
+  background: var(--card); border: 1px solid var(--border2);
+  border-radius: 20px; padding: 40px 32px;
   box-shadow: 0 40px 80px rgba(0,0,0,0.5), var(--glow);
 }
-
-.login-logo {
-  text-align: center;
-  margin-bottom: 36px;
-}
-
+.login-logo { text-align: center; margin-bottom: 32px; }
 .login-logo .logo-mark {
   width: 64px; height: 64px;
   background: linear-gradient(135deg, var(--accent2), var(--accent));
-  border-radius: 16px;
-  display: inline-flex; align-items: center; justify-content: center;
-  font-family: 'Syne', sans-serif;
-  font-size: 24px; font-weight: 800;
-  color: white;
-  margin-bottom: 16px;
-  box-shadow: 0 8px 32px rgba(0,119,255,0.4);
+  border-radius: 16px; display: inline-flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; color: white;
+  margin-bottom: 16px; box-shadow: 0 8px 32px rgba(0,119,255,0.4);
 }
-
-.login-logo h1 {
-  font-family: 'Syne', sans-serif;
-  font-size: 22px; font-weight: 700;
-  color: var(--text);
-}
-
-.login-logo p {
-  font-size: 13px; color: var(--text2);
-  margin-top: 4px;
-}
-
-.login-field {
-  margin-bottom: 16px;
-}
-
-.login-field label {
-  display: block;
-  font-size: 12px; font-weight: 600;
-  color: var(--text2);
-  text-transform: uppercase; letter-spacing: 0.08em;
-  margin-bottom: 8px;
-}
-
+.login-logo h1 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; }
+.login-logo p { font-size: 13px; color: var(--text2); margin-top: 4px; }
+.login-field { margin-bottom: 16px; }
+.login-field label { display: block; font-size: 12px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
 .login-field input {
-  width: 100%;
-  background: var(--bg2);
-  border: 1px solid var(--border2);
-  border-radius: 10px;
-  padding: 12px 16px;
-  font-size: 14px;
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  outline: none;
+  width: 100%; background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 10px; padding: 14px 16px;
+  font-size: 16px; /* no iOS zoom */
+  color: var(--text); font-family: 'DM Sans', sans-serif; outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
 }
-
-.login-field input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(0,196,255,0.1);
-}
-
+.login-field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,196,255,0.1); }
 .login-btn {
-  width: 100%;
-  background: linear-gradient(135deg, var(--accent2), var(--accent));
-  border: none;
-  border-radius: 10px;
-  padding: 14px;
-  font-family: 'Syne', sans-serif;
-  font-size: 15px; font-weight: 700;
-  color: white;
-  cursor: pointer;
-  margin-top: 8px;
-  transition: opacity 0.2s, transform 0.1s;
-  letter-spacing: 0.03em;
+  width: 100%; background: linear-gradient(135deg, var(--accent2), var(--accent));
+  border: none; border-radius: 10px; padding: 16px;
+  font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+  color: white; cursor: pointer; margin-top: 8px;
+  transition: opacity 0.2s; letter-spacing: 0.03em;
+  -webkit-appearance: none;
 }
+.login-btn:active { opacity: 0.85; transform: scale(0.98); }
+.login-error { color: var(--red); font-size: 13px; text-align: center; margin-top: 12px; display: none; }
 
-.login-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-.login-btn:active { transform: translateY(0); }
-
-.login-error {
-  color: var(--red);
-  font-size: 13px;
-  text-align: center;
-  margin-top: 12px;
-  display: none;
-}
-
-/* ── MAIN APP ── */
+/* ════════════
+   APP
+════════════ */
 #app { display: none; }
 
-/* ── SIDEBAR ── */
+/* ════════════
+   SIDEBAR — desktop
+════════════ */
 .sidebar {
   position: fixed; left: 0; top: 0; bottom: 0;
-  width: 240px;
-  background: var(--bg2);
-  border-right: 1px solid var(--border);
+  width: var(--sidebar-w);
+  background: var(--bg2); border-right: 1px solid var(--border);
   display: flex; flex-direction: column;
-  z-index: 100;
+  z-index: 300;
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
 }
-
 .sidebar-logo {
-  padding: 24px 20px;
-  border-bottom: 1px solid var(--border);
+  padding: 24px 20px; border-bottom: 1px solid var(--border);
   display: flex; align-items: center; gap: 12px;
 }
-
 .sidebar-logo .logo-mark {
   width: 40px; height: 40px;
   background: linear-gradient(135deg, var(--accent2), var(--accent));
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Syne', sans-serif;
-  font-size: 16px; font-weight: 800;
-  color: white;
-  flex-shrink: 0;
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 800; color: white; flex-shrink: 0;
 }
-
-.sidebar-logo .logo-text h2 {
-  font-family: 'Syne', sans-serif;
-  font-size: 14px; font-weight: 700;
-  line-height: 1.2;
-}
-
-.sidebar-logo .logo-text p {
-  font-size: 11px; color: var(--text2);
-}
-
-.sidebar-nav {
-  flex: 1;
-  padding: 16px 12px;
-  overflow-y: auto;
-}
-
-.nav-section-label {
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding: 8px 8px 4px;
-  margin-top: 8px;
-}
-
+.sidebar-logo .logo-text h2 { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; line-height: 1.2; }
+.sidebar-logo .logo-text p { font-size: 11px; color: var(--text2); }
+.sidebar-close { display: none; background: none; border: none; color: var(--text2); font-size: 20px; cursor: pointer; margin-left: auto; padding: 4px 0; line-height: 1; }
+.sidebar-nav { flex: 1; padding: 16px 12px; overflow-y: auto; }
+.nav-section-label { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; padding: 8px 8px 4px; margin-top: 8px; }
 .nav-item {
   display: flex; align-items: center; gap: 10px;
-  padding: 10px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 13px; font-weight: 500;
-  color: var(--text2);
-  transition: all 0.15s;
-  position: relative;
+  padding: 11px 10px; border-radius: 8px;
+  cursor: pointer; font-size: 13px; font-weight: 500;
+  color: var(--text2); transition: all 0.15s; position: relative;
 }
-
 .nav-item:hover { background: var(--bg3); color: var(--text); }
-
-.nav-item.active {
-  background: rgba(0,196,255,0.1);
-  color: var(--accent);
-}
-
+.nav-item.active { background: rgba(0,196,255,0.1); color: var(--accent); }
 .nav-item.active::before {
-  content: '';
-  position: absolute; left: 0; top: 50%;
-  transform: translateY(-50%);
-  width: 3px; height: 60%;
-  background: var(--accent);
-  border-radius: 0 2px 2px 0;
+  content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 60%; background: var(--accent); border-radius: 0 2px 2px 0;
 }
-
 .nav-icon { font-size: 16px; width: 20px; text-align: center; }
-
-.nav-badge {
-  margin-left: auto;
-  background: var(--accent2);
-  color: white;
-  font-size: 10px; font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 10px;
-}
-
-.sidebar-footer {
-  padding: 16px;
-  border-top: 1px solid var(--border);
-}
-
-.user-card {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px;
-  background: var(--bg3);
-  border-radius: 10px;
-}
-
-.user-avatar {
-  width: 32px; height: 32px;
-  background: linear-gradient(135deg, var(--purple), var(--accent2));
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700; color: white;
-}
-
+.nav-badge { margin-left: auto; background: var(--accent2); color: white; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 10px; }
+.sidebar-footer { padding: 16px; border-top: 1px solid var(--border); }
+.user-card { display: flex; align-items: center; gap: 10px; padding: 10px; background: var(--bg3); border-radius: 10px; }
+.user-avatar { width: 32px; height: 32px; background: linear-gradient(135deg, var(--purple), var(--accent2)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: white; }
 .user-info { flex: 1; min-width: 0; }
 .user-info .name { font-size: 12px; font-weight: 600; }
 .user-info .role { font-size: 11px; color: var(--text2); }
-
-.logout-btn {
-  background: none; border: none; cursor: pointer;
-  color: var(--text3); font-size: 16px;
-  padding: 4px; border-radius: 4px;
-  transition: color 0.15s;
-}
+.logout-btn { background: none; border: none; cursor: pointer; color: var(--text3); font-size: 16px; padding: 4px; border-radius: 4px; transition: color 0.15s; }
 .logout-btn:hover { color: var(--red); }
 
-/* ── MAIN CONTENT ── */
+/* Mobile overlay */
+.sidebar-overlay { display: none; position: fixed; inset: 0; z-index: 299; background: rgba(0,0,0,0.65); backdrop-filter: blur(3px); }
+.sidebar-overlay.visible { display: block; }
+
+/* ════════════
+   MAIN
+════════════ */
 .main {
-  margin-left: 240px;
+  margin-left: var(--sidebar-w);
   min-height: 100vh;
   background: var(--bg);
   background-image:
@@ -277,668 +170,447 @@ body {
     radial-gradient(ellipse at 90% 100%, rgba(0,196,255,0.04) 0%, transparent 50%);
 }
 
+/* ════════════
+   TOPBAR
+════════════ */
 .topbar {
   height: 60px;
   border-bottom: 1px solid var(--border);
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 28px;
-  background: rgba(7,13,26,0.8);
-  backdrop-filter: blur(10px);
-  position: sticky; top: 0; z-index: 50;
+  background: rgba(7,13,26,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: sticky; top: 0; z-index: 100;
 }
+.topbar-hamburger { display: none; background: none; border: none; color: var(--text); font-size: 22px; cursor: pointer; padding: 4px 8px 4px 0; line-height: 1; }
+.topbar-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; }
+.topbar-right { display: flex; align-items: center; gap: 14px; }
+.live-badge { display: flex; align-items: center; gap: 6px; background: rgba(0,229,160,0.1); border: 1px solid rgba(0,229,160,0.3); border-radius: 20px; padding: 5px 12px; font-size: 12px; font-weight: 600; color: var(--green); }
+.live-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+.topbar-date { font-size: 13px; color: var(--text2); }
 
-.topbar-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 18px; font-weight: 700;
+/* ════════════
+   BOTTOM NAV — mobile only
+════════════ */
+.bottom-nav {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: rgba(10,18,35,0.97);
+  border-top: 1px solid var(--border2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 400;
+  padding-bottom: var(--sab);
 }
-
-.topbar-right {
-  display: flex; align-items: center; gap: 16px;
+.bottom-nav-inner { display: flex; align-items: center; justify-content: space-around; height: var(--bnav-h); }
+.bnav-item {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px; flex: 1; padding: 6px 2px; cursor: pointer; border: none; background: none;
+  color: var(--text3); transition: color 0.15s; position: relative;
 }
-
-.live-badge {
-  display: flex; align-items: center; gap: 6px;
-  background: rgba(0,229,160,0.1);
-  border: 1px solid rgba(0,229,160,0.3);
-  border-radius: 20px;
-  padding: 5px 12px;
-  font-size: 12px; font-weight: 600;
-  color: var(--green);
+.bnav-item.active { color: var(--accent); }
+.bnav-item.active::before {
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 28px; height: 2px; background: var(--accent); border-radius: 0 0 3px 3px;
 }
+.bnav-icon { font-size: 21px; line-height: 1; }
+.bnav-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+.bnav-badge { position: absolute; top: 3px; right: calc(50% - 20px); background: var(--accent2); color: white; font-size: 9px; font-weight: 700; padding: 1px 4px; border-radius: 8px; min-width: 14px; text-align: center; }
 
-.live-dot {
-  width: 7px; height: 7px;
-  background: var(--green);
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.8); }
-}
-
-.content {
-  padding: 28px;
-}
-
-/* ── SECTIONS ── */
+/* ════════════
+   CONTENT
+════════════ */
+.content { padding: 28px; }
 .section { display: none; }
 .section.active { display: block; }
 
-/* ── CARDS ── */
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 20px;
-  transition: border-color 0.2s;
-}
-
+/* ════════════
+   CARDS
+════════════ */
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; transition: border-color 0.2s; }
 .card:hover { border-color: var(--border2); }
+.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.card-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text2); }
 
-.card-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 16px;
-}
-
-.card-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 13px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--text2);
-}
-
-/* ── GRID ── */
+/* ════════════
+   GRIDS
+════════════ */
 .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 .grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
 .grid-1-2 { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; }
 
-/* ── KPI CARDS ── */
+/* ════════════
+   KPI CARDS
+════════════ */
 .kpi-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 20px;
-  position: relative;
-  overflow: hidden;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px;
+  position: relative; overflow: hidden;
   transition: transform 0.2s, border-color 0.2s;
 }
-
 .kpi-card:hover { transform: translateY(-2px); border-color: var(--border2); }
-
-.kpi-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--accent2), var(--accent));
-}
-
+.kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent2), var(--accent)); }
 .kpi-card.green::before { background: linear-gradient(90deg, var(--green), #00b37a); }
 .kpi-card.orange::before { background: linear-gradient(90deg, var(--orange), #ffaa00); }
 .kpi-card.purple::before { background: linear-gradient(90deg, var(--purple), var(--accent2)); }
 .kpi-card.red::before { background: linear-gradient(90deg, var(--red), #ff8a00); }
-
-.kpi-icon {
-  font-size: 24px; margin-bottom: 12px;
-}
-
-.kpi-value {
-  font-family: 'DM Mono', monospace;
-  font-size: 36px; font-weight: 500;
-  line-height: 1;
-  margin-bottom: 6px;
-  letter-spacing: -0.02em;
-}
-
-.kpi-label {
-  font-size: 12px; color: var(--text2); font-weight: 500;
-}
-
-.kpi-delta {
-  display: inline-flex; align-items: center; gap: 4px;
-  font-size: 12px; font-weight: 600;
-  margin-top: 8px;
-  padding: 3px 8px;
-  border-radius: 6px;
-}
-
+.kpi-icon { font-size: 24px; margin-bottom: 12px; }
+.kpi-value { font-family: 'DM Mono', monospace; font-size: 36px; font-weight: 500; line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em; }
+.kpi-label { font-size: 12px; color: var(--text2); font-weight: 500; }
+.kpi-delta { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; margin-top: 8px; padding: 3px 8px; border-radius: 6px; }
 .kpi-delta.up { background: rgba(0,229,160,0.1); color: var(--green); }
 .kpi-delta.down { background: rgba(255,61,90,0.1); color: var(--red); }
 .kpi-delta.neutral { background: rgba(138,154,181,0.1); color: var(--text2); }
 
-/* ── PLATFORM CARDS ── */
-.platform-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 20px;
-  transition: transform 0.2s, border-color 0.2s;
-}
-
+/* ════════════
+   PLATFORM CARDS
+════════════ */
+.platform-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; transition: transform 0.2s, border-color 0.2s; }
 .platform-card:hover { transform: translateY(-2px); border-color: var(--border2); }
-
-.platform-header {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 16px;
-}
-
-.platform-logo {
-  width: 42px; height: 42px;
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px;
-}
-
+.platform-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.platform-logo { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
 .platform-logo.linkedin { background: rgba(0,119,181,0.2); }
 .platform-logo.facebook { background: rgba(24,119,242,0.2); }
 .platform-logo.instagram { background: rgba(225,48,108,0.2); }
+.platform-name { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; }
+.platform-handle { font-size: 12px; color: var(--text2); }
+.platform-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.platform-stat { background: var(--bg2); border-radius: 8px; padding: 10px; }
+.platform-stat .val { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; color: var(--text); }
+.platform-stat .lbl { font-size: 11px; color: var(--text2); margin-top: 2px; }
 
-.platform-name {
-  font-family: 'Syne', sans-serif;
-  font-size: 15px; font-weight: 700;
-}
-
-.platform-handle {
-  font-size: 12px; color: var(--text2);
-}
-
-.platform-stats {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.platform-stat {
-  background: var(--bg2);
-  border-radius: 8px; padding: 10px;
-}
-
-.platform-stat .val {
-  font-family: 'DM Mono', monospace;
-  font-size: 18px; font-weight: 500;
-  color: var(--text);
-}
-
-.platform-stat .lbl {
-  font-size: 11px; color: var(--text2);
-  margin-top: 2px;
-}
-
-/* ── PROGRESS BAR ── */
-.progress-bar {
-  height: 6px;
-  background: var(--bg2);
-  border-radius: 3px;
-  overflow: hidden;
-  margin-top: 12px;
-}
-
-.progress-fill {
-  height: 100%;
-  border-radius: 3px;
-  background: linear-gradient(90deg, var(--accent2), var(--accent));
-  transition: width 1s ease;
-}
-
+/* ════════════
+   PROGRESS
+════════════ */
+.progress-bar { height: 6px; background: var(--bg2); border-radius: 3px; overflow: hidden; margin-top: 12px; }
+.progress-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--accent2), var(--accent)); transition: width 1s ease; }
 .progress-fill.green { background: linear-gradient(90deg, var(--green), #00b37a); }
 .progress-fill.orange { background: linear-gradient(90deg, var(--orange), #ffaa00); }
 
-/* ── CONTENT PIPELINE ── */
-.pipeline-item {
-  display: flex; align-items: center; gap: 14px;
-  padding: 12px 14px;
-  border-radius: 10px;
-  background: var(--bg2);
-  margin-bottom: 8px;
-  transition: background 0.15s;
-  cursor: pointer;
-}
-
+/* ════════════
+   PIPELINE
+════════════ */
+.pipeline-item { display: flex; align-items: center; gap: 14px; padding: 12px 14px; border-radius: 10px; background: var(--bg2); margin-bottom: 8px; transition: background 0.15s; cursor: pointer; }
 .pipeline-item:hover { background: var(--bg3); }
-
-.pipe-status {
-  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-}
+.pipe-status { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .pipe-status.draft { background: var(--text3); }
 .pipe-status.review { background: var(--yellow); }
-.pipe-status.approved { background: var(--green); }
 .pipe-status.scheduled { background: var(--accent); }
 .pipe-status.published { background: var(--purple); }
-
 .pipe-content { flex: 1; min-width: 0; }
+.pipe-title { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pipe-meta { display: flex; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
+.pipe-tag { font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px; }
+.pipe-date { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; flex-shrink: 0; }
 
-.pipe-title {
-  font-size: 13px; font-weight: 500;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-
-.pipe-meta {
-  display: flex; gap: 8px; margin-top: 4px;
-}
-
-.pipe-tag {
-  font-size: 10px; font-weight: 600;
-  padding: 2px 6px; border-radius: 4px;
-  background: rgba(0,196,255,0.1);
-  color: var(--accent);
-}
-
-.pipe-tag.linkedin { background: rgba(0,119,181,0.15); color: #4da9ff; }
-.pipe-tag.facebook { background: rgba(24,119,242,0.15); color: #6eaaff; }
-.pipe-tag.instagram { background: rgba(225,48,108,0.15); color: #ff7eb3; }
-
-.pipe-date {
-  font-size: 11px; color: var(--text3);
-  font-family: 'DM Mono', monospace;
-  flex-shrink: 0;
-}
-
-/* ── CHALLENGE TABLE ── */
-.challenge-table {
-  width: 100%;
-  border-collapse: separate; border-spacing: 0 6px;
-}
-
-.challenge-table th {
-  font-size: 11px; font-weight: 600;
-  color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em;
-  padding: 6px 14px; text-align: left;
-}
-
-.challenge-table td {
-  padding: 12px 14px;
-  background: var(--bg2);
-  font-size: 13px;
-}
-
+/* ════════════
+   CHALLENGE TABLE
+════════════ */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.challenge-table { width: 100%; border-collapse: separate; border-spacing: 0 6px; }
+.challenge-table th { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; padding: 6px 14px; text-align: left; }
+.challenge-table td { padding: 12px 14px; background: var(--bg2); font-size: 13px; }
 .challenge-table tr td:first-child { border-radius: 8px 0 0 8px; }
 .challenge-table tr td:last-child { border-radius: 0 8px 8px 0; }
-
-.rank-badge {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 28px; height: 28px;
-  border-radius: 8px; font-weight: 700; font-size: 13px;
-}
-
+.rank-badge { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 8px; font-weight: 700; font-size: 13px; }
 .rank-1 { background: rgba(251,191,36,0.2); color: var(--yellow); }
 .rank-2 { background: rgba(138,154,181,0.2); color: #8a9ab5; }
 .rank-3 { background: rgba(255,124,42,0.2); color: var(--orange); }
 .rank-n { background: var(--bg3); color: var(--text3); }
+.points-pill { display: inline-flex; align-items: center; background: rgba(0,196,255,0.1); border-radius: 20px; padding: 3px 10px; font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: var(--accent); }
 
-.points-pill {
-  display: inline-flex; align-items: center;
-  background: rgba(0,196,255,0.1);
-  border-radius: 20px; padding: 3px 10px;
-  font-family: 'DM Mono', monospace;
-  font-size: 13px; font-weight: 500;
-  color: var(--accent);
-}
-
-/* ── ACTIVITY FEED ── */
-.feed-item {
-  display: flex; gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border);
-}
-
+/* ════════════
+   FEED
+════════════ */
+.feed-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
 .feed-item:last-child { border-bottom: none; }
-
-.feed-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  margin-top: 5px; flex-shrink: 0;
-}
-
+.feed-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
 .feed-content { flex: 1; }
 .feed-content .msg { font-size: 13px; line-height: 1.4; }
 .feed-content .msg strong { color: var(--accent); }
-.feed-content .time {
-  font-size: 11px; color: var(--text3);
-  font-family: 'DM Mono', monospace;
-  margin-top: 3px;
-}
+.feed-content .time { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; margin-top: 3px; }
 
-/* ── AGENT CARDS ── */
-.agent-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px;
-  transition: border-color 0.2s;
-}
-
+/* ════════════
+   AGENTS
+════════════ */
+.agent-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; transition: border-color 0.2s; }
 .agent-card:hover { border-color: var(--border2); }
-
-.agent-header {
-  display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
-}
-
-.agent-avatar {
-  width: 38px; height: 38px; border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px;
-}
-
-.agent-name {
-  font-family: 'Syne', sans-serif;
-  font-size: 13px; font-weight: 700;
-}
-
-.agent-status {
-  font-size: 11px;
-  display: flex; align-items: center; gap: 5px;
-  margin-top: 2px;
-}
-
-.status-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-}
-
+.agent-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.agent-avatar { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.agent-name { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; }
+.agent-status { font-size: 11px; display: flex; align-items: center; gap: 5px; margin-top: 2px; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; }
 .status-dot.active { background: var(--green); animation: pulse 2s infinite; }
 .status-dot.idle { background: var(--yellow); }
 .status-dot.offline { background: var(--text3); }
+.agent-task { font-size: 12px; color: var(--text2); background: var(--bg2); border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; line-height: 1.4; }
+.agent-progress-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text3); margin-bottom: 4px; }
 
-.agent-task {
-  font-size: 12px; color: var(--text2);
-  background: var(--bg2); border-radius: 6px;
-  padding: 8px 10px; margin-bottom: 10px;
-  line-height: 1.4;
-}
-
-.agent-progress-label {
-  display: flex; justify-content: space-between;
-  font-size: 11px; color: var(--text3); margin-bottom: 4px;
-}
-
-/* ── SECTION HEADER ── */
-.section-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 24px;
-}
-
-.section-header h2 {
-  font-family: 'Syne', sans-serif;
-  font-size: 22px; font-weight: 800;
-}
-
-.section-header p {
-  font-size: 13px; color: var(--text2); margin-top: 3px;
-}
-
-.btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 9px 16px; border-radius: 8px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px; font-weight: 600;
-  cursor: pointer; border: none;
-  transition: opacity 0.15s, transform 0.1s;
-}
-
+/* ════════════
+   SECTION HEADER
+════════════ */
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+.section-header h2 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; }
+.section-header p { font-size: 13px; color: var(--text2); margin-top: 3px; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: opacity 0.15s, transform 0.1s; -webkit-appearance: none; }
 .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: linear-gradient(135deg, var(--accent2), var(--accent)); color: white; }
+.btn-secondary { background: var(--card2); border: 1px solid var(--border2); color: var(--text); }
 
-.btn-primary {
-  background: linear-gradient(135deg, var(--accent2), var(--accent));
-  color: white;
-}
-
-.btn-secondary {
-  background: var(--card2);
-  border: 1px solid var(--border2);
-  color: var(--text);
-}
-
-/* ── PLAN ÉDITORIAL ── */
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
-}
-
-.cal-day-header {
-  font-size: 11px; font-weight: 700;
-  color: var(--text3); text-align: center;
-  text-transform: uppercase; letter-spacing: 0.06em;
-  padding: 6px;
-}
-
-.cal-day {
-  min-height: 80px;
-  background: var(--bg2);
-  border-radius: 8px;
-  padding: 8px;
-  border: 1px solid var(--border);
-  transition: border-color 0.15s;
-}
-
-.cal-day:hover { border-color: var(--border2); }
-
-.cal-day.today {
-  border-color: rgba(0,196,255,0.4);
-  background: rgba(0,196,255,0.04);
-}
-
-.cal-date {
-  font-size: 13px; font-weight: 700;
-  color: var(--text2); margin-bottom: 6px;
-}
-
+/* ════════════
+   CALENDAR
+════════════ */
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+.cal-day-header { font-size: 11px; font-weight: 700; color: var(--text3); text-align: center; text-transform: uppercase; letter-spacing: 0.06em; padding: 6px; }
+.cal-day { min-height: 80px; background: var(--bg2); border-radius: 8px; padding: 8px; border: 1px solid var(--border); transition: border-color 0.15s; }
+.cal-day.today { border-color: rgba(0,196,255,0.4); background: rgba(0,196,255,0.04); }
+.cal-date { font-size: 13px; font-weight: 700; color: var(--text2); margin-bottom: 6px; }
 .cal-day.today .cal-date { color: var(--accent); }
-
-.cal-post {
-  font-size: 10px;
-  border-radius: 4px; padding: 3px 5px;
-  margin-bottom: 3px;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  font-weight: 500;
-}
-
+.cal-post { font-size: 10px; border-radius: 4px; padding: 3px 5px; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
 .cal-post.linkedin { background: rgba(0,119,181,0.2); color: #4da9ff; }
 .cal-post.facebook { background: rgba(24,119,242,0.2); color: #6eaaff; }
 .cal-post.instagram { background: rgba(225,48,108,0.2); color: #ff7eb3; }
 .cal-post.newsletter { background: rgba(251,191,36,0.2); color: var(--yellow); }
 
-/* ── VEILLE ── */
-.veille-item {
-  background: var(--bg2);
-  border-radius: 10px; padding: 14px;
-  margin-bottom: 10px;
-  border: 1px solid var(--border);
-  transition: border-color 0.15s;
-}
-
-.veille-item:hover { border-color: var(--border2); }
-
+/* ════════════
+   VEILLE
+════════════ */
+.veille-item { background: var(--bg2); border-radius: 10px; padding: 14px; margin-bottom: 10px; border: 1px solid var(--border); transition: border-color 0.15s; }
 .veille-item.statut-en_cours { border-color: rgba(251,191,36,0.35); }
 .veille-item.statut-traite { opacity: 0.45; }
-
-.veille-header {
-  display: flex; align-items: flex-start; justify-content: space-between;
-  gap: 12px; margin-bottom: 8px;
-}
-
-.veille-source {
-  font-size: 10px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--text3); margin-bottom: 4px;
-}
-
-.veille-title {
-  font-size: 13px; font-weight: 600; line-height: 1.4;
-}
-
-.veille-gravite {
-  display: flex; gap: 2px; flex-shrink: 0; margin-top: 2px;
-}
-.veille-gravite span {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--border2);
-}
+.veille-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.veille-source { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin-bottom: 4px; }
+.veille-title { font-size: 13px; font-weight: 600; line-height: 1.4; }
+.veille-gravite { display: flex; gap: 2px; flex-shrink: 0; margin-top: 2px; }
+.veille-gravite span { width: 6px; height: 6px; border-radius: 50%; background: var(--border2); }
 .veille-gravite span.active { background: var(--red); }
 .veille-gravite.g3 span.active { background: var(--orange); }
 .veille-gravite.g2 span.active { background: var(--yellow); }
 .veille-gravite.g1 span.active { background: var(--text3); }
-
-.veille-tag {
-  font-size: 10px; font-weight: 700;
-  padding: 3px 8px; border-radius: 20px; flex-shrink: 0;
-}
-
-.veille-tag.fleet { background: rgba(0,196,255,0.1); color: var(--accent); }
-.veille-tag.security { background: rgba(168,85,247,0.1); color: var(--purple); }
-.veille-tag.energy { background: rgba(255,124,42,0.1); color: var(--orange); }
+.veille-tag { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px; flex-shrink: 0; }
 .veille-tag.nouveau { background: rgba(0,196,255,0.08); color: var(--accent); }
 .veille-tag.en_cours { background: rgba(251,191,36,0.12); color: var(--yellow); }
+.veille-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.veille-btn { font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 6px; border: none; cursor: pointer; transition: opacity 0.15s; -webkit-appearance: none; }
+.veille-btn:active { opacity: 0.7; }
+.veille-btn.btn-encours { background: rgba(251,191,36,0.15); color: var(--yellow); border: 1px solid rgba(251,191,36,0.3); }
+.veille-btn.btn-pipeline { background: rgba(0,196,255,0.12); color: var(--accent); border: 1px solid rgba(0,196,255,0.25); }
+.veille-btn.btn-done { background: rgba(34,197,94,0.1); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
 
-.veille-summary {
-  font-size: 12px; color: var(--text2); line-height: 1.5;
-  margin-bottom: 10px;
-}
-
-.veille-actions {
-  display: flex; gap: 8px; margin-top: 10px;
-}
-
-.veille-btn {
-  font-size: 11px; font-weight: 600; padding: 5px 12px;
-  border-radius: 6px; border: none; cursor: pointer;
-  transition: opacity 0.15s, transform 0.1s;
-}
-.veille-btn:hover { opacity: 0.8; transform: translateY(-1px); }
-.veille-btn:active { transform: translateY(0); }
-
-.veille-btn.btn-encours {
-  background: rgba(251,191,36,0.15); color: var(--yellow);
-  border: 1px solid rgba(251,191,36,0.3);
-}
-.veille-btn.btn-pipeline {
-  background: rgba(0,196,255,0.12); color: var(--accent);
-  border: 1px solid rgba(0,196,255,0.25);
-}
-.veille-btn.btn-done {
-  background: rgba(34,197,94,0.1); color: var(--green);
-  border: 1px solid rgba(34,197,94,0.25);
-}
-
-/* ── ADMIN ── */
-.admin-section {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px; padding: 24px;
-  margin-bottom: 20px;
-}
-
-.admin-section h3 {
-  font-family: 'Syne', sans-serif;
-  font-size: 16px; font-weight: 700;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border);
-}
-
-.admin-user-row {
-  display: flex; align-items: center;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
-}
-
+/* ════════════
+   ADMIN
+════════════ */
+.admin-section { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 20px; }
+.admin-section h3 { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.admin-user-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
 .admin-user-row:last-child { border-bottom: none; }
-
 .admin-user-info { display: flex; align-items: center; gap: 10px; }
-
-.admin-avatar {
-  width: 36px; height: 36px;
-  background: linear-gradient(135deg, var(--accent2), var(--purple));
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 700; color: white;
-}
-
-.admin-role-badge {
-  font-size: 10px; font-weight: 700;
-  padding: 2px 8px; border-radius: 20px;
-  text-transform: uppercase; letter-spacing: 0.06em;
-}
-
+.admin-avatar { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent2), var(--purple)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: white; }
+.admin-role-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.06em; }
 .admin-role-badge.superadmin { background: rgba(251,191,36,0.2); color: var(--yellow); }
 .admin-role-badge.admin { background: rgba(0,196,255,0.1); color: var(--accent); }
 .admin-role-badge.editor { background: rgba(168,85,247,0.1); color: var(--purple); }
 .admin-role-badge.viewer { background: rgba(138,154,181,0.1); color: var(--text2); }
-
-.form-field {
-  margin-bottom: 14px;
-}
-
-.form-field label {
-  display: block; font-size: 12px; font-weight: 600;
-  color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em;
-  margin-bottom: 6px;
-}
-
+.form-field { margin-bottom: 14px; }
+.form-field label { display: block; font-size: 12px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
 .form-field input, .form-field select {
-  width: 100%; background: var(--bg2);
-  border: 1px solid var(--border2); border-radius: 8px;
-  padding: 10px 14px; font-size: 13px;
-  color: var(--text); font-family: 'DM Sans', sans-serif;
-  outline: none;
-  transition: border-color 0.2s;
+  width: 100%; background: var(--bg2); border: 1px solid var(--border2); border-radius: 8px;
+  padding: 12px 14px; font-size: 16px; /* no iOS zoom */
+  color: var(--text); font-family: 'DM Sans', sans-serif; outline: none;
+  transition: border-color 0.2s; -webkit-appearance: none;
+}
+.form-field input:focus, .form-field select:focus { border-color: var(--accent); }
+
+/* ════════════
+   TOOLTIPS (desktop hover only)
+════════════ */
+@media (hover: hover) {
+  [data-tip] { position: relative; cursor: help; }
+  [data-tip]::after {
+    content: attr(data-tip);
+    position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    background: var(--card2); border: 1px solid var(--border2);
+    color: var(--text); font-size: 12px; line-height: 1.4;
+    padding: 6px 10px; border-radius: 6px;
+    white-space: pre-wrap; pointer-events: none;
+    opacity: 0; transition: opacity 0.2s; z-index: 200; max-width: 220px;
+  }
+  [data-tip]:hover::after { opacity: 1; }
 }
 
-.form-field input:focus, .form-field select:focus {
-  border-color: var(--accent);
-}
-
-/* ── MINI CHART (SVG) ── */
-.mini-chart { width: 100%; height: 60px; }
-
-/* ── SCROLL ── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
+/* ════════════
+   SCROLLBAR
+════════════ */
+::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--border2); }
 
-/* ── TOOLTIPS ── */
-[data-tip] { position: relative; cursor: help; }
-[data-tip]::after {
-  content: attr(data-tip);
-  position: absolute; bottom: calc(100% + 8px); left: 50%;
-  transform: translateX(-50%);
-  background: var(--card2); border: 1px solid var(--border2);
-  color: var(--text); font-size: 12px; line-height: 1.4;
-  padding: 6px 10px; border-radius: 6px;
-  white-space: nowrap; pointer-events: none;
-  opacity: 0; transition: opacity 0.2s;
-  z-index: 200; max-width: 200px; white-space: pre-wrap;
-}
-[data-tip]:hover::after { opacity: 1; }
-
-/* ── ANIMATIONS ── */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+/* ════════════
+   ANIMATIONS
+════════════ */
+@keyframes fadeInUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
 .section.active .kpi-card,
 .section.active .platform-card,
-.section.active .card {
-  animation: fadeInUp 0.3s ease backwards;
+.section.active .card { animation: fadeInUp 0.25s ease backwards; }
+.kpi-card:nth-child(1){animation-delay:.04s}
+.kpi-card:nth-child(2){animation-delay:.08s}
+.kpi-card:nth-child(3){animation-delay:.12s}
+.kpi-card:nth-child(4){animation-delay:.16s}
+
+/* ════════════
+   TOAST
+════════════ */
+.toast {
+  position: fixed;
+  bottom: calc(var(--bnav-h) + var(--sab) + 12px);
+  right: 16px;
+  background: var(--card2); border: 1px solid var(--border2);
+  color: var(--text); padding: 12px 18px; border-radius: 10px;
+  font-size: 13px; z-index: 9999;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+  animation: fadeInUp 0.2s ease;
+  max-width: calc(100vw - 32px);
 }
 
-.kpi-card:nth-child(1) { animation-delay: 0.05s; }
-.kpi-card:nth-child(2) { animation-delay: 0.1s; }
-.kpi-card:nth-child(3) { animation-delay: 0.15s; }
-.kpi-card:nth-child(4) { animation-delay: 0.2s; }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 1200px) {
+/* ═══════════════════════════════════
+   RESPONSIVE — TABLET ≤1024px
+═══════════════════════════════════ */
+@media (max-width: 1024px) {
+  :root { --sidebar-w: 220px; }
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-1-2 { grid-template-columns: 1fr; }
+  .grid-2-1 { grid-template-columns: 1fr; }
+  .content { padding: 20px; }
+}
+
+/* ═══════════════════════════════════
+   RESPONSIVE — MOBILE ≤768px
+   Includes iPhone 17 Pro Max (430px)
+═══════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Sidebar: hidden, slides in */
+  .sidebar {
+    transform: translateX(-100%);
+    width: min(280px, 85vw);
+    padding-top: max(0px, var(--sat));
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-close { display: block; }
+
+  /* Main: full width */
+  .main { margin-left: 0; }
+
+  /* Topbar: iPhone-aware height */
+  .topbar {
+    height: auto;
+    min-height: 52px;
+    padding: 0 16px;
+    padding-top: max(12px, var(--sat));
+    padding-bottom: 12px;
+  }
+  .topbar-hamburger { display: flex; }
+  .topbar-date { display: none; }
+  .topbar-title { font-size: 15px; }
+  .live-badge { padding: 4px 10px; font-size: 11px; }
+
+  /* Bottom nav visible */
+  .bottom-nav { display: block; }
+
+  /* Content: account for bottom nav + safe area */
+  .content {
+    padding: 14px;
+    padding-left: max(14px, var(--sal));
+    padding-right: max(14px, var(--sar));
+    padding-bottom: calc(var(--bnav-h) + var(--sab) + 16px);
+  }
+
+  /* Grids → single column on mobile */
+  .grid-4, .grid-3, .grid-2, .grid-2-1, .grid-1-2 {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* KPI — compact */
+  .kpi-card { padding: 16px; }
+  .kpi-value { font-size: 28px; }
+  .kpi-icon { font-size: 20px; margin-bottom: 8px; }
+
+  /* Section header */
+  .section-header { margin-bottom: 16px; }
+  .section-header h2 { font-size: 19px; }
+
+  /* Cards */
+  .card { padding: 14px; border-radius: 12px; }
+
+  /* Calendar mini */
+  .calendar-grid { gap: 3px; }
+  .cal-day { min-height: 44px; padding: 5px; }
+  .cal-date { font-size: 11px; margin-bottom: 2px; }
+  .cal-day-header { font-size: 9px; padding: 4px 2px; }
+  /* hide post labels on tiny calendar, show colored dots instead */
+  .cal-post { height: 5px; padding: 0; font-size: 0; margin-bottom: 2px; border-radius: 2px; }
+
+  /* Challenge table — horizontal scroll */
+  .challenge-table th { padding: 4px 8px; font-size: 10px; }
+  .challenge-table td { padding: 10px 8px; font-size: 12px; }
+  .rank-badge { width: 24px; height: 24px; font-size: 11px; }
+
+  /* Admin */
+  .admin-section { padding: 14px; }
+  .admin-user-row { flex-wrap: wrap; gap: 8px; }
+
+  /* Agents compact */
+  .agent-task { font-size: 11px; }
+
+  /* Toast position */
+  .toast { bottom: calc(var(--bnav-h) + max(var(--sab), 4px) + 10px); }
+}
+
+/* ═══════════════════════════════════
+   RESPONSIVE — SMALL ≤390px (SE, older)
+═══════════════════════════════════ */
+@media (max-width: 390px) {
+  .kpi-value { font-size: 24px; }
+  .section-header h2 { font-size: 17px; }
+  .topbar-title { font-size: 14px; }
+  .bnav-label { display: none; }
+  :root { --bnav-h: 50px; }
+}
+
+/* ═══════════════════════════════════
+   iPhone safe-area @supports block
+   Covers Dynamic Island (iPhone 14 Pro+)
+   and Home Indicator
+═══════════════════════════════════ */
+@supports (padding: max(0px)) {
+  .topbar {
+    padding-left: max(16px, var(--sal));
+    padding-right: max(16px, var(--sar));
+  }
+  .content {
+    padding-left: max(14px, var(--sal));
+    padding-right: max(14px, var(--sar));
+  }
+  .bottom-nav {
+    padding-left: max(0px, var(--sal));
+    padding-right: max(0px, var(--sar));
+    padding-bottom: max(0px, var(--sab));
+  }
+  .sidebar { padding-top: max(0px, var(--sat)); }
+  .login-screen { padding-top: max(20px, var(--sat)); }
 }
 </style>
 </head>
 <body>
 
+<!-- ══ LOGIN ══ -->
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">
@@ -948,7 +620,7 @@ body {
     </div>
     <div class="login-field">
       <label>Identifiant</label>
-      <input type="text" id="login-user" placeholder="Votre identifiant" autocomplete="username">
+      <input type="text" id="login-user" placeholder="Votre identifiant" autocomplete="username" inputmode="text">
     </div>
     <div class="login-field">
       <label>Mot de passe</label>
@@ -959,15 +631,17 @@ body {
   </div>
 </div>
 
+<!-- ══ APP ══ -->
 <div id="app">
 
-  <div class="sidebar">
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <div class="logo-mark">G</div>
-      <div class="logo-text">
-        <h2>Globo Corps</h2>
-        <p>Command Center</p>
-      </div>
+      <div class="logo-text"><h2>Globo Corps</h2><p>Command Center</p></div>
+      <button class="sidebar-close" onclick="closeSidebar()">✕</button>
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section-label">Vue d'ensemble</div>
@@ -996,51 +670,48 @@ body {
     </div>
   </div>
 
+  <!-- MAIN -->
   <div class="main">
+
+    <!-- TOPBAR -->
     <div class="topbar">
+      <button class="topbar-hamburger" onclick="openSidebar()">☰</button>
       <div class="topbar-title" id="page-title">⚡ Command Center</div>
       <div class="topbar-right">
-        <div class="live-badge"><div class="live-dot"></div>LIVE</div>
-        <div style="font-size:13px;color:var(--text2)" id="topbar-date"></div>
+        <div class="live-badge"><div class="live-dot"></div><span>LIVE</span></div>
+        <div class="topbar-date" id="topbar-date"></div>
       </div>
     </div>
 
+    <!-- CONTENT -->
     <div class="content">
 
       <!-- ══ COMMAND CENTER ══ -->
       <div class="section active" id="section-overview">
         <div class="section-header">
-          <div>
-            <h2>Command Center</h2>
-            <p>Vue consolidée — LinkedIn · Facebook · Instagram · Challenge · Veille</p>
-          </div>
+          <div><h2>Command Center</h2><p>LinkedIn · Facebook · Instagram · Challenge · Veille</p></div>
           <button class="btn btn-primary" onclick="refreshData()">↻ Actualiser</button>
         </div>
-
-        <!-- KPIs -->
-        <div class="grid-4" style="margin-bottom:20px;">
+        <div class="grid-4" style="margin-bottom:16px;">
           <div class="kpi-card" data-tip="Somme des followers LinkedIn + Facebook + Instagram">
             <div class="kpi-icon">👥</div>
             <div class="kpi-value" id="kpi-reach">—</div>
             <div class="kpi-label">Reach Total Communauté</div>
-            <!-- PATCHED: delta remplacé par date MAJ -->
             <div class="kpi-delta neutral" id="kpi-reach-delta">—</div>
           </div>
-          <div class="kpi-card green" data-tip="Nombre de posts publiés sur LinkedIn ce mois (source Apify)">
+          <div class="kpi-card green" data-tip="Posts publiés sur LinkedIn ce mois (source Apify)">
             <div class="kpi-icon">📤</div>
             <div class="kpi-value" id="kpi-posts">—</div>
-            <div class="kpi-label">Posts Publiés LinkedIn (Mars)</div>
-            <!-- PATCHED: delta remplacé par date MAJ -->
+            <div class="kpi-label">Posts LinkedIn (Mars)</div>
             <div class="kpi-delta neutral" id="kpi-posts-delta">—</div>
           </div>
-          <div class="kpi-card orange" data-tip="Taux d'engagement LinkedIn (likes + commentaires + partages / impressions)">
+          <div class="kpi-card orange" data-tip="Taux d'engagement LinkedIn">
             <div class="kpi-icon">💬</div>
             <div class="kpi-value" id="kpi-engage">—</div>
-            <div class="kpi-label">Taux d'Engagement LinkedIn</div>
-            <!-- PATCHED: delta remplacé par date MAJ -->
+            <div class="kpi-label">Engagement LinkedIn</div>
             <div class="kpi-delta neutral" id="kpi-engage-delta">—</div>
           </div>
-          <div class="kpi-card purple" data-tip="Contenus en attente de validation ou de publication dans le pipeline">
+          <div class="kpi-card purple" data-tip="Contenus en attente dans le pipeline">
             <div class="kpi-icon">⏳</div>
             <div class="kpi-value" id="kpi-pipeline">5</div>
             <div class="kpi-label">Contenus en Pipeline</div>
@@ -1048,228 +719,109 @@ body {
           </div>
         </div>
 
-        <!-- Plateformes + Feed -->
-        <div class="grid-1-2" style="margin-bottom:20px;">
+        <div class="grid-1-2" style="margin-bottom:16px;">
           <div>
-            <div class="card" style="margin-bottom:16px;">
+            <div class="card" style="margin-bottom:12px;">
               <div class="card-header">
                 <div class="card-title">Plateformes</div>
                 <a href="#" onclick="showSection('platforms')" style="font-size:12px;color:var(--accent);text-decoration:none;">Détail →</a>
               </div>
-              <div id="mini-platforms">
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
-                  <div style="display:flex;align-items:center;gap:10px;">
-                    <span style="font-size:20px;">💼</span>
-                    <div>
-                      <div style="font-size:13px;font-weight:600;">LinkedIn</div>
-                      <div style="font-size:11px;color:var(--text2);">Globo Afrique · Globo Corps</div>
-                    </div>
-                  </div>
-                  <div style="text-align:right;">
-                    <div id="followers-linkedin" style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;">—</div>
-                    <div style="font-size:11px;color:var(--green);">live ↑</div>
-                  </div>
-                </div>
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
-                  <div style="display:flex;align-items:center;gap:10px;">
-                    <span style="font-size:20px;">📘</span>
-                    <div>
-                      <div style="font-size:13px;font-weight:600;">Facebook</div>
-                      <div style="font-size:11px;color:var(--text2);">Globo Afrique</div>
-                    </div>
-                  </div>
-                  <div style="text-align:right;">
-                    <div id="followers-facebook" style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;">—</div>
-                    <!-- PATCHED: "bientôt" remplacé par date MAJ -->
-                    <div id="followers-facebook-updated" style="font-size:11px;color:var(--text2);">—</div>
-                  </div>
-                </div>
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;">
-                  <div style="display:flex;align-items:center;gap:10px;">
-                    <span style="font-size:20px;">📸</span>
-                    <div>
-                      <div style="font-size:13px;font-weight:600;">Instagram</div>
-                      <div style="font-size:11px;color:var(--text2);">@globoafrique</div>
-                    </div>
-                  </div>
-                  <div style="text-align:right;">
-                    <div id="followers-instagram" style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;">—</div>
-                    <!-- PATCHED: "bientôt" remplacé par date MAJ -->
-                    <div id="followers-instagram-updated" style="font-size:11px;color:var(--text2);">—</div>
-                  </div>
-                </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
+                <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">💼</span><div><div style="font-size:13px;font-weight:600;">LinkedIn</div><div style="font-size:11px;color:var(--text2);">Globo Afrique · Globo Corps</div></div></div>
+                <div style="text-align:right;"><div id="followers-linkedin" style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;">—</div><div style="font-size:11px;color:var(--green);">live ↑</div></div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
+                <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">📘</span><div><div style="font-size:13px;font-weight:600;">Facebook</div><div style="font-size:11px;color:var(--text2);">Globo Afrique</div></div></div>
+                <div style="text-align:right;"><div id="followers-facebook" style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;">—</div><div id="followers-facebook-updated" style="font-size:11px;color:var(--text2);">—</div></div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;">
+                <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:20px;">📸</span><div><div style="font-size:13px;font-weight:600;">Instagram</div><div style="font-size:11px;color:var(--text2);">@globoafrique</div></div></div>
+                <div style="text-align:right;"><div id="followers-instagram" style="font-family:'DM Mono',monospace;font-size:15px;font-weight:500;">—</div><div id="followers-instagram-updated" style="font-size:11px;color:var(--text2);">—</div></div>
               </div>
             </div>
-
-            <!-- Objectif LinkedIn -->
             <div class="card">
               <div class="card-header">
                 <div class="card-title">Objectif LinkedIn 10K</div>
                 <span id="linkedin-10k-label" style="font-size:12px;color:var(--text2);">— / 10 000</span>
               </div>
-              <div class="progress-bar">
-                <div class="progress-fill" id="linkedin-10k-bar" style="width:0%"></div>
-              </div>
+              <div class="progress-bar"><div class="progress-fill" id="linkedin-10k-bar" style="width:0%"></div></div>
               <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--text2);">
                 <span id="linkedin-10k-pct">—% atteint</span>
                 <span id="linkedin-10k-rest" style="color:var(--accent);">— restants</span>
               </div>
             </div>
           </div>
-
-          <!-- Activity Feed -->
           <div class="card">
             <div class="card-header">
               <div class="card-title">Activity Feed</div>
               <div class="live-badge" style="font-size:11px;padding:3px 8px;"><div class="live-dot"></div> LIVE</div>
             </div>
             <div id="activity-feed">
-              <div class="feed-item">
-                <div class="feed-dot" style="background:var(--green)"></div>
-                <div class="feed-content">
-                  <div class="msg" id="feed-classement">🏆 Classement ambassadeurs — chargement...</div>
-                  <div class="time" id="feed-classement-time">—</div>
-                </div>
-              </div>
-              <div class="feed-item">
-                <div class="feed-dot" style="background:var(--accent)"></div>
-                <div class="feed-content">
-                  <div class="msg">📤 Post LinkedIn publié : <strong>"Fleet Management & Sécurité en Afrique de l'Ouest"</strong></div>
-                  <div class="time">Aujourd'hui 07:30</div>
-                </div>
-              </div>
-              <div class="feed-item">
-                <div class="feed-dot" style="background:var(--purple)"></div>
-                <div class="feed-content">
-                  <div class="msg">🤖 Agent <strong>Researcher</strong> a terminé la veille hebdomadaire — 8 signaux détectés</div>
-                  <div class="time">Hier 22:15</div>
-                </div>
-              </div>
-              <div class="feed-item">
-                <div class="feed-dot" style="background:var(--yellow)"></div>
-                <div class="feed-content">
-                  <div class="msg">⏳ <strong>Moustapha Ndiaye</strong> a déclaré 7 invitations LinkedIn via WhatsApp</div>
-                  <div class="time">Hier 18:44</div>
-                </div>
-              </div>
-              <div class="feed-item">
-                <div class="feed-dot" style="background:var(--orange)"></div>
-                <div class="feed-content">
-                  <div class="msg">🔭 Concurrent <strong>Fleeti</strong> a publié 3 nouveaux posts cette semaine</div>
-                  <div class="time">Hier 14:20</div>
-                </div>
-              </div>
-              <div class="feed-item">
-                <div class="feed-dot" style="background:var(--green)"></div>
-                <div class="feed-content">
-                  <div class="msg">📧 Newsletter Brevo envoyée — <strong>847 destinataires</strong>, taux d'ouverture 24.3%</div>
-                  <div class="time">Lundi 09:00</div>
-                </div>
-              </div>
+              <div class="feed-item"><div class="feed-dot" style="background:var(--green)"></div><div class="feed-content"><div class="msg" id="feed-classement">🏆 Classement ambassadeurs — chargement...</div><div class="time" id="feed-classement-time">—</div></div></div>
+              <div class="feed-item"><div class="feed-dot" style="background:var(--accent)"></div><div class="feed-content"><div class="msg">📤 Post LinkedIn : <strong>"Fleet Management & Sécurité en Afrique de l'Ouest"</strong></div><div class="time">Aujourd'hui 07:30</div></div></div>
+              <div class="feed-item"><div class="feed-dot" style="background:var(--purple)"></div><div class="feed-content"><div class="msg">🤖 Agent <strong>Researcher</strong> — 8 signaux détectés</div><div class="time">Hier 22:15</div></div></div>
+              <div class="feed-item"><div class="feed-dot" style="background:var(--yellow)"></div><div class="feed-content"><div class="msg">⏳ <strong>Moustapha Ndiaye</strong> — 7 invitations LinkedIn</div><div class="time">Hier 18:44</div></div></div>
+              <div class="feed-item"><div class="feed-dot" style="background:var(--orange)"></div><div class="feed-content"><div class="msg">🔭 Concurrent <strong>Fleeti</strong> — 3 nouveaux posts</div><div class="time">Hier 14:20</div></div></div>
+              <div class="feed-item"><div class="feed-dot" style="background:var(--green)"></div><div class="feed-content"><div class="msg">📧 Newsletter — <strong>847 destinataires</strong>, 24.3% ouverture</div><div class="time">Lundi 09:00</div></div></div>
             </div>
           </div>
         </div>
 
-        <!-- Objectifs hebdo -->
         <div class="card">
-          <div class="card-header">
-            <div class="card-title">Objectifs Hebdomadaires — Semaine du 07/03/2026</div>
-          </div>
+          <div class="card-header"><div class="card-title">Objectifs Hebdomadaires — Semaine du 07/03/2026</div></div>
           <div class="grid-4">
-            <div>
-              <div style="font-size:12px;color:var(--text2);margin-bottom:6px;">Posts LinkedIn</div>
-              <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
-              <div style="font-size:12px;color:var(--text2);margin-top:4px;">3 / 4 publiés</div>
-            </div>
-            <div>
-              <div style="font-size:12px;color:var(--text2);margin-bottom:6px;">Posts Facebook</div>
-              <div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div>
-              <div style="font-size:12px;color:var(--green);margin-top:4px;">3 / 3 ✓</div>
-            </div>
-            <div>
-              <div style="font-size:12px;color:var(--text2);margin-bottom:6px;">Posts Instagram</div>
-              <div class="progress-bar"><div class="progress-fill orange" style="width:50%"></div></div>
-              <div style="font-size:12px;color:var(--text2);margin-top:4px;">1 / 2 publiés</div>
-            </div>
-            <div>
-              <div style="font-size:12px;color:var(--text2);margin-bottom:6px;">Validations Challenge</div>
-              <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
-              <div style="font-size:12px;color:var(--text2);margin-top:4px;">3 / 5 traitées</div>
-            </div>
+            <div><div style="font-size:12px;color:var(--text2);margin-bottom:6px;">Posts LinkedIn</div><div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div><div style="font-size:12px;color:var(--text2);margin-top:4px;">3 / 4 publiés</div></div>
+            <div><div style="font-size:12px;color:var(--text2);margin-bottom:6px;">Posts Facebook</div><div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div><div style="font-size:12px;color:var(--green);margin-top:4px;">3 / 3 ✓</div></div>
+            <div><div style="font-size:12px;color:var(--text2);margin-bottom:6px;">Posts Instagram</div><div class="progress-bar"><div class="progress-fill orange" style="width:50%"></div></div><div style="font-size:12px;color:var(--text2);margin-top:4px;">1 / 2 publiés</div></div>
+            <div><div style="font-size:12px;color:var(--text2);margin-bottom:6px;">Validations Challenge</div><div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div><div style="font-size:12px;color:var(--text2);margin-top:4px;">3 / 5 traitées</div></div>
           </div>
         </div>
       </div>
 
       <!-- ══ PLATEFORMES ══ -->
       <div class="section" id="section-platforms">
-        <div class="section-header">
-          <div><h2>Plateformes Sociales</h2><p>Métriques détaillées LinkedIn · Facebook · Instagram</p></div>
-        </div>
-        <div class="grid-3" style="margin-bottom:20px;">
+        <div class="section-header"><div><h2>Plateformes Sociales</h2><p>Métriques détaillées LinkedIn · Facebook · Instagram</p></div></div>
+        <div class="grid-3" style="margin-bottom:16px;">
           <div class="platform-card">
-            <div class="platform-header">
-              <div class="platform-logo linkedin">💼</div>
-              <div><div class="platform-name">LinkedIn</div><div class="platform-handle">Globo Afrique · Globo Corps</div></div>
-            </div>
+            <div class="platform-header"><div class="platform-logo linkedin">💼</div><div><div class="platform-name">LinkedIn</div><div class="platform-handle">Globo Afrique · Globo Corps</div></div></div>
             <div class="platform-stats">
               <div class="platform-stat"><div class="val" id="plat-linkedin-followers">—</div><div class="lbl">Followers</div></div>
               <div class="platform-stat"><div class="val" style="color:var(--text2);">—</div><div class="lbl">Ce mois</div></div>
               <div class="platform-stat"><div class="val" id="plat-linkedin-engage">—</div><div class="lbl">Engagement</div></div>
               <div class="platform-stat"><div class="val" id="plat-linkedin-posts">—</div><div class="lbl">Posts (Mars)</div></div>
             </div>
-            <div style="margin-top:14px;">
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px;">
-                <span>Objectif 10 000 followers</span><span id="plat-linkedin-pct">—%</span>
-              </div>
-              <div class="progress-bar"><div class="progress-fill" id="plat-linkedin-bar" style="width:0%"></div></div>
-            </div>
+            <div style="margin-top:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px;"><span>Objectif 10 000</span><span id="plat-linkedin-pct">—%</span></div><div class="progress-bar"><div class="progress-fill" id="plat-linkedin-bar" style="width:0%"></div></div></div>
           </div>
           <div class="platform-card">
-            <div class="platform-header">
-              <div class="platform-logo facebook">📘</div>
-              <div><div class="platform-name">Facebook</div><div class="platform-handle">Globo Afrique</div></div>
-            </div>
+            <div class="platform-header"><div class="platform-logo facebook">📘</div><div><div class="platform-name">Facebook</div><div class="platform-handle">Globo Afrique</div></div></div>
             <div class="platform-stats">
               <div class="platform-stat"><div class="val" id="plat-facebook-followers">—</div><div class="lbl">Abonnés</div></div>
               <div class="platform-stat"><div class="val" style="color:var(--text2);">—</div><div class="lbl">Ce mois</div></div>
               <div class="platform-stat"><div class="val">—</div><div class="lbl">Engagement</div></div>
               <div class="platform-stat"><div class="val">—</div><div class="lbl">Posts (Mars)</div></div>
             </div>
-            <div style="margin-top:14px;">
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px;">
-                <span>Objectif 8 000 abonnés</span><span id="plat-facebook-pct">—%</span>
-              </div>
-              <div class="progress-bar"><div class="progress-fill green" id="plat-facebook-bar" style="width:0%"></div></div>
-            </div>
+            <div style="margin-top:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px;"><span>Objectif 8 000</span><span id="plat-facebook-pct">—%</span></div><div class="progress-bar"><div class="progress-fill green" id="plat-facebook-bar" style="width:0%"></div></div></div>
           </div>
           <div class="platform-card">
-            <div class="platform-header">
-              <div class="platform-logo instagram">📸</div>
-              <div><div class="platform-name">Instagram</div><div class="platform-handle">@globoafrique</div></div>
-            </div>
+            <div class="platform-header"><div class="platform-logo instagram">📸</div><div><div class="platform-name">Instagram</div><div class="platform-handle">@globoafrique</div></div></div>
             <div class="platform-stats">
               <div class="platform-stat"><div class="val" id="plat-instagram-followers">—</div><div class="lbl">Abonnés</div></div>
               <div class="platform-stat"><div class="val" style="color:var(--text2);">—</div><div class="lbl">Ce mois</div></div>
               <div class="platform-stat"><div class="val">—</div><div class="lbl">Engagement</div></div>
               <div class="platform-stat"><div class="val">—</div><div class="lbl">Posts (Mars)</div></div>
             </div>
-            <div style="margin-top:14px;">
-              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px;">
-                <span>Objectif 5 000 abonnés</span><span id="plat-instagram-pct">—%</span>
-              </div>
-              <div class="progress-bar"><div class="progress-fill orange" id="plat-instagram-bar" style="width:0%"></div></div>
-            </div>
+            <div style="margin-top:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px;"><span>Objectif 5 000</span><span id="plat-instagram-pct">—%</span></div><div class="progress-bar"><div class="progress-fill orange" id="plat-instagram-bar" style="width:0%"></div></div></div>
           </div>
         </div>
         <div class="card">
           <div class="card-header"><div class="card-title">Piliers de Contenu — Performance</div></div>
           <div class="grid-3">
-            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">🚗 Fleet Management</div><div style="font-size:12px;color:var(--text2);">Meilleure performance — 6.8% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill" style="width:68%"></div></div></div>
-            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">🔥 Sécurité & Incendie</div><div style="font-size:12px;color:var(--text2);">Forte croissance — 5.2% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill green" style="width:52%"></div></div></div>
-            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">⚙️ Ingénierie & Industrie</div><div style="font-size:12px;color:var(--text2);">En développement — 3.1% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill orange" style="width:31%"></div></div></div>
-            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">🌍 Actualité Afrique</div><div style="font-size:12px;color:var(--text2);">Fort reach — 4.7% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill" style="width:47%"></div></div></div>
-            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">🏢 Culture d'Entreprise</div><div style="font-size:12px;color:var(--text2);">Humanise la marque — 5.8% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill green" style="width:58%"></div></div></div>
-            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">💡 Innovation & IA</div><div style="font-size:12px;color:var(--text2);">Tendance montante — 4.2% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill" style="width:42%"></div></div></div>
+            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">🚗 Fleet Management</div><div style="font-size:12px;color:var(--text2);">6.8% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill" style="width:68%"></div></div></div>
+            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">🔥 Sécurité & Incendie</div><div style="font-size:12px;color:var(--text2);">5.2% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill green" style="width:52%"></div></div></div>
+            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">⚙️ Ingénierie & Industrie</div><div style="font-size:12px;color:var(--text2);">3.1% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill orange" style="width:31%"></div></div></div>
+            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">🌍 Actualité Afrique</div><div style="font-size:12px;color:var(--text2);">4.7% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill" style="width:47%"></div></div></div>
+            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">🏢 Culture d'Entreprise</div><div style="font-size:12px;color:var(--text2);">5.8% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill green" style="width:58%"></div></div></div>
+            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">💡 Innovation & IA</div><div style="font-size:12px;color:var(--text2);">4.2% engagement moyen</div><div class="progress-bar" style="margin-top:8px;"><div class="progress-fill" style="width:42%"></div></div></div>
           </div>
         </div>
       </div>
@@ -1277,28 +829,16 @@ body {
       <!-- ══ PIPELINE ══ -->
       <div class="section" id="section-pipeline">
         <div class="section-header">
-          <div><h2>Pipeline Contenu</h2><p>Gestion du flux éditorial — Idées → Rédaction → Validation → Publication</p></div>
+          <div><h2>Pipeline Contenu</h2><p>Idées → Rédaction → Validation → Publication</p></div>
           <div style="font-size:12px;color:var(--text2);" id="pipeline-updated">—</div>
         </div>
-        <div class="grid-2" style="margin-bottom:16px;">
-          <div class="card">
-            <div class="card-header"><div class="card-title" id="pipeline-review-title">🟡 À Valider</div></div>
-            <div id="pipeline-review"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Chargement...</div></div>
-          </div>
-          <div class="card">
-            <div class="card-header"><div class="card-title" id="pipeline-scheduled-title">🔵 Planifiés</div></div>
-            <div id="pipeline-scheduled"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Chargement...</div></div>
-          </div>
+        <div class="grid-2" style="margin-bottom:12px;">
+          <div class="card"><div class="card-header"><div class="card-title" id="pipeline-review-title">🟡 À Valider</div></div><div id="pipeline-review"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Chargement...</div></div></div>
+          <div class="card"><div class="card-header"><div class="card-title" id="pipeline-scheduled-title">🔵 Planifiés</div></div><div id="pipeline-scheduled"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Chargement...</div></div></div>
         </div>
         <div class="grid-2">
-          <div class="card">
-            <div class="card-header"><div class="card-title" id="pipeline-draft-title">✏️ Brouillons</div></div>
-            <div id="pipeline-draft"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Chargement...</div></div>
-          </div>
-          <div class="card">
-            <div class="card-header"><div class="card-title" id="pipeline-published-title">✅ Publiés</div></div>
-            <div id="pipeline-published"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Chargement...</div></div>
-          </div>
+          <div class="card"><div class="card-header"><div class="card-title" id="pipeline-draft-title">✏️ Brouillons</div></div><div id="pipeline-draft"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Chargement...</div></div></div>
+          <div class="card"><div class="card-header"><div class="card-title" id="pipeline-published-title">✅ Publiés</div></div><div id="pipeline-published"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Chargement...</div></div></div>
         </div>
       </div>
 
@@ -1306,17 +846,14 @@ body {
       <div class="section" id="section-calendar">
         <div class="section-header">
           <div><h2>Plan Éditorial — Mars 2026</h2><p>Calendrier de publication multi-plateformes</p></div>
-          <div style="display:flex;gap:8px;"><button class="btn btn-secondary">← Février</button><button class="btn btn-secondary">Avril →</button></div>
+          <div style="display:flex;gap:8px;"><button class="btn btn-secondary" style="padding:7px 12px;font-size:12px;">← Fév</button><button class="btn btn-secondary" style="padding:7px 12px;font-size:12px;">Avr →</button></div>
         </div>
         <div class="card">
-          <div class="calendar-grid" style="margin-bottom:8px;">
+          <div class="calendar-grid" style="margin-bottom:6px;">
             <div class="cal-day-header">Lun</div><div class="cal-day-header">Mar</div><div class="cal-day-header">Mer</div><div class="cal-day-header">Jeu</div><div class="cal-day-header">Ven</div><div class="cal-day-header">Sam</div><div class="cal-day-header">Dim</div>
           </div>
           <div class="calendar-grid" id="cal-grid"></div>
-        </div>
-        <div class="card" style="margin-top:16px;">
-          <div class="card-header"><div class="card-title">Légende & Piliers</div></div>
-          <div style="display:flex;gap:16px;flex-wrap:wrap;">
+          <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);">
             <div style="display:flex;align-items:center;gap:6px;"><div style="width:10px;height:10px;border-radius:2px;background:rgba(0,119,181,0.4);"></div><span style="font-size:12px;">LinkedIn</span></div>
             <div style="display:flex;align-items:center;gap:6px;"><div style="width:10px;height:10px;border-radius:2px;background:rgba(24,119,242,0.4);"></div><span style="font-size:12px;">Facebook</span></div>
             <div style="display:flex;align-items:center;gap:6px;"><div style="width:10px;height:10px;border-radius:2px;background:rgba(225,48,108,0.4);"></div><span style="font-size:12px;">Instagram</span></div>
@@ -1328,133 +865,36 @@ body {
       <!-- ══ AI TEAM ══ -->
       <div class="section" id="section-agents">
         <div class="section-header">
-          <div><h2>AI Team</h2><p>8 workflows n8n actifs — Veille, Social Media, Challenge Ambassadeurs, Synthèse IA</p></div>
+          <div><h2>AI Team</h2><p>8 workflows n8n actifs — Veille, Social Media, Challenge, Synthèse IA</p></div>
           <a href="https://globocorps-itl.app.n8n.cloud" target="_blank" class="btn btn-secondary" style="font-size:12px;">Ouvrir n8n →</a>
         </div>
-        <div class="grid-3" style="margin-bottom:20px;">
-
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar" style="background:rgba(0,229,160,0.1);">🔄</div>
-              <div>
-                <div class="agent-name">Sync Classement → GitHub</div>
-                <div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · toutes les heures</span></div>
-              </div>
-            </div>
-            <div class="agent-task">Lit Classement, Employés, Activity depuis Google Sheets + followers FB/IG via API + posts LinkedIn via Apify. Génère et pousse le data.json sur GitHub Pages.</div>
-            <div class="agent-progress-label"><span>Dernière exécution</span><span style="color:var(--green);">il y a 24 min</span></div>
-            <div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div>
-          </div>
-
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar" style="background:rgba(0,119,255,0.1);">💬</div>
-              <div>
-                <div class="agent-name">Invitations LinkedIn WhatsApp</div>
-                <div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · webhook Twilio</span></div>
-              </div>
-            </div>
-            <div class="agent-task">Reçoit les déclarations (envoi d'un chiffre) et validations ("ok Prénom Nom") via WhatsApp. Met à jour le Classement Google Sheets, envoie confirmation Slack et enregistre dans Activity.</div>
-            <div class="agent-progress-label"><span>Numéro actif</span><span style="color:var(--accent);">+1 555 718 9862</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
-          </div>
-
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar" style="background:rgba(251,191,36,0.1);">🏆</div>
-              <div>
-                <div class="agent-name">Challenge Ambassadeurs Globo</div>
-                <div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · Apify scraper</span></div>
-              </div>
-            </div>
-            <div class="agent-task">Scrape les posts LinkedIn des employés via Apify (Posts, Reactions, Comments). Calcule les points (1pt/like, 2pts/commentaire, 3pts/repost). Met à jour le Classement et poste le leaderboard Slack chaque lundi.</div>
-            <div class="agent-progress-label"><span>Participants actifs</span><span style="color:var(--yellow);">4 employés</span></div>
-            <div class="progress-bar"><div class="progress-fill orange" style="width:33%"></div></div>
-          </div>
-
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar" style="background:rgba(168,85,247,0.1);">🔭</div>
-              <div>
-                <div class="agent-name">Veille LinkedIn Concurrentielle</div>
-                <div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · Apify LinkedIn</span></div>
-              </div>
-            </div>
-            <div class="agent-task">Scrape les posts LinkedIn des 9 concurrents (Georis, Fleeti, ON TRACK, Mapping Control, SAGAM, IT Mobile, Iris Afrique, Teletrack, Camtrack) via Apify. Alimente la Google Sheet Signaux.</div>
-            <div class="agent-progress-label"><span>Concurrents surveillés</span><span style="color:var(--purple);">9 profils</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:100%;background:linear-gradient(90deg,var(--purple),var(--accent2));"></div></div>
-          </div>
-
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar" style="background:rgba(0,196,255,0.1);">🌐</div>
-              <div>
-                <div class="agent-name">Veille Sites Concurrents</div>
-                <div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · quotidien</span></div>
-              </div>
-            </div>
-            <div class="agent-task">Scrape 15 pages web des concurrents chaque jour. Détecte les nouveautés (offres, pages, actualités). Enregistre les signaux dans Google Sheet et notifie via Slack.</div>
-            <div class="agent-progress-label"><span>Pages surveillées</span><span style="color:var(--accent);">15 sources</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
-          </div>
-
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar" style="background:rgba(255,124,42,0.1);">📡</div>
-              <div>
-                <div class="agent-name">Veille Google Alerts</div>
-                <div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · quotidien</span></div>
-              </div>
-            </div>
-            <div class="agent-task">Lit 13 flux RSS Google Alerts sur les concurrents et le secteur. Filtre les signaux pertinents, déduplique, enregistre dans Google Sheet Signaux et notifie Slack.</div>
-            <div class="agent-progress-label"><span>Flux RSS actifs</span><span style="color:var(--orange);">13 alertes</span></div>
-            <div class="progress-bar"><div class="progress-fill orange" style="width:100%"></div></div>
-          </div>
-
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar" style="background:rgba(0,229,160,0.1);">🧠</div>
-              <div>
-                <div class="agent-name">Synthèse Hebdomadaire IA</div>
-                <div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · lundi 9h</span></div>
-              </div>
-            </div>
-            <div class="agent-task">Chaque lundi à 9h, lit les signaux de la semaine depuis Google Sheet et génère un rapport IA via Claude Sonnet. Distribue le bulletin en PDF par Slack et Gmail.</div>
-            <div class="agent-progress-label"><span>Prochain rapport</span><span style="color:var(--green);">Lundi 09:00</span></div>
-            <div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div>
-          </div>
-
-          <div class="agent-card">
-            <div class="agent-header">
-              <div class="agent-avatar" style="background:rgba(255,61,90,0.1);">📲</div>
-              <div>
-                <div class="agent-name">Suivi Déploiement Social Media</div>
-                <div class="agent-status"><div class="status-dot idle"></div><span style="color:var(--yellow);font-size:11px;">En cours de déploiement</span></div>
-              </div>
-            </div>
-            <div class="agent-task">Suivi du déploiement de la stratégie social media sur 15 jours : SocialBee, Canva Teams, n8n Cloud, Brevo. Coordination avec la personne dédiée en exécution.</div>
-            <div class="agent-progress-label"><span>Déploiement</span><span style="color:var(--yellow);">En cours</span></div>
-            <div class="progress-bar"><div class="progress-fill orange" style="width:60%"></div></div>
-          </div>
-
+        <div class="grid-3">
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(0,229,160,0.1);">🔄</div><div><div class="agent-name">Sync Classement → GitHub</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · toutes les heures</span></div></div></div><div class="agent-task">Lit Classement, Employés, Activity depuis Google Sheets + followers FB/IG via API + posts LinkedIn via Apify. Génère et pousse le data.json sur GitHub Pages.</div><div class="agent-progress-label"><span>Dernière exécution</span><span style="color:var(--green);">il y a 24 min</span></div><div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div></div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(0,119,255,0.1);">💬</div><div><div class="agent-name">Invitations LinkedIn WhatsApp</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · webhook Twilio</span></div></div></div><div class="agent-task">Reçoit déclarations et validations ("ok Prénom Nom") via WhatsApp. Met à jour Classement, Slack et Activity.</div><div class="agent-progress-label"><span>Numéro actif</span><span style="color:var(--accent);">+1 555 718 9862</span></div><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div></div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(251,191,36,0.1);">🏆</div><div><div class="agent-name">Challenge Ambassadeurs Globo</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · Apify scraper</span></div></div></div><div class="agent-task">Scrape posts LinkedIn des employés via Apify. Calcule points (1/like, 2/comm., 3/repost). Leaderboard Slack chaque lundi.</div><div class="agent-progress-label"><span>Participants actifs</span><span style="color:var(--yellow);">4 employés</span></div><div class="progress-bar"><div class="progress-fill orange" style="width:33%"></div></div></div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(168,85,247,0.1);">🔭</div><div><div class="agent-name">Veille LinkedIn Concurrentielle</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · Apify LinkedIn</span></div></div></div><div class="agent-task">Scrape posts LinkedIn de 9 concurrents. Alimente Google Sheet Signaux.</div><div class="agent-progress-label"><span>Concurrents surveillés</span><span style="color:var(--purple);">9 profils</span></div><div class="progress-bar"><div class="progress-fill" style="width:100%;background:linear-gradient(90deg,var(--purple),var(--accent2));"></div></div></div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(0,196,255,0.1);">🌐</div><div><div class="agent-name">Veille Sites Concurrents</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · quotidien</span></div></div></div><div class="agent-task">Scrape 15 pages web des concurrents. Détecte nouveautés. Enregistre dans Google Sheet + notifie Slack.</div><div class="agent-progress-label"><span>Pages surveillées</span><span style="color:var(--accent);">15 sources</span></div><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div></div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(255,124,42,0.1);">📡</div><div><div class="agent-name">Veille Google Alerts</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · quotidien</span></div></div></div><div class="agent-task">Lit 13 flux RSS Google Alerts. Filtre, déduplique, enregistre Signaux + notifie Slack.</div><div class="agent-progress-label"><span>Flux RSS actifs</span><span style="color:var(--orange);">13 alertes</span></div><div class="progress-bar"><div class="progress-fill orange" style="width:100%"></div></div></div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(0,229,160,0.1);">🧠</div><div><div class="agent-name">Synthèse Hebdomadaire IA</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);font-size:11px;">Actif · lundi 9h</span></div></div></div><div class="agent-task">Chaque lundi à 9h, lit les signaux depuis Google Sheet et génère rapport via Claude Sonnet. Distribue PDF par Slack et Gmail.</div><div class="agent-progress-label"><span>Prochain rapport</span><span style="color:var(--green);">Lundi 09:00</span></div><div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div></div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(255,61,90,0.1);">📲</div><div><div class="agent-name">Suivi Déploiement Social Media</div><div class="agent-status"><div class="status-dot idle"></div><span style="color:var(--yellow);font-size:11px;">En cours de déploiement</span></div></div></div><div class="agent-task">Suivi déploiement stratégie social media 15 jours : SocialBee, Canva Teams, n8n Cloud, Brevo.</div><div class="agent-progress-label"><span>Déploiement</span><span style="color:var(--yellow);">En cours</span></div><div class="progress-bar"><div class="progress-fill orange" style="width:60%"></div></div></div>
         </div>
       </div>
 
       <!-- ══ CHALLENGE AMBASSADEURS ══ -->
       <div class="section" id="section-challenge">
         <div class="section-header">
-          <div><h2>Challenge Ambassadeurs</h2><p>Classement hebdomadaire — 1 pt/like · 2 pts/commentaire · 2 pts/invitation · 3 pts/repost</p></div>
+          <div><h2>Challenge Ambassadeurs</h2><p>1 pt/like · 2 pts/commentaire · 2 pts/invitation · 3 pts/repost</p></div>
           <div style="font-size:12px;color:var(--text2);">Semaine du 07/03/2026</div>
         </div>
         <div class="grid-2-1">
           <div class="card">
             <div class="card-header"><div class="card-title">🏆 Classement Semaine</div></div>
-            <table class="challenge-table">
-              <thead><tr><th>#</th><th>Employé</th><th>Likes</th><th>Comm.</th><th>Invit.</th><th>Reposts</th><th>Total</th></tr></thead>
-              <tbody id="challenge-tbody">
-                <tr><td colspan="7" style="text-align:center;color:var(--text2);padding:20px;">Chargement...</td></tr>
-              </tbody>
-            </table>
+            <div class="table-scroll">
+              <table class="challenge-table">
+                <thead><tr><th>#</th><th>Employé</th><th>Likes</th><th>Comm.</th><th>Invit.</th><th>Reposts</th><th>Total</th></tr></thead>
+                <tbody id="challenge-tbody"><tr><td colspan="7" style="text-align:center;color:var(--text2);padding:20px;">Chargement...</td></tr></tbody>
+              </table>
+            </div>
           </div>
           <div>
             <div class="card" style="margin-bottom:16px;">
@@ -1467,7 +907,7 @@ body {
             </div>
             <div class="card">
               <div class="card-header"><div class="card-title">📱 Déclarations WhatsApp</div></div>
-              <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">Employés déclarent leurs invitations LinkedIn en envoyant un nombre au numéro WhatsApp dédié.</div>
+              <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">Déclarez vos invitations LinkedIn en envoyant un nombre au numéro WhatsApp dédié.</div>
               <div style="background:var(--bg2);border-radius:8px;padding:12px;margin-bottom:8px;"><div style="font-size:11px;color:var(--text3);margin-bottom:4px;">Numéro actif</div><div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--accent);">+1 555 718 9862</div></div>
               <div style="background:var(--bg2);border-radius:8px;padding:12px;"><div style="font-size:11px;color:var(--text3);margin-bottom:4px;">Numéro dédié (en attente Meta)</div><div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--yellow);">+1 302 343 2720</div></div>
             </div>
@@ -1478,7 +918,7 @@ body {
       <!-- ══ VEILLE ══ -->
       <div class="section" id="section-veille">
         <div class="section-header">
-          <div><h2>Veille Concurrentielle</h2><p>Monitoring Georis · Fleeti · ON TRACK · Mapping Control · SAGAM · IT Mobile · Iris Afrique · Teletrack · Camtrack</p></div>
+          <div><h2>Veille Concurrentielle</h2><p>Georis · Fleeti · ON TRACK · Mapping Control · SAGAM · IT Mobile · Iris Afrique · Teletrack · Camtrack</p></div>
           <div style="display:flex;align-items:center;gap:10px;">
             <span id="veille-count-badge" style="background:rgba(0,196,255,0.1);color:var(--accent);font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;border:1px solid rgba(0,196,255,0.2);">— signaux</span>
             <span style="font-size:11px;color:var(--text3);" id="veille-updated"></span>
@@ -1500,22 +940,10 @@ body {
             <div class="card" style="margin-bottom:16px;">
               <div class="card-header"><div class="card-title">📊 Résumé Veille</div></div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
-                <div style="background:var(--bg2);border-radius:8px;padding:12px;text-align:center;">
-                  <div style="font-size:22px;font-weight:800;color:var(--red);" id="veille-stat-critique">—</div>
-                  <div style="font-size:11px;color:var(--text2);">Gravité haute</div>
-                </div>
-                <div style="background:var(--bg2);border-radius:8px;padding:12px;text-align:center;">
-                  <div style="font-size:22px;font-weight:800;color:var(--yellow);" id="veille-stat-encours">—</div>
-                  <div style="font-size:11px;color:var(--text2);">En cours</div>
-                </div>
-                <div style="background:var(--bg2);border-radius:8px;padding:12px;text-align:center;">
-                  <div style="font-size:22px;font-weight:800;color:var(--accent);" id="veille-stat-action">—</div>
-                  <div style="font-size:11px;color:var(--text2);">Action requise</div>
-                </div>
-                <div style="background:var(--bg2);border-radius:8px;padding:12px;text-align:center;">
-                  <div style="font-size:22px;font-weight:800;color:var(--green);" id="veille-stat-pipeline">—</div>
-                  <div style="font-size:11px;color:var(--text2);">→ Pipeline</div>
-                </div>
+                <div style="background:var(--bg2);border-radius:8px;padding:12px;text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--red);" id="veille-stat-critique">—</div><div style="font-size:11px;color:var(--text2);">Gravité haute</div></div>
+                <div style="background:var(--bg2);border-radius:8px;padding:12px;text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--yellow);" id="veille-stat-encours">—</div><div style="font-size:11px;color:var(--text2);">En cours</div></div>
+                <div style="background:var(--bg2);border-radius:8px;padding:12px;text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--accent);" id="veille-stat-action">—</div><div style="font-size:11px;color:var(--text2);">Action requise</div></div>
+                <div style="background:var(--bg2);border-radius:8px;padding:12px;text-align:center;"><div style="font-size:22px;font-weight:800;color:var(--green);" id="veille-stat-pipeline">—</div><div style="font-size:11px;color:var(--text2);">→ Pipeline</div></div>
               </div>
             </div>
             <div class="card" style="margin-bottom:16px;">
@@ -1553,9 +981,9 @@ body {
         <div class="card">
           <div class="card-header"><div class="card-title">Top Posts du Mois</div></div>
           <div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);"><div style="display:flex;align-items:center;gap:12px;"><div style="background:var(--bg2);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text2);">💼 LinkedIn</div><div style="font-size:13px;">Fleet Management & Sécurité en Afrique de l'Ouest</div></div><div style="display:flex;gap:16px;font-size:12px;color:var(--text2);"><span>👍 47</span><span>💬 12</span><span>↗️ 8.4%</span></div></div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);"><div style="display:flex;align-items:center;gap:12px;"><div style="background:var(--bg2);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text2);">📘 Facebook</div><div style="font-size:13px;">Petrosen — Globo assure la sécurité incendie de 3 nouveaux sites</div></div><div style="display:flex;gap:16px;font-size:12px;color:var(--text2);"><span>👍 89</span><span>💬 24</span><span>↗️ 7.2%</span></div></div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;"><div style="display:flex;align-items:center;gap:12px;"><div style="background:var(--bg2);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text2);">📸 Instagram</div><div style="font-size:13px;">Behind the scenes — Installation système anti-incendie TotalEnergies</div></div><div style="display:flex;gap:16px;font-size:12px;color:var(--text2);"><span>👍 134</span><span>💬 18</span><span>↗️ 9.1%</span></div></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px;"><div style="display:flex;align-items:center;gap:12px;min-width:0;"><div style="background:var(--bg2);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text2);flex-shrink:0;">💼 LinkedIn</div><div style="font-size:13px;">Fleet Management & Sécurité en Afrique de l'Ouest</div></div><div style="display:flex;gap:16px;font-size:12px;color:var(--text2);flex-shrink:0;"><span>👍 47</span><span>💬 12</span><span>↗️ 8.4%</span></div></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px;"><div style="display:flex;align-items:center;gap:12px;min-width:0;"><div style="background:var(--bg2);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text2);flex-shrink:0;">📘 Facebook</div><div style="font-size:13px;">Petrosen — Globo assure la sécurité incendie de 3 nouveaux sites</div></div><div style="display:flex;gap:16px;font-size:12px;color:var(--text2);flex-shrink:0;"><span>👍 89</span><span>💬 24</span><span>↗️ 7.2%</span></div></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;flex-wrap:wrap;gap:8px;"><div style="display:flex;align-items:center;gap:12px;min-width:0;"><div style="background:var(--bg2);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text2);flex-shrink:0;">📸 Instagram</div><div style="font-size:13px;">Behind the scenes — Installation système anti-incendie TotalEnergies</div></div><div style="display:flex;gap:16px;font-size:12px;color:var(--text2);flex-shrink:0;"><span>👍 134</span><span>💬 18</span><span>↗️ 9.1%</span></div></div>
           </div>
         </div>
       </div>
@@ -1565,13 +993,13 @@ body {
         <div class="section-header"><div><h2>Administration</h2><p>Gestion des accès, paramètres et configuration du dashboard</p></div></div>
         <div class="admin-section">
           <h3>👥 Utilisateurs & Accès</h3>
-          <div id="users-list"><!-- généré dynamiquement --></div>
+          <div id="users-list"></div>
           <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);">
             <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:16px;">+ Ajouter un Utilisateur</div>
             <div class="grid-3">
-              <div class="form-field"><label>Nom complet</label><input type="text" id="new-name" placeholder="Prénom Nom"></div>
-              <div class="form-field"><label>Identifiant</label><input type="text" id="new-user" placeholder="login"></div>
-              <div class="form-field"><label>Mot de passe</label><input type="password" id="new-pass" placeholder="••••••••"></div>
+              <div class="form-field"><label>Nom complet</label><input type="text" id="new-name" placeholder="Prénom Nom" autocomplete="off"></div>
+              <div class="form-field"><label>Identifiant</label><input type="text" id="new-user" placeholder="login" autocomplete="off"></div>
+              <div class="form-field"><label>Mot de passe</label><input type="password" id="new-pass" placeholder="••••••••" autocomplete="new-password"></div>
               <div class="form-field"><label>Rôle</label><select id="new-role"><option value="admin">Admin</option><option value="editor" selected>Éditeur</option><option value="viewer">Lecteur</option></select></div>
             </div>
             <button class="btn btn-primary" onclick="addUser(document.getElementById('new-user').value, document.getElementById('new-pass').value, document.getElementById('new-name').value, document.getElementById('new-role').value)">Ajouter l'utilisateur</button>
@@ -1581,14 +1009,14 @@ body {
           <h3>⚙️ Configuration Dashboard</h3>
           <div class="grid-2">
             <div>
-              <div class="form-field"><label>Objectif LinkedIn (followers)</label><input type="number" id="cfg-linkedin-goal" value="10000"></div>
-              <div class="form-field"><label>Objectif Facebook (abonnés)</label><input type="number" id="cfg-fb-goal" value="8000"></div>
-              <div class="form-field"><label>Objectif Instagram (abonnés)</label><input type="number" id="cfg-ig-goal" value="5000"></div>
+              <div class="form-field"><label>Objectif LinkedIn (followers)</label><input type="number" id="cfg-linkedin-goal" value="10000" inputmode="numeric"></div>
+              <div class="form-field"><label>Objectif Facebook (abonnés)</label><input type="number" id="cfg-fb-goal" value="8000" inputmode="numeric"></div>
+              <div class="form-field"><label>Objectif Instagram (abonnés)</label><input type="number" id="cfg-ig-goal" value="5000" inputmode="numeric"></div>
             </div>
             <div>
-              <div class="form-field"><label>Posts LinkedIn / semaine</label><input type="number" id="cfg-li-posts" value="4"></div>
-              <div class="form-field"><label>Posts Facebook / semaine</label><input type="number" id="cfg-fb-posts" value="3"></div>
-              <div class="form-field"><label>Posts Instagram / semaine</label><input type="number" id="cfg-ig-posts" value="2"></div>
+              <div class="form-field"><label>Posts LinkedIn / semaine</label><input type="number" id="cfg-li-posts" value="4" inputmode="numeric"></div>
+              <div class="form-field"><label>Posts Facebook / semaine</label><input type="number" id="cfg-fb-posts" value="3" inputmode="numeric"></div>
+              <div class="form-field"><label>Posts Instagram / semaine</label><input type="number" id="cfg-ig-posts" value="2" inputmode="numeric"></div>
             </div>
           </div>
           <button class="btn btn-primary" onclick="saveConfig()">Sauvegarder la Configuration</button>
@@ -1604,63 +1032,40 @@ body {
         </div>
       </div>
 
+    </div><!-- /content -->
+  </div><!-- /main -->
+
+  <!-- ══ BOTTOM NAV ══ -->
+  <div class="bottom-nav" id="bottom-nav">
+    <div class="bottom-nav-inner">
+      <button class="bnav-item active" id="bnav-overview" onclick="showSection('overview')">
+        <span class="bnav-icon">⚡</span><span class="bnav-label">Home</span>
+      </button>
+      <button class="bnav-item" id="bnav-platforms" onclick="showSection('platforms')">
+        <span class="bnav-icon">📡</span><span class="bnav-label">Réseaux</span>
+      </button>
+      <button class="bnav-item" id="bnav-pipeline" onclick="showSection('pipeline')">
+        <span class="bnav-icon">📝</span><span class="bnav-label">Pipeline</span>
+        <span class="bnav-badge" id="bnav-badge-pipeline">5</span>
+      </button>
+      <button class="bnav-item" id="bnav-challenge" onclick="showSection('challenge')">
+        <span class="bnav-icon">🏆</span><span class="bnav-label">Challenge</span>
+      </button>
+      <button class="bnav-item" id="bnav-more" onclick="openSidebar()">
+        <span class="bnav-icon">⋯</span><span class="bnav-label">Plus</span>
+      </button>
     </div>
   </div>
-</div>
+
+</div><!-- /app -->
 
 <script>
+/* ══ USERS ══ */
 var USERS = {
   'christopher': { pass: 'GloboAdmin2026!', name: 'Christopher Chaudey', role: 'superadmin', initial: 'C' },
-  'gallad': { pass: 'AI2026@', name: 'Gallad', role: 'editor', initial: 'G' },
-  'vilane': { pass: 'AIVilane2026', name: 'Vilane', role: 'editor', initial: 'V' },
+  'gallad':      { pass: 'AI2026@',         name: 'Gallad',              role: 'editor',     initial: 'G' },
+  'vilane':      { pass: 'AIVilane2026',    name: 'Vilane',              role: 'editor',     initial: 'V' },
 };
-
-function saveUsersToGitHub() {
-  // Persistance via n8n webhook — à implémenter
-}
-
-function addUser(username, password, name, role) {
-  if (!username || !password || !name) { alert('Tous les champs sont requis'); return; }
-  if (USERS[username]) { alert('Cet identifiant existe déjà'); return; }
-  var initial = name.charAt(0).toUpperCase();
-  USERS[username] = { pass: password, name: name, role: role || 'editor', initial: initial };
-  renderUsersList();
-  saveUsersToGitHub();
-  document.getElementById('new-user').value = '';
-  document.getElementById('new-pass').value = '';
-  document.getElementById('new-name') && (document.getElementById('new-name').value = '');
-  showNotif('✅ Compte créé : ' + username);
-}
-
-function deleteUser(username) {
-  if (username === 'christopher') { alert('Impossible de supprimer le Super Admin'); return; }
-  if (!confirm('Supprimer le compte ' + username + ' ?')) return;
-  delete USERS[username];
-  renderUsersList();
-  saveUsersToGitHub();
-  showNotif('🗑️ Compte supprimé : ' + username);
-}
-
-function renderUsersList() {
-  var list = document.getElementById('users-list');
-  if (!list) return;
-  var html = '';
-  Object.keys(USERS).forEach(function(u) {
-    var user = USERS[u];
-    var roleLabel = user.role === 'superadmin' ? 'Super Admin' : user.role === 'admin' ? 'Admin' : user.role === 'editor' ? 'Éditeur' : 'Lecteur';
-    var roleColor = user.role === 'superadmin' ? 'var(--accent)' : user.role === 'admin' ? 'var(--green)' : user.role === 'editor' ? 'var(--orange)' : 'var(--text2)';
-    html += '<div class="admin-user-row" style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">';
-    html += '<div class="admin-user-info" style="display:flex;align-items:center;gap:12px;">';
-    html += '<div class="admin-avatar" style="width:36px;height:36px;border-radius:50%;background:var(--card2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;">' + user.initial + '</div>';
-    html += '<div><div style="font-size:13px;font-weight:600;">' + user.name + '</div>';
-    html += '<div style="font-size:12px;color:var(--text2);">' + u + ' · <span style="color:' + roleColor + '">' + roleLabel + '</span></div></div></div>';
-    if (u !== 'christopher') {
-      html += '<button onclick="deleteUser(\'' + u + '\')" style="background:rgba(255,61,90,0.15);border:none;color:var(--red);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;">Supprimer</button>';
-    }
-    html += '</div>';
-  });
-  list.innerHTML = html;
-}
 var currentUser = null;
 
 function applySession(user) {
@@ -1669,7 +1074,10 @@ function applySession(user) {
   document.getElementById('app').style.display = 'block';
   if (currentUser.role === 'superadmin' || currentUser.role === 'admin') renderUsersList();
   document.getElementById('sidebar-name').textContent = currentUser.name.split(' ')[0];
-  document.getElementById('sidebar-role').textContent = currentUser.role === 'superadmin' ? 'Super Admin' : currentUser.role === 'admin' ? 'Administrateur' : currentUser.role === 'editor' ? 'Éditeur' : 'Lecteur';
+  document.getElementById('sidebar-role').textContent =
+    currentUser.role === 'superadmin' ? 'Super Admin' :
+    currentUser.role === 'admin' ? 'Administrateur' :
+    currentUser.role === 'editor' ? 'Éditeur' : 'Lecteur';
   document.getElementById('sidebar-avatar').textContent = currentUser.initial;
   document.querySelectorAll('.admin-only').forEach(function(el) {
     if (currentUser.role !== 'superadmin' && currentUser.role !== 'admin') el.style.display = 'none';
@@ -1698,44 +1106,96 @@ function doLogout() {
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('login-user').value = '';
   document.getElementById('login-pass').value = '';
+  closeSidebar();
 }
 
-// Restaurer la session au chargement
 (function() {
   if (window.location.search.includes('reset=1')) sessionStorage.clear();
   var saved = sessionStorage.getItem('globo_user');
-  if (saved) {
-    try {
-      var user = JSON.parse(saved);
-      if (USERS[user.username]) applySession(user);
-      else sessionStorage.removeItem('globo_user');
-    } catch(e) { sessionStorage.removeItem('globo_user'); }
-  }
+  if (saved) { try { var user = JSON.parse(saved); if (USERS[user.username]) applySession(user); else sessionStorage.removeItem('globo_user'); } catch(e) { sessionStorage.removeItem('globo_user'); } }
 })();
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') doLogin();
+  if (e.key === 'Escape') closeSidebar();
 });
 
-var titles = {
-  'overview': '⚡ Command Center', 'platforms': '📡 Plateformes Sociales',
-  'pipeline': '📝 Pipeline Contenu', 'calendar': '📅 Plan Éditorial',
-  'agents': '🤖 AI Team', 'challenge': '🏆 Challenge Ambassadeurs',
-  'veille': '🔭 Veille Concurrentielle', 'analytics': '📊 Analytics', 'admin': '⚙️ Administration'
+/* ══ SIDEBAR MOBILE ══ */
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebar-overlay').classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('visible');
+  document.body.style.overflow = '';
+}
+
+/* ══ NAVIGATION ══ */
+var TITLES = {
+  'overview':'⚡ Command Center','platforms':'📡 Plateformes Sociales',
+  'pipeline':'📝 Pipeline Contenu','calendar':'📅 Plan Éditorial',
+  'agents':'🤖 AI Team','challenge':'🏆 Challenge Ambassadeurs',
+  'veille':'🔭 Veille Concurrentielle','analytics':'📊 Analytics','admin':'⚙️ Administration'
 };
 
 function showSection(id) {
   document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
   document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+  document.querySelectorAll('.bnav-item').forEach(function(b) { b.classList.remove('active'); });
   var section = document.getElementById('section-' + id);
   if (section) section.classList.add('active');
-  document.title = 'Globo Corps — ' + (titles[id] || id);
-  document.getElementById('page-title').textContent = titles[id] || id;
+  document.title = 'Globo Corps — ' + (TITLES[id] || id);
+  document.getElementById('page-title').textContent = TITLES[id] || id;
   document.querySelectorAll('.nav-item').forEach(function(item) {
     if (item.getAttribute('onclick') && item.getAttribute('onclick').includes("'" + id + "'")) item.classList.add('active');
   });
+  var bnavEl = document.getElementById('bnav-' + id);
+  if (bnavEl) bnavEl.classList.add('active');
+  document.querySelector('.content').scrollTop = 0;
+  window.scrollTo(0, 0);
+  closeSidebar();
 }
 
+/* ══ ADMIN ══ */
+function addUser(username, password, name, role) {
+  if (!username || !password || !name) { showNotif('⚠️ Tous les champs sont requis'); return; }
+  if (USERS[username]) { showNotif('⚠️ Cet identifiant existe déjà'); return; }
+  USERS[username] = { pass: password, name: name, role: role || 'editor', initial: name.charAt(0).toUpperCase() };
+  renderUsersList();
+  document.getElementById('new-user').value = '';
+  document.getElementById('new-pass').value = '';
+  var nn = document.getElementById('new-name'); if (nn) nn.value = '';
+  showNotif('✅ Compte créé : ' + username);
+}
+
+function deleteUser(username) {
+  if (username === 'christopher') { showNotif('⚠️ Impossible de supprimer le Super Admin'); return; }
+  if (!confirm('Supprimer le compte ' + username + ' ?')) return;
+  delete USERS[username];
+  renderUsersList();
+  showNotif('🗑️ Compte supprimé : ' + username);
+}
+
+function renderUsersList() {
+  var list = document.getElementById('users-list');
+  if (!list) return;
+  var html = '';
+  Object.keys(USERS).forEach(function(u) {
+    var user = USERS[u];
+    var roleLabel = user.role === 'superadmin' ? 'Super Admin' : user.role === 'admin' ? 'Admin' : user.role === 'editor' ? 'Éditeur' : 'Lecteur';
+    var roleColor = user.role === 'superadmin' ? 'var(--accent)' : user.role === 'admin' ? 'var(--green)' : user.role === 'editor' ? 'var(--orange)' : 'var(--text2)';
+    html += '<div class="admin-user-row"><div class="admin-user-info"><div class="admin-avatar" style="background:var(--card2);">' + user.initial + '</div><div><div style="font-size:13px;font-weight:600;">' + user.name + '</div><div style="font-size:12px;color:var(--text2);">' + u + ' · <span style="color:' + roleColor + '">' + roleLabel + '</span></div></div></div>';
+    if (u !== 'christopher') html += '<button onclick="deleteUser(\'' + u + '\')" style="background:rgba(255,61,90,0.15);border:none;color:var(--red);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;flex-shrink:0;">Supprimer</button>';
+    html += '</div>';
+  });
+  list.innerHTML = html;
+}
+
+function saveConfig() { showNotif('✅ Configuration sauvegardée'); }
+
+/* ══ CALENDAR ══ */
 function buildCalendar() {
   var grid = document.getElementById('cal-grid');
   if (!grid) return;
@@ -1755,10 +1215,9 @@ function buildCalendar() {
     30:[{type:'linkedin',text:'Bilan Mars 2026'},{type:'newsletter',text:'Newsletter Avril preview'}]
   };
   var today = new Date().getDate();
-  for (var i = 0; i < shift; i++) { var e = document.createElement('div'); e.style.minHeight='80px'; grid.appendChild(e); }
+  for (var i = 0; i < shift; i++) { var e = document.createElement('div'); e.style.minHeight = '44px'; grid.appendChild(e); }
   for (var d = 1; d <= 31; d++) {
-    var cell = document.createElement('div');
-    cell.className = 'cal-day' + (d === today ? ' today' : '');
+    var cell = document.createElement('div'); cell.className = 'cal-day' + (d === today ? ' today' : '');
     var dd = document.createElement('div'); dd.className = 'cal-date'; dd.textContent = d;
     cell.appendChild(dd);
     if (posts[d]) posts[d].forEach(function(p) { var t = document.createElement('div'); t.className = 'cal-post ' + p.type; t.textContent = p.text; cell.appendChild(t); });
@@ -1766,50 +1225,30 @@ function buildCalendar() {
   }
 }
 
-function addUser() {
-  var name = document.getElementById('new-name').value.trim();
-  var user = document.getElementById('new-user').value.trim();
-  var pass = document.getElementById('new-pass').value;
-  var role = document.getElementById('new-role').value;
-  if (!name || !user || !pass) { alert('Remplissez tous les champs'); return; }
-  USERS[user] = { pass: pass, name: name, role: role, initial: name[0].toUpperCase() };
-  var list = document.getElementById('users-list');
-  var row = document.createElement('div'); row.className = 'admin-user-row';
-  row.innerHTML = '<div class="admin-user-info"><div class="admin-avatar" style="background:linear-gradient(135deg,var(--green),var(--accent2))">' + name[0].toUpperCase() + '</div><div><div style="font-size:13px;font-weight:600;">' + name + '</div><div style="font-size:12px;color:var(--text2);">' + user + '</div></div></div><div><div class="admin-role-badge ' + role + '">' + (role==='admin'?'Admin':role==='editor'?'Éditeur':'Lecteur') + '</div></div>';
-  list.appendChild(row);
-  document.getElementById('new-name').value = ''; document.getElementById('new-user').value = ''; document.getElementById('new-pass').value = '';
-  showNotif('✅ Utilisateur "' + user + '" ajouté avec succès');
-}
-
-function saveConfig() { showNotif('✅ Configuration sauvegardée'); }
-function addContent() { showNotif('✏️ Fonctionnalité disponible dans la prochaine version'); }
-
-function refreshData() {
-  loadRealData();
-  showNotif('↻ Actualisation en cours...');
-}
-
+/* ══ NOTIFICATIONS ══ */
 function showNotif(msg) {
-  var n = document.createElement('div');
-  n.style.cssText = 'position:fixed;bottom:24px;right:24px;background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:12px 18px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.3);';
-  n.textContent = msg; document.body.appendChild(n);
-  setTimeout(function() { n.remove(); }, 3000);
+  var old = document.querySelector('.toast'); if (old) old.remove();
+  var n = document.createElement('div'); n.className = 'toast'; n.textContent = msg;
+  document.body.appendChild(n);
+  setTimeout(function() { if (n.parentNode) n.remove(); }, 3000);
 }
 
+/* ══ DATE ══ */
 function updateDate() {
-  var now = new Date();
-  document.getElementById('topbar-date').textContent = now.toLocaleDateString('fr-FR', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  var el = document.getElementById('topbar-date');
+  if (el) el.textContent = new Date().toLocaleDateString('fr-FR', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
 }
 
-// ══════════════════════════════════
-// LOAD REAL DATA FROM GITHUB
-// ══════════════════════════════════
+/* ══ REFRESH ══ */
+function refreshData() { loadRealData(); showNotif('↻ Actualisation en cours...'); }
+
+/* ══ LOAD DATA ══ */
 function loadRealData() {
   fetch('https://direction-svg.github.io/globo-command-center/data.json?t=' + Date.now())
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (!data) return;
-      var updLabel = data.updated || '';
+      var upd = data.updated || '';
       var set = function(id, val) { var el = document.getElementById(id); if (el) el.textContent = val; };
 
       if (data.followers) {
@@ -1820,41 +1259,34 @@ function loadRealData() {
         set('followers-linkedin', li.toLocaleString('fr-FR'));
         set('followers-facebook', fb ? fb.toLocaleString('fr-FR') : '');
         set('followers-instagram', ig ? ig.toLocaleString('fr-FR') : '');
-        set('followers-facebook-updated', 'MAJ ' + updLabel);
-        set('followers-instagram-updated', 'MAJ ' + updLabel);
+        set('followers-facebook-updated', 'MAJ ' + upd);
+        set('followers-instagram-updated', 'MAJ ' + upd);
         set('kpi-reach', total.toLocaleString('fr-FR'));
-        set('kpi-reach-delta', 'MAJ ' + updLabel);
+        set('kpi-reach-delta', 'MAJ ' + upd);
         var pct = Math.round((li / 10000) * 1000) / 10;
         var restants = 10000 - li;
         set('linkedin-10k-label', li.toLocaleString('fr-FR') + ' / 10 000');
         set('linkedin-10k-pct', pct + '% atteint');
         set('linkedin-10k-rest', '+' + restants.toLocaleString('fr-FR') + ' restants');
-        var bar = document.getElementById('linkedin-10k-bar');
-        if (bar) bar.style.width = pct + '%';
+        var bar = document.getElementById('linkedin-10k-bar'); if (bar) bar.style.width = pct + '%';
         set('plat-linkedin-followers', li.toLocaleString('fr-FR'));
         set('plat-facebook-followers', fb ? fb.toLocaleString('fr-FR') : '');
         set('plat-instagram-followers', ig ? ig.toLocaleString('fr-FR') : '');
         var pctFB = Math.round((fb / 8000) * 1000) / 10;
         var pctIG = Math.round((ig / 5000) * 1000) / 10;
-        set('plat-linkedin-pct', pct + '%');
-        set('plat-facebook-pct', pctFB + '%');
-        set('plat-instagram-pct', pctIG + '%');
-        var liBar = document.getElementById('plat-linkedin-bar');
-        var fbBar = document.getElementById('plat-facebook-bar');
-        var igBar = document.getElementById('plat-instagram-bar');
-        if (liBar) liBar.style.width = pct + '%';
-        if (fbBar) fbBar.style.width = pctFB + '%';
-        if (igBar) igBar.style.width = pctIG + '%';
+        set('plat-linkedin-pct', pct + '%'); set('plat-facebook-pct', pctFB + '%'); set('plat-instagram-pct', pctIG + '%');
+        var b1=document.getElementById('plat-linkedin-bar'), b2=document.getElementById('plat-facebook-bar'), b3=document.getElementById('plat-instagram-bar');
+        if(b1) b1.style.width=pct+'%'; if(b2) b2.style.width=pctFB+'%'; if(b3) b3.style.width=pctIG+'%';
       }
 
       if (data.linkedin_stats) {
-        var posts = data.linkedin_stats.posts_mois;
+        var posts2 = data.linkedin_stats.posts_mois;
         var engage = data.linkedin_stats.engagement_rate;
-        set('kpi-posts', posts !== undefined ? posts : '');
+        set('kpi-posts', posts2 !== undefined ? posts2 : '');
         set('kpi-engage', engage !== undefined ? engage.toFixed(1) + '%' : '');
-        set('kpi-posts-delta', 'LinkedIn · MAJ ' + updLabel);
-        set('kpi-engage-delta', 'LinkedIn · MAJ ' + updLabel);
-        set('plat-linkedin-posts', posts !== undefined ? posts : '');
+        set('kpi-posts-delta', 'LinkedIn · MAJ ' + upd);
+        set('kpi-engage-delta', 'LinkedIn · MAJ ' + upd);
+        set('plat-linkedin-posts', posts2 !== undefined ? posts2 : '');
         set('plat-linkedin-engage', engage !== undefined ? engage.toFixed(1) + '%' : '');
       }
 
@@ -1865,191 +1297,105 @@ function loadRealData() {
           var totalPts = 0;
           data.classement.forEach(function(emp, i) {
             totalPts += (parseInt(emp.Total_Points) || 0);
-            var rankClass = i===0 ? 'rank-1' : i===1 ? 'rank-2' : i===2 ? 'rank-3' : 'rank-n';
+            var rankClass = i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-n';
             var row = document.createElement('tr');
-            var td1 = document.createElement('td');
-            var badge = document.createElement('div');
-            badge.className = 'rank-badge ' + rankClass;
-            badge.textContent = i + 1;
-            td1.appendChild(badge);
-            var td2 = document.createElement('td');
-            var strong = document.createElement('strong');
-            strong.textContent = emp.Prenom + ' ' + emp.Nom;
-            td2.appendChild(strong);
-            var td3 = document.createElement('td'); td3.textContent = emp.Total_Likes || 0;
-            var td4 = document.createElement('td'); td4.textContent = emp.Total_Commentaires || 0;
-            var td5 = document.createElement('td'); td5.textContent = emp.Total_Invitations || 0;
-            var td6 = document.createElement('td'); td6.textContent = emp.Total_Reposts || 0;
-            var td7 = document.createElement('td');
-            var pill = document.createElement('div');
-            pill.className = 'points-pill';
-            pill.textContent = (emp.Total_Points || 0) + ' pts';
-            td7.appendChild(pill);
-            row.appendChild(td1); row.appendChild(td2); row.appendChild(td3);
-            row.appendChild(td4); row.appendChild(td5); row.appendChild(td6); row.appendChild(td7);
+            var td1=document.createElement('td'); var badge=document.createElement('div'); badge.className='rank-badge '+rankClass; badge.textContent=i+1; td1.appendChild(badge);
+            var td2=document.createElement('td'); var strong=document.createElement('strong'); strong.textContent=emp.Prenom+' '+emp.Nom; td2.appendChild(strong);
+            var td3=document.createElement('td'); td3.textContent=emp.Total_Likes||0;
+            var td4=document.createElement('td'); td4.textContent=emp.Total_Commentaires||0;
+            var td5=document.createElement('td'); td5.textContent=emp.Total_Invitations||0;
+            var td6=document.createElement('td'); td6.textContent=emp.Total_Reposts||0;
+            var td7=document.createElement('td'); var pill=document.createElement('div'); pill.className='points-pill'; pill.textContent=(emp.Total_Points||0)+' pts'; td7.appendChild(pill);
+            row.appendChild(td1);row.appendChild(td2);row.appendChild(td3);row.appendChild(td4);row.appendChild(td5);row.appendChild(td6);row.appendChild(td7);
             tbody.appendChild(row);
           });
-          var stPts = document.getElementById('stats-total-pts');
-          if (stPts) stPts.textContent = totalPts + ' pts';
+          set('stats-total-pts', totalPts + ' pts');
         }
       }
 
-      // Activity Feed depuis data.json
       if (data.activity && data.activity.length > 0) {
         var feedEl = document.getElementById('activity-feed');
         if (feedEl) {
           feedEl.innerHTML = '';
-          var colorMap = {
-            'green': 'var(--green)', 'accent': 'var(--accent)',
-            'purple': 'var(--purple)', 'yellow': 'var(--yellow)',
-            'orange': 'var(--orange)', 'red': 'var(--red)'
-          };
+          var colorMap = {green:'var(--green)',accent:'var(--accent)',purple:'var(--purple)',yellow:'var(--yellow)',orange:'var(--orange)',red:'var(--red)'};
           data.activity.forEach(function(item) {
-            var dotColor = colorMap[item.color] || 'var(--accent)';
-            var feedItem = document.createElement('div');
-            feedItem.className = 'feed-item';
-            var dot = document.createElement('div');
-            dot.className = 'feed-dot';
-            dot.style.background = dotColor;
-            var content = document.createElement('div');
-            content.className = 'feed-content';
-            var msg = document.createElement('div');
-            msg.className = 'msg';
-            msg.textContent = item.msg;
-            var time = document.createElement('div');
-            time.className = 'time';
-            time.textContent = item.time;
-            content.appendChild(msg);
-            content.appendChild(time);
-            feedItem.appendChild(dot);
-            feedItem.appendChild(content);
-            feedEl.appendChild(feedItem);
+            var fi=document.createElement('div'); fi.className='feed-item';
+            var dot=document.createElement('div'); dot.className='feed-dot'; dot.style.background=colorMap[item.color]||'var(--accent)';
+            var content=document.createElement('div'); content.className='feed-content';
+            var msg=document.createElement('div'); msg.className='msg'; msg.textContent=item.msg;
+            var time=document.createElement('div'); time.className='time'; time.textContent=item.time;
+            content.appendChild(msg); content.appendChild(time);
+            fi.appendChild(dot); fi.appendChild(content);
+            feedEl.appendChild(fi);
           });
         }
       }
 
-      // Pipeline Contenu dynamique
       if (data.pipeline !== undefined) {
         var statuts = {
-          'review':    { id: 'pipeline-review',    titleId: 'pipeline-review-title',    emoji: '🟡', label: 'À Valider' },
-          'scheduled': { id: 'pipeline-scheduled', titleId: 'pipeline-scheduled-title', emoji: '🔵', label: 'Planifiés' },
-          'draft':     { id: 'pipeline-draft',     titleId: 'pipeline-draft-title',     emoji: '✏️', label: 'Brouillons' },
-          'published': { id: 'pipeline-published', titleId: 'pipeline-published-title', emoji: '✅', label: 'Publiés' }
+          'review':    {id:'pipeline-review',    titleId:'pipeline-review-title',    emoji:'🟡',label:'À Valider'},
+          'scheduled': {id:'pipeline-scheduled', titleId:'pipeline-scheduled-title', emoji:'🔵',label:'Planifiés'},
+          'draft':     {id:'pipeline-draft',     titleId:'pipeline-draft-title',     emoji:'✏️',label:'Brouillons'},
+          'published': {id:'pipeline-published', titleId:'pipeline-published-title', emoji:'✅',label:'Publiés'}
         };
-        var tagColors = {
-          'linkedin':   'var(--accent)',
-          'facebook':   '#1877F2',
-          'instagram':  'var(--purple)',
-          'newsletter': 'var(--yellow)',
-          'twitter':    '#1DA1F2'
-        };
+        var tagColors = {linkedin:'var(--accent)',facebook:'#1877F2',instagram:'var(--purple)',newsletter:'var(--yellow)',twitter:'#1DA1F2'};
         Object.keys(statuts).forEach(function(statut) {
-          var cfg = statuts[statut];
-          var items = data.pipeline.filter(function(p) { return (p.statut || '').toLowerCase() === statut; });
-          var titleEl = document.getElementById(cfg.titleId);
-          if (titleEl) titleEl.textContent = cfg.emoji + ' ' + cfg.label + ' (' + items.length + ')';
-          var container = document.getElementById(cfg.id);
-          if (!container) return;
-          container.innerHTML = '';
-          if (items.length === 0) {
-            var empty = document.createElement('div');
-            empty.style.cssText = 'color:var(--text2);font-size:13px;padding:12px 0;';
-            empty.textContent = 'Aucun contenu';
-            container.appendChild(empty);
-            return;
-          }
-          items.forEach(function(p) {
-            var item = document.createElement('div');
-            item.className = 'pipeline-item';
-            var dot = document.createElement('div');
-            dot.className = 'pipe-status ' + statut;
-            var body = document.createElement('div');
-            body.className = 'pipe-content';
-            var title = document.createElement('div');
-            title.className = 'pipe-title';
-            title.textContent = p.titre;
-            var meta = document.createElement('div');
-            meta.className = 'pipe-meta';
-            if (p.plateformes) {
-              p.plateformes.split(',').forEach(function(pl) {
-                pl = pl.trim().toLowerCase();
-                var tag = document.createElement('span');
-                tag.className = 'pipe-tag';
-                tag.textContent = pl.charAt(0).toUpperCase() + pl.slice(1);
-                tag.style.background = (tagColors[pl] || 'var(--accent)') + '22';
-                tag.style.color = tagColors[pl] || 'var(--accent)';
-                meta.appendChild(tag);
-              });
-            }
-            body.appendChild(title);
-            body.appendChild(meta);
-            var dateEl = document.createElement('div');
-            dateEl.className = 'pipe-date';
-            if (p.date) {
-              var parts = p.date.split('/');
-              dateEl.textContent = parts.length >= 2 ? parts[0] + '/' + parts[1] : p.date;
-            }
-            item.appendChild(dot);
-            item.appendChild(body);
-            item.appendChild(dateEl);
+          var cfg=statuts[statut];
+          var items=data.pipeline.filter(function(p){return (p.statut||'').toLowerCase()===statut;});
+          var titleEl=document.getElementById(cfg.titleId); if(titleEl) titleEl.textContent=cfg.emoji+' '+cfg.label+' ('+items.length+')';
+          var container=document.getElementById(cfg.id); if(!container) return;
+          container.innerHTML='';
+          if(items.length===0){container.innerHTML='<div style="color:var(--text2);font-size:13px;padding:12px 0;">Aucun contenu</div>';return;}
+          items.forEach(function(p){
+            var item=document.createElement('div'); item.className='pipeline-item';
+            var dot=document.createElement('div'); dot.className='pipe-status '+statut;
+            var body=document.createElement('div'); body.className='pipe-content';
+            var title=document.createElement('div'); title.className='pipe-title'; title.textContent=p.titre;
+            var meta=document.createElement('div'); meta.className='pipe-meta';
+            if(p.plateformes){p.plateformes.split(',').forEach(function(pl){pl=pl.trim().toLowerCase();var tag=document.createElement('span');tag.className='pipe-tag';tag.textContent=pl.charAt(0).toUpperCase()+pl.slice(1);tag.style.background=(tagColors[pl]||'var(--accent)')+'22';tag.style.color=tagColors[pl]||'var(--accent)';meta.appendChild(tag);});}
+            body.appendChild(title);body.appendChild(meta);
+            var dateEl=document.createElement('div'); dateEl.className='pipe-date';
+            if(p.date){var parts=p.date.split('/');dateEl.textContent=parts.length>=2?parts[0]+'/'+parts[1]:p.date;}
+            item.appendChild(dot);item.appendChild(body);item.appendChild(dateEl);
             container.appendChild(item);
           });
         });
-        var puEl = document.getElementById('pipeline-updated');
-        if (puEl) puEl.textContent = 'MAJ ' + (data.updated || '');
-
-        // Badge nav + KPI home
-        var actifs = data.pipeline.filter(function(p) {
-          var s = (p.statut || '').toLowerCase();
-          return s === 'review' || s === 'scheduled' || s === 'draft';
-        }).length;
-        var badge = document.getElementById('pipeline-badge');
-        if (badge) badge.textContent = actifs;
-        var kpiPipe = document.getElementById('kpi-pipeline');
-        if (kpiPipe) kpiPipe.textContent = actifs;
-        var reviewCount = data.pipeline.filter(function(p) { return (p.statut||'').toLowerCase() === 'review'; }).length;
-        var scheduledCount = data.pipeline.filter(function(p) { return (p.statut||'').toLowerCase() === 'scheduled'; }).length;
-        var draftCount = data.pipeline.filter(function(p) { return (p.statut||'').toLowerCase() === 'draft'; }).length;
-        var detail = document.getElementById('kpi-pipeline-detail');
-        if (detail) detail.textContent = reviewCount + ' à valider · ' + scheduledCount + ' planifiés · ' + draftCount + ' brouillons';
+        set('pipeline-updated','MAJ '+upd);
+        var actifs=data.pipeline.filter(function(p){var s=(p.statut||'').toLowerCase();return s==='review'||s==='scheduled'||s==='draft';}).length;
+        var bdg=document.getElementById('pipeline-badge'); if(bdg) bdg.textContent=actifs;
+        var bndg=document.getElementById('bnav-badge-pipeline'); if(bndg) bndg.textContent=actifs;
+        set('kpi-pipeline',actifs);
+        var rev=data.pipeline.filter(function(p){return (p.statut||'').toLowerCase()==='review';}).length;
+        var sch=data.pipeline.filter(function(p){return (p.statut||'').toLowerCase()==='scheduled';}).length;
+        var dra=data.pipeline.filter(function(p){return (p.statut||'').toLowerCase()==='draft';}).length;
+        set('kpi-pipeline-detail',rev+' à valider · '+sch+' planifiés · '+dra+' brouillons');
       }
 
-      // Veille Concurrentielle dynamique
       if (data.signaux !== undefined) {
         window._signauxData = data.signaux;
         window._signauxPipelineCount = window._signauxPipelineCount || 0;
         renderVeille(data.signaux, window._veilleFilter || 'all');
-        var countBadge = document.getElementById('veille-count-badge');
-        if (countBadge) countBadge.textContent = data.signaux.length + ' signaux';
-        var upd = document.getElementById('veille-updated');
-        if (upd) upd.textContent = 'MAJ ' + (data.updated || '');
-        // Stats
-        var critique = data.signaux.filter(function(s) { return s.gravite >= 4; }).length;
-        var encours = data.signaux.filter(function(s) { return (s.statut||'') === 'en_cours'; }).length;
-        var action = data.signaux.filter(function(s) { return (s.action_requise||'').toUpperCase() === 'OUI'; }).length;
-        var set2 = function(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
-        set2('veille-stat-critique', critique);
-        set2('veille-stat-encours', encours);
-        set2('veille-stat-action', action);
-        set2('veille-stat-pipeline', window._signauxPipelineCount || 0);
+        set('veille-count-badge', data.signaux.length + ' signaux');
+        set('veille-updated', 'MAJ ' + upd);
+        var critique=data.signaux.filter(function(s){return s.gravite>=4;}).length;
+        var encours=data.signaux.filter(function(s){return (s.statut||'')==='en_cours';}).length;
+        var action=data.signaux.filter(function(s){return (s.action_requise||'').toUpperCase()==='OUI';}).length;
+        set('veille-stat-critique',critique);set('veille-stat-encours',encours);set('veille-stat-action',action);
+        set('veille-stat-pipeline',window._signauxPipelineCount||0);
       }
-
     })
-    .catch(function(e) { console.log('data.json non disponible:', e); });
+    .catch(function(e) { console.log('[Globo] data.json indisponible:', e); });
 }
 
-// ══════════════════════════════════
-// VEILLE — RENDU & ACTIONS
-// ══════════════════════════════════
+/* ══ VEILLE ══ */
 window._veilleFilter = 'all';
 window._signauxPipelineCount = 0;
-window._signauxStates = {}; // statuts modifiés localement en attente de sync
+window._signauxStates = {};
 
 function graviteStars(g) {
-  var html = '<div class="veille-gravite' + (g >= 4 ? '' : g === 3 ? ' g3' : g === 2 ? ' g2' : ' g1') + '">';
-  for (var i = 1; i <= 4; i++) {
-    html += '<span class="' + (i <= g ? 'active' : '') + '"></span>';
-  }
+  var cls = g>=4?'':g===3?' g3':g===2?' g2':' g1';
+  var html = '<div class="veille-gravite'+cls+'">';
+  for (var i=1;i<=4;i++) html += '<span class="'+(i<=g?'active':'')+'"></span>';
   return html + '</div>';
 }
 
@@ -2058,119 +1404,76 @@ function renderVeille(signaux, filter) {
   if (!feed) return;
   feed.innerHTML = '';
   var filtered = signaux.filter(function(s) {
-    var statut = window._signauxStates[s.concurrent] || s.statut || 'nouveau';
-    if (filter === 'nouveau') return statut === 'nouveau';
-    if (filter === 'en_cours') return statut === 'en_cours';
+    var st = window._signauxStates[s.concurrent] || s.statut || 'nouveau';
+    if (filter==='nouveau') return st==='nouveau';
+    if (filter==='en_cours') return st==='en_cours';
     return true;
   });
-  if (filtered.length === 0) {
-    feed.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:20px 0;text-align:center;">Aucun signal pour ce filtre</div>';
-    return;
-  }
+  if (filtered.length === 0) { feed.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:20px 0;text-align:center;">Aucun signal pour ce filtre</div>'; return; }
   filtered.forEach(function(s) {
     var statut = window._signauxStates[s.concurrent] || s.statut || 'nouveau';
-    var item = document.createElement('div');
-    item.className = 'veille-item statut-' + statut;
-    item.dataset.concurrent = s.concurrent;
-    var gravite = parseInt(s.gravite) || 1;
+    var item = document.createElement('div'); item.className = 'veille-item statut-' + statut;
+    var g = parseInt(s.gravite) || 1;
     var resume = s.resume || '';
-    var shortResume = resume.length > 160 ? resume.substring(0, 160) + '...' : resume;
-    var actionHtml = '';
+    var shortResume = resume.length > 160 ? resume.substring(0,160) + '...' : resume;
     var idx = window._signauxData ? window._signauxData.indexOf(s) : -1;
-    if (statut === 'nouveau') {
-      actionHtml = '<div class="veille-actions">' +
-        '<button class="veille-btn btn-encours" data-action="en_cours" data-idx="' + idx + '">⏳ En cours</button>' +
-        '<button class="veille-btn btn-pipeline" data-action="pipeline" data-idx="' + idx + '">📝 → Pipeline</button>' +
-        '</div>';
-    } else if (statut === 'en_cours') {
-      actionHtml = '<div class="veille-actions">' +
-        '<button class="veille-btn btn-pipeline" data-action="pipeline" data-idx="' + idx + '">📝 → Pipeline</button>' +
-        '<button class="veille-btn btn-done" data-action="traite" data-idx="' + idx + '">✅ Traité</button>' +
-        '</div>';
-    }
-    var statutLabel = statut === 'en_cours' ? '⏳ En cours' : statut === 'traite' ? '✅ Traité' : '';
+    var actionHtml = '';
+    if (statut==='nouveau') { actionHtml = '<div class="veille-actions"><button class="veille-btn btn-encours" data-action="en_cours" data-idx="'+idx+'">⏳ En cours</button><button class="veille-btn btn-pipeline" data-action="pipeline" data-idx="'+idx+'">📝 → Pipeline</button></div>'; }
+    else if (statut==='en_cours') { actionHtml = '<div class="veille-actions"><button class="veille-btn btn-pipeline" data-action="pipeline" data-idx="'+idx+'">📝 → Pipeline</button><button class="veille-btn btn-done" data-action="traite" data-idx="'+idx+'">✅ Traité</button></div>'; }
+    var statLabel = statut==='en_cours'?'⏳ En cours':statut==='traite'?'✅ Traité':'';
     item.innerHTML =
-      '<div class="veille-header">' +
-        '<div>' +
-          '<div class="veille-source">' + s.concurrent + ' · ' + (s.date || '') + '</div>' +
-          '<div class="veille-title">' + shortResume + '</div>' +
-        '</div>' +
-        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">' +
-          graviteStars(gravite) +
-          (statutLabel ? '<span class="veille-tag ' + statut + '">' + statutLabel + '</span>' : '') +
-        '</div>' +
-      '</div>' +
-      (s.action_requise && s.action_requise.toUpperCase() === 'OUI' ? '<div style="font-size:11px;color:var(--orange);margin-bottom:6px;">⚡ Action requise</div>' : '') +
+      '<div class="veille-header">'+
+        '<div><div class="veille-source">'+s.concurrent+' · '+(s.date||'')+'</div><div class="veille-title">'+shortResume+'</div></div>'+
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">'+graviteStars(g)+(statLabel?'<span class="veille-tag '+statut+'">'+statLabel+'</span>':'')+'</div>'+
+      '</div>'+
+      (s.action_requise&&s.action_requise.toUpperCase()==='OUI'?'<div style="font-size:11px;color:var(--orange);margin-bottom:6px;">⚡ Action requise</div>':'')+
       actionHtml;
     feed.appendChild(item);
   });
-  // Event delegation pour les boutons
   feed.onclick = function(e) {
-    var btn = e.target.closest('.veille-btn');
-    if (!btn) return;
-    var action = btn.dataset.action;
-    var idx = parseInt(btn.dataset.idx);
-    if (isNaN(idx) || !window._signauxData[idx]) return;
-    var s = window._signauxData[idx];
-    actionVeille(action, s.concurrent, s.resume.substring(0, 80));
+    var btn = e.target.closest('.veille-btn'); if (!btn) return;
+    var action=btn.dataset.action; var idx=parseInt(btn.dataset.idx);
+    if (isNaN(idx)||!window._signauxData[idx]) return;
+    var s=window._signauxData[idx];
+    actionVeille(action, s.concurrent, s.resume.substring(0,80));
   };
 }
 
 function filterVeille(f) {
   window._veilleFilter = f;
-  var btns = ['all','nouveau','en_cours'];
-  btns.forEach(function(b) {
-    var el = document.getElementById('vf-' + b);
-    if (!el) return;
-    if (b === f) {
-      el.style.background = 'var(--accent)'; el.style.color = '#000'; el.style.fontWeight = '700';
-    } else {
-      el.style.background = 'transparent'; el.style.color = 'var(--text2)'; el.style.fontWeight = '400';
-    }
+  ['all','nouveau','en_cours'].forEach(function(b) {
+    var el=document.getElementById('vf-'+b); if(!el) return;
+    if(b===f){el.style.background='var(--accent)';el.style.color='#000';el.style.fontWeight='700';}
+    else{el.style.background='transparent';el.style.color='var(--text2)';el.style.fontWeight='400';}
   });
   if (window._signauxData) renderVeille(window._signauxData, f);
 }
 
 function actionVeille(action, concurrent, titre) {
-  // Mise à jour locale immédiate
-  window._signauxStates[concurrent] = action === 'pipeline' ? 'en_cours' : action;
-  if (action === 'pipeline') {
-    window._signauxPipelineCount = (window._signauxPipelineCount || 0) + 1;
-    var el = document.getElementById('veille-stat-pipeline');
-    if (el) el.textContent = window._signauxPipelineCount;
+  window._signauxStates[concurrent] = action==='pipeline'?'en_cours':action;
+  if (action==='pipeline') {
+    window._signauxPipelineCount = (window._signauxPipelineCount||0) + 1;
+    var el=document.getElementById('veille-stat-pipeline'); if(el) el.textContent=window._signauxPipelineCount;
     showNotif('📝 Signal envoyé vers Pipeline — ' + concurrent);
-  } else if (action === 'traite') {
-    showNotif('✅ Signal traité — ' + concurrent);
-  } else if (action === 'en_cours') {
-    showNotif('⏳ Signal en cours — ' + concurrent);
-  }
-  // Re-render immédiat
-  if (window._signauxData) renderVeille(window._signauxData, window._veilleFilter || 'all');
-  var encours = Object.values(window._signauxStates).filter(function(v) { return v === 'en_cours'; }).length;
-  var el2 = document.getElementById('veille-stat-encours');
-  if (el2) el2.textContent = encours;
-  // Webhook n8n — persiste le statut dans Google Sheets
-  var statutAEnvoyer = action === 'pipeline' ? 'en_cours' : action;
+  } else if (action==='traite') { showNotif('✅ Signal traité — ' + concurrent);
+  } else if (action==='en_cours') { showNotif('⏳ Signal en cours — ' + concurrent); }
+  if (window._signauxData) renderVeille(window._signauxData, window._veilleFilter||'all');
+  var encours=Object.values(window._signauxStates).filter(function(v){return v==='en_cours';}).length;
+  var el2=document.getElementById('veille-stat-encours'); if(el2) el2.textContent=encours;
+  var statutAEnvoyer = action==='pipeline'?'en_cours':action;
   fetch('https://globocorps-itl.app.n8n.cloud/webhook/veille-action', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ action: statutAEnvoyer, concurrent: concurrent, titre: titre })
-  }).then(function(r) { return r.json(); }).then(function(data) {
-    if (data.ok) {
-      console.log('[Veille] Statut mis à jour dans Sheets:', concurrent, '\u2192', statutAEnvoyer);
-    } else {
-      console.warn('[Veille] Erreur webhook:', data.error);
-    }
-  }).catch(function(err) {
-    console.warn('[Veille] Webhook inaccessible:', err);
-  });
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({action:statutAEnvoyer,concurrent:concurrent,titre:titre})
+  }).then(function(r){return r.json();}).then(function(d){if(!d.ok) console.warn('[Veille] webhook error:',d.error);}).catch(function(err){console.warn('[Veille] webhook inaccessible:',err);});
 }
 
+/* ══ INIT ══ */
 function initDashboard() {
   updateDate();
   buildCalendar();
   loadRealData();
-  setInterval(loadRealData, 15 * 1000);
+  setInterval(loadRealData, 15000);
+  setInterval(updateDate, 60000);
 }
 </script>
 </body>
