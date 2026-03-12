@@ -1,11 +1,11 @@
 {
-  "updated": "2026-03-12T22:59:13.707Z",
+  "updated": "2026-03-12T22:59:15.015Z",
   "entites": {
     "globo_afrique": {
       "followers": {
         "linkedin": 5937,
         "facebook": 13911,
-        "instagram": null
+        "instagram": 2128
       },
       "linkedin_stats": {
         "followers": 5937,
