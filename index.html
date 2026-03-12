@@ -1678,8 +1678,14 @@ function tryAuth(u, p, remember) {
 }
 
 function doLogin() {
-  var u = document.getElementById('login-user').value.trim();
-  var p = document.getElementById('login-pass').value;
+  // Petit délai pour laisser Chrome finaliser l'autocomplete avant lecture
+  setTimeout(function() { _doLoginInner(); }, 50);
+}
+function _doLoginInner() {
+  var uEl = document.getElementById('login-user');
+  var pEl = document.getElementById('login-pass');
+  var u = uEl.value.trim();
+  var p = pEl.value;
   var remember = document.getElementById('login-remember').checked;
   var err = document.getElementById('login-error');
 
