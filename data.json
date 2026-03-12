@@ -1,11 +1,11 @@
 {
-  "updated": "2026-03-12T22:59:16.816Z",
+  "updated": "2026-03-12T23:10:56.033Z",
   "entites": {
     "globo_afrique": {
       "followers": {
         "linkedin": 5937,
-        "facebook": 13911,
-        "instagram": 2128
+        "facebook": null,
+        "instagram": null
       },
       "linkedin_stats": {
         "followers": 5937,
@@ -17,26 +17,26 @@
     },
     "ges": {
       "followers": {
-        "linkedin": 2144,
-        "facebook": 4912,
-        "instagram": null
-      },
-      "linkedin_stats": {
-        "followers": 2144,
-        "posts_month": 4,
-        "likes_month": 22,
-        "comments_month": null,
-        "engagement": 0.26
-      }
-    },
-    "aoe": {
-      "followers": {
-        "linkedin": 1442,
+        "linkedin": null,
         "facebook": null,
         "instagram": null
       },
       "linkedin_stats": {
-        "followers": 1442,
+        "followers": null,
+        "posts_month": null,
+        "likes_month": null,
+        "comments_month": null,
+        "engagement": null
+      }
+    },
+    "aoe": {
+      "followers": {
+        "linkedin": null,
+        "facebook": null,
+        "instagram": null
+      },
+      "linkedin_stats": {
+        "followers": null,
         "posts_month": null,
         "likes_month": null,
         "comments_month": null,
