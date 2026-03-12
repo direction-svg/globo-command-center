@@ -1040,9 +1040,9 @@ body {
             <div class="platform-header"><div class="platform-logo linkedin">💼</div><div><div class="platform-name">LinkedIn</div><div class="platform-handle">Globo Afrique · Globo Corps</div></div></div>
             <div class="platform-stats">
               <div class="platform-stat"><div class="val" id="plat-linkedin-followers">—</div><div class="lbl">Followers</div></div>
-              <div class="platform-stat"><div class="val" style="color:var(--text2);">—</div><div class="lbl">Ce mois</div></div>
               <div class="platform-stat"><div class="val" id="plat-linkedin-engage">—</div><div class="lbl">Engagement</div></div>
               <div class="platform-stat"><div class="val" id="plat-linkedin-posts">—</div><div class="lbl">Posts (Mars)</div></div>
+              <div class="platform-stat"><div class="val" id="plat-linkedin-likes">—</div><div class="lbl">Likes (Mars)</div></div>
             </div>
             <div style="margin-top:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Objectif 10 000</span><span id="plat-linkedin-pct">—%</span></div><div class="progress-bar"><div class="progress-fill" id="plat-linkedin-bar" style="width:0%"></div></div></div>
           </div>
@@ -1050,19 +1050,19 @@ body {
             <div class="platform-header"><div class="platform-logo facebook">📘</div><div><div class="platform-name">Facebook</div><div class="platform-handle">Globo Afrique</div></div></div>
             <div class="platform-stats">
               <div class="platform-stat"><div class="val" id="plat-facebook-followers">—</div><div class="lbl">Abonnés</div></div>
-              <div class="platform-stat"><div class="val" style="color:var(--text2);">—</div><div class="lbl">Ce mois</div></div>
-              <div class="platform-stat"><div class="val">—</div><div class="lbl">Engagement</div></div>
-              <div class="platform-stat"><div class="val">—</div><div class="lbl">Posts (Mars)</div></div>
+              <div class="platform-stat"><div class="val" id="plat-facebook-engage">—</div><div class="lbl">Engagement</div></div>
+              <div class="platform-stat"><div class="val" id="plat-facebook-posts">—</div><div class="lbl">Posts (Mars)</div></div>
+              <div class="platform-stat"><div class="val" id="plat-facebook-likes">—</div><div class="lbl">Likes (Mars)</div></div>
             </div>
-            <div style="margin-top:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Objectif 8 000</span><span id="plat-facebook-pct">—%</span></div><div class="progress-bar"><div class="progress-fill green" id="plat-facebook-bar" style="width:0%"></div></div></div>
+            <div style="margin-top:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Objectif 20 000</span><span id="plat-facebook-pct">—%</span></div><div class="progress-bar"><div class="progress-fill green" id="plat-facebook-bar" style="width:0%"></div></div></div>
           </div>
           <div class="platform-card">
             <div class="platform-header"><div class="platform-logo instagram">📸</div><div><div class="platform-name">Instagram</div><div class="platform-handle">@globoafrique</div></div></div>
             <div class="platform-stats">
               <div class="platform-stat"><div class="val" id="plat-instagram-followers">—</div><div class="lbl">Abonnés</div></div>
-              <div class="platform-stat"><div class="val" style="color:var(--text2);">—</div><div class="lbl">Ce mois</div></div>
-              <div class="platform-stat"><div class="val">—</div><div class="lbl">Engagement</div></div>
-              <div class="platform-stat"><div class="val">—</div><div class="lbl">Posts (Mars)</div></div>
+              <div class="platform-stat"><div class="val" id="plat-instagram-engage">—</div><div class="lbl">Engagement</div></div>
+              <div class="platform-stat"><div class="val" id="plat-instagram-posts">—</div><div class="lbl">Posts (Mars)</div></div>
+              <div class="platform-stat"><div class="val" id="plat-instagram-likes">—</div><div class="lbl">Likes (Mars)</div></div>
             </div>
             <div style="margin-top:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Objectif 5 000</span><span id="plat-instagram-pct">—%</span></div><div class="progress-bar" style=""><div class="progress-fill" id="plat-instagram-bar" style="width:0%;background:var(--purple)"></div></div></div>
           </div>
@@ -1264,7 +1264,7 @@ body {
           <div class="grid-2">
             <div>
               <div class="form-field"><label>Objectif LinkedIn (followers)</label><input type="number" id="cfg-linkedin-goal" value="10000" inputmode="numeric"></div>
-              <div class="form-field"><label>Objectif Facebook (abonnés)</label><input type="number" id="cfg-fb-goal" value="8000" inputmode="numeric"></div>
+              <div class="form-field"><label>Objectif Facebook (abonnés)</label><input type="number" id="cfg-fb-goal" value="20000" inputmode="numeric"></div>
               <div class="form-field"><label>Objectif Instagram (abonnés)</label><input type="number" id="cfg-ig-goal" value="5000" inputmode="numeric"></div>
             </div>
             <div>
@@ -1707,7 +1707,7 @@ function loadRealData() {
         set('plat-linkedin-followers', li.toLocaleString('fr-FR'));
         set('plat-facebook-followers', fb ? fb.toLocaleString('fr-FR') : '');
         set('plat-instagram-followers', ig ? ig.toLocaleString('fr-FR') : '');
-        var pctFB = Math.round((fb/8000)*1000)/10, pctIG = Math.round((ig/5000)*1000)/10;
+        var pctFB = Math.round((fb/20000)*1000)/10, pctIG = Math.round((ig/5000)*1000)/10;
         set('plat-linkedin-pct', pct+'%'); set('plat-facebook-pct', pctFB+'%'); set('plat-instagram-pct', pctIG+'%');
         var b1=document.getElementById('plat-linkedin-bar'),b2=document.getElementById('plat-facebook-bar'),b3=document.getElementById('plat-instagram-bar');
         if(b1) b1.style.width=pct+'%'; if(b2) b2.style.width=pctFB+'%'; if(b3) b3.style.width=pctIG+'%';
@@ -1715,12 +1715,22 @@ function loadRealData() {
 
       if (data.linkedin_stats) {
         var posts2=data.linkedin_stats.posts_mois, engage=data.linkedin_stats.engagement_rate;
+        var likes2=data.linkedin_stats.total_likes;
         set('kpi-posts', posts2!==undefined?posts2:'');
         set('kpi-engage', engage!==undefined?engage.toFixed(1)+'%':'');
         set('kpi-posts-delta', 'LinkedIn · MAJ '+upd);
         set('kpi-engage-delta', 'LinkedIn · MAJ '+upd);
         set('plat-linkedin-posts', posts2!==undefined?posts2:'');
         set('plat-linkedin-engage', engage!==undefined?engage.toFixed(1)+'%':'');
+        set('plat-linkedin-likes', likes2!==undefined?likes2:'');
+        // Facebook stats (depuis linkedin_stats si disponible, sinon N/D)
+        set('plat-facebook-engage', data.facebook_stats ? data.facebook_stats.engagement_rate.toFixed(1)+'%' : 'N/D');
+        set('plat-facebook-posts', data.facebook_stats ? data.facebook_stats.posts_mois : 'N/D');
+        set('plat-facebook-likes', data.facebook_stats ? data.facebook_stats.total_likes : 'N/D');
+        // Instagram stats
+        set('plat-instagram-engage', data.instagram_stats ? data.instagram_stats.engagement_rate.toFixed(1)+'%' : 'N/D');
+        set('plat-instagram-posts', data.instagram_stats ? data.instagram_stats.posts_mois : 'N/D');
+        set('plat-instagram-likes', data.instagram_stats ? data.instagram_stats.total_likes : 'N/D');
       }
 
       if (data.classement && data.classement.length > 0) {
