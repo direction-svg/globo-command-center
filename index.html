@@ -295,7 +295,13 @@ body {
   padding-left: 8px;
 }
 
-.nav-icon { font-size: 15px; width: 20px; text-align: center; flex-shrink: 0; }
+.nav-item.sub {
+  padding-left: 22px;
+  font-size: 12px;
+}
+
+.entity-nav { overflow: hidden; }
+
 .nav-badge { margin-left: auto; background: var(--orange); color: white; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 2px; }
 
 .sidebar-footer {
@@ -896,18 +902,52 @@ body {
       <button class="sidebar-close" onclick="closeSidebar()">✕</button>
     </div>
     <nav class="sidebar-nav">
-      <div class="nav-section-label">Vue d'ensemble</div>
-      <div class="nav-item active" onclick="showSection('overview')"><span class="nav-icon">⚡</span>Command Center</div>
-      <div class="nav-item" onclick="showSection('platforms')"><span class="nav-icon">📡</span>Plateformes</div>
-      <div class="nav-section-label">Contenu</div>
-      <div class="nav-item" onclick="showSection('pipeline')"><span class="nav-icon">📝</span>Pipeline Contenu<span class="nav-badge" id="pipeline-badge">5</span></div>
-      <div class="nav-item" onclick="showSection('calendar')"><span class="nav-icon">📅</span>Plan Éditorial</div>
-      <div class="nav-item" onclick="showSection('agents')"><span class="nav-icon">🤖</span>AI Team</div>
-      <div class="nav-section-label">Engagement</div>
+      <div class="nav-section-label">Groupe</div>
+      <div class="nav-item active" onclick="showSection('overview')"><span class="nav-icon">🌍</span>Vue Groupe</div>
       <div class="nav-item" onclick="showSection('challenge')"><span class="nav-icon">🏆</span>Challenge Ambassadeurs</div>
-      <div class="nav-item" onclick="showSection('veille')"><span class="nav-icon">🔭</span>Veille Concurrentielle</div>
-      <div class="nav-section-label">Administration</div>
-      <div class="nav-item" onclick="showSection('analytics')"><span class="nav-icon">📊</span>Analytics</div>
+      <div class="nav-item" onclick="showSection('agents')"><span class="nav-icon">🤖</span>AI Team</div>
+
+      <div class="nav-section-label" style="margin-top:8px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleEntity('ga')">
+          <span>🔵 Globo Afrique</span>
+          <span id="entity-ga-arrow" style="font-size:10px;transition:transform 0.2s;">▼</span>
+        </div>
+      </div>
+      <div id="entity-ga-nav" class="entity-nav">
+        <div class="nav-item sub" onclick="showSection('ga-overview')"><span class="nav-icon">⚡</span>Aperçu</div>
+        <div class="nav-item sub" onclick="showSection('ga-platforms')"><span class="nav-icon">📡</span>Plateformes</div>
+        <div class="nav-item sub" onclick="showSection('ga-pipeline')"><span class="nav-icon">📝</span>Pipeline<span class="nav-badge" id="pipeline-badge">—</span></div>
+        <div class="nav-item sub" onclick="showSection('ga-calendar')"><span class="nav-icon">📅</span>Plan Éditorial</div>
+        <div class="nav-item sub" onclick="showSection('ga-veille')"><span class="nav-icon">🔭</span>Veille</div>
+      </div>
+
+      <div class="nav-section-label" style="margin-top:8px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleEntity('ges')">
+          <span>🟠 GES</span>
+          <span id="entity-ges-arrow" style="font-size:10px;transition:transform 0.2s;">▶</span>
+        </div>
+      </div>
+      <div id="entity-ges-nav" class="entity-nav" style="display:none;">
+        <div class="nav-item sub" onclick="showSection('ges-overview')"><span class="nav-icon">⚡</span>Aperçu</div>
+        <div class="nav-item sub" onclick="showSection('ges-platforms')"><span class="nav-icon">📡</span>Plateformes</div>
+        <div class="nav-item sub" onclick="showSection('ges-pipeline')"><span class="nav-icon">📝</span>Pipeline</div>
+        <div class="nav-item sub" onclick="showSection('ges-veille')"><span class="nav-icon">🔭</span>Veille</div>
+      </div>
+
+      <div class="nav-section-label" style="margin-top:8px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleEntity('aoe')">
+          <span>🟡 AOE</span>
+          <span id="entity-aoe-arrow" style="font-size:10px;transition:transform 0.2s;">▶</span>
+        </div>
+      </div>
+      <div id="entity-aoe-nav" class="entity-nav" style="display:none;">
+        <div class="nav-item sub" onclick="showSection('aoe-overview')"><span class="nav-icon">⚡</span>Aperçu</div>
+        <div class="nav-item sub" onclick="showSection('aoe-platforms')"><span class="nav-icon">📡</span>Plateformes</div>
+        <div class="nav-item sub" onclick="showSection('aoe-pipeline')"><span class="nav-icon">📝</span>Pipeline</div>
+        <div class="nav-item sub" onclick="showSection('aoe-veille')"><span class="nav-icon">🔭</span>Veille</div>
+      </div>
+
+      <div class="nav-section-label" style="margin-top:8px;">Administration</div>
       <div class="nav-item admin-only" onclick="showSection('admin')"><span class="nav-icon">⚙️</span>Administration</div>
     </nav>
     <div class="sidebar-footer">
@@ -939,18 +979,18 @@ body {
     <!-- CONTENT -->
     <div class="content">
 
-      <!-- ══ OVERVIEW ══ -->
+      <!-- ══ OVERVIEW (VUE GROUPE) ══ -->
       <div class="section active" id="section-overview">
         <div class="section-header">
-          <div><h2>Command Center</h2><p>LinkedIn · Facebook · Instagram · Challenge · Veille</p></div>
+          <div><h2>Vue Groupe</h2><p>Globo Afrique · GES · AOE — Consolidé</p></div>
           <button class="btn btn-primary" onclick="refreshData()">↻ Actualiser</button>
         </div>
         <div class="grid-4" style="margin-bottom:14px;">
           <div class="kpi-card">
             <div class="kpi-icon">👥</div>
             <div class="kpi-value" id="kpi-reach">—</div>
-            <div class="kpi-label">Reach Total Communauté</div>
-            <div class="kpi-delta neutral" id="kpi-reach-delta">—</div>
+            <div class="kpi-label">Reach Total Groupe</div>
+            <div class="kpi-delta neutral" id="kpi-reach-delta">3 entités combinées</div>
           </div>
           <div class="kpi-card green">
             <div class="kpi-icon">📤</div>
@@ -966,9 +1006,82 @@ body {
           </div>
           <div class="kpi-card blue">
             <div class="kpi-icon">⏳</div>
-            <div class="kpi-value" id="kpi-pipeline">5</div>
+            <div class="kpi-value" id="kpi-pipeline">—</div>
             <div class="kpi-label">Contenus en Pipeline</div>
-            <div class="kpi-delta neutral" id="kpi-pipeline-detail">—</div>
+            <div class="kpi-delta neutral" id="kpi-pipeline-detail">Toutes entités</div>
+          </div>
+        </div>
+
+        <!-- Followers consolidés par entité -->
+        <div class="grid-3" style="margin-bottom:14px;">
+          <!-- Globo Afrique -->
+          <div class="card" style="border-top:3px solid #3b82f6;">
+            <div class="card-header">
+              <div class="card-title">🔵 Globo Afrique</div>
+              <a href="#" onclick="showSection('ga-overview')" style="font-size:12px;color:var(--orange2);text-decoration:none;font-weight:700;">Détail →</a>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:8px;"><span>💼</span><span style="font-size:12px;font-weight:600;color:var(--text2);">LinkedIn</span></div>
+              <div id="groupe-ga-linkedin" style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;color:var(--white);">—</div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:8px;"><span>📘</span><span style="font-size:12px;font-weight:600;color:var(--text2);">Facebook</span></div>
+              <div id="groupe-ga-facebook" style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;color:var(--white);">—</div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;">
+              <div style="display:flex;align-items:center;gap:8px;"><span>📸</span><span style="font-size:12px;font-weight:600;color:var(--text2);">Instagram</span></div>
+              <div id="groupe-ga-instagram" style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;color:var(--white);">—</div>
+            </div>
+            <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:11px;color:var(--text2);font-weight:600;">Total communauté</span>
+              <span id="groupe-ga-total" style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--blue);">—</span>
+            </div>
+          </div>
+          <!-- GES -->
+          <div class="card" style="border-top:3px solid var(--orange);">
+            <div class="card-header">
+              <div class="card-title">🟠 GES</div>
+              <a href="#" onclick="showSection('ges-overview')" style="font-size:12px;color:var(--orange2);text-decoration:none;font-weight:700;">Détail →</a>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:8px;"><span>💼</span><span style="font-size:12px;font-weight:600;color:var(--text2);">LinkedIn</span></div>
+              <div id="groupe-ges-linkedin" style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;color:var(--white);">—</div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:8px;"><span>📘</span><span style="font-size:12px;font-weight:600;color:var(--text2);">Facebook</span></div>
+              <div id="groupe-ges-facebook" style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;color:var(--white);">—</div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;">
+              <div style="display:flex;align-items:center;gap:8px;"><span>📸</span><span style="font-size:12px;font-weight:600;color:var(--text2);">Instagram</span></div>
+              <div id="groupe-ges-instagram" style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;color:var(--white);">—</div>
+            </div>
+            <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:11px;color:var(--text2);font-weight:600;">Total communauté</span>
+              <span id="groupe-ges-total" style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--orange2);">—</span>
+            </div>
+          </div>
+          <!-- AOE -->
+          <div class="card" style="border-top:3px solid var(--yellow);">
+            <div class="card-header">
+              <div class="card-title">🟡 AOE</div>
+              <a href="#" onclick="showSection('aoe-overview')" style="font-size:12px;color:var(--orange2);text-decoration:none;font-weight:700;">Détail →</a>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:8px;"><span>💼</span><span style="font-size:12px;font-weight:600;color:var(--text2);">LinkedIn</span></div>
+              <div id="groupe-aoe-linkedin" style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;color:var(--white);">—</div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:8px;"><span>📘</span><span style="font-size:12px;font-weight:600;color:var(--text2);">Facebook</span></div>
+              <div id="groupe-aoe-facebook" style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;color:var(--white);">—</div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;">
+              <div style="display:flex;align-items:center;gap:8px;"><span>📸</span><span style="font-size:12px;font-weight:600;color:var(--text2);">Instagram</span></div>
+              <div id="groupe-aoe-instagram" style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;color:var(--white);">—</div>
+            </div>
+            <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:11px;color:var(--text2);font-weight:600;">Total communauté</span>
+              <span id="groupe-aoe-total" style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;color:var(--yellow);">—</span>
+            </div>
           </div>
         </div>
 
@@ -976,68 +1089,64 @@ body {
           <div>
             <div class="card" style="margin-bottom:12px;">
               <div class="card-header">
-                <div class="card-title">Plateformes</div>
-                <a href="#" onclick="showSection('platforms')" style="font-size:12px;color:var(--orange2);text-decoration:none;font-weight:700;">Détail →</a>
+                <div class="card-title">Activity Feed</div>
+                <div class="live-badge" style="font-size:10px;padding:3px 8px;"><div class="live-dot"></div>Live</div>
               </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
-                <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">💼</span><div><div style="font-size:13px;font-weight:700;color:var(--white);">LinkedIn</div><div style="font-size:11px;color:var(--text2);">Globo Afrique · Globo Corps</div></div></div>
-                <div style="text-align:right;"><div id="followers-linkedin" style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--white);">—</div><div style="font-size:11px;color:var(--green);font-weight:600;">live ↑</div></div>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
-                <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📘</span><div><div style="font-size:13px;font-weight:700;color:var(--white);">Facebook</div><div style="font-size:11px;color:var(--text2);">Globo Afrique</div></div></div>
-                <div style="text-align:right;"><div id="followers-facebook" style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--white);">—</div><div id="followers-facebook-updated" style="font-size:11px;color:var(--text2);">—</div></div>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;">
-                <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📸</span><div><div style="font-size:13px;font-weight:700;color:var(--white);">Instagram</div><div style="font-size:11px;color:var(--text2);">@globoafrique</div></div></div>
-                <div style="text-align:right;"><div id="followers-instagram" style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--white);">—</div><div id="followers-instagram-updated" style="font-size:11px;color:var(--text2);">—</div></div>
+              <div id="activity-feed">
+                <div class="feed-item"><div class="feed-dot" style="background:var(--green)"></div><div class="feed-content"><div class="msg" id="feed-classement">🏆 Classement ambassadeurs — chargement...</div><div class="time" id="feed-classement-time">—</div></div></div>
               </div>
             </div>
             <div class="card">
-              <div class="card-header">
-                <div class="card-title">Objectif LinkedIn 10K</div>
-                <span id="linkedin-10k-label" style="font-size:12px;color:var(--text2);font-weight:600;">— / 10 000</span>
+              <div class="card-header"><div class="card-title">Objectifs Hebdomadaires</div></div>
+              <div class="grid-4">
+                <div><div style="font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;">Posts LinkedIn</div><div class="progress-bar"><div class="progress-fill" id="obj-linkedin-bar" style="width:0%"></div></div><div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:600;" id="obj-linkedin-label">— / 4 publiés</div></div>
+                <div><div style="font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;">Posts Facebook</div><div class="progress-bar"><div class="progress-fill green" id="obj-facebook-bar" style="width:0%"></div></div><div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:600;" id="obj-facebook-label">— / 3 publiés</div></div>
+                <div><div style="font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;">Posts Instagram</div><div class="progress-bar"><div class="progress-fill" id="obj-instagram-bar" style="width:0%;background:var(--yellow)"></div></div><div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:600;" id="obj-instagram-label">— / 2 publiés</div></div>
+                <div><div style="font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;">Validations Challenge</div><div class="progress-bar"><div class="progress-fill blue" id="obj-challenge-bar" style="width:0%"></div></div><div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:600;" id="obj-challenge-label">— / 5 traitées</div></div>
               </div>
+            </div>
+          </div>
+
+          <!-- Colonne droite overview -->
+          <div>
+            <div class="card" style="margin-bottom:12px;">
+              <div class="card-header"><div class="card-title">Objectif Groupe LinkedIn</div></div>
+              <div style="font-size:12px;color:var(--text2);margin-bottom:8px;">Globo Afrique + GES + AOE combinés</div>
               <div class="progress-bar"><div class="progress-fill" id="linkedin-10k-bar" style="width:0%"></div></div>
               <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--text2);font-weight:600;">
-                <span id="linkedin-10k-pct">—% atteint</span>
-                <span id="linkedin-10k-rest" style="color:var(--orange2);">— restants</span>
+                <span id="linkedin-10k-label">— / 15 000</span>
+                <span id="linkedin-10k-pct" style="color:var(--orange2);">—%</span>
+              </div>
+              <div style="font-size:11px;color:var(--text3);margin-top:4px;" id="linkedin-10k-rest"></div>
+            </div>
+            <div class="card">
+              <div class="card-header"><div class="card-title">🔭 Veille Concurrentielle</div><a href="#" onclick="showSection('veille')" style="font-size:12px;color:var(--orange2);text-decoration:none;font-weight:700;">Détail →</a></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <div style="background:var(--navy2);border-radius:3px;padding:10px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--red);" id="grp-veille-critique">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Gravité haute</div></div>
+                <div style="background:var(--navy2);border-radius:3px;padding:10px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--orange2);" id="grp-veille-action">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Action requise</div></div>
+                <div style="background:var(--navy2);border-radius:3px;padding:10px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--yellow);" id="grp-veille-encours">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">En cours</div></div>
+                <div style="background:var(--navy2);border-radius:3px;padding:10px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--green);" id="grp-veille-pipeline">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">→ Pipeline</div></div>
               </div>
             </div>
-          </div>
-
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title">Activity Feed</div>
-              <div class="live-badge" style="font-size:10px;padding:3px 8px;"><div class="live-dot"></div>Live</div>
-            </div>
-            <div id="activity-feed">
-              <div class="feed-item"><div class="feed-dot" style="background:var(--green)"></div><div class="feed-content"><div class="msg" id="feed-classement">🏆 Classement ambassadeurs — chargement...</div><div class="time" id="feed-classement-time">—</div></div></div>
-              <div class="feed-item"><div class="feed-dot" style="background:var(--orange)"></div><div class="feed-content"><div class="msg">📤 Post LinkedIn : <strong>"Fleet Management & Sécurité en Afrique"</strong></div><div class="time">Aujourd'hui 07:30</div></div></div>
-              <div class="feed-item"><div class="feed-dot" style="background:var(--blue)"></div><div class="feed-content"><div class="msg">🤖 Agent <strong>Researcher</strong> — 8 signaux détectés</div><div class="time">Hier 22:15</div></div></div>
-              <div class="feed-item"><div class="feed-dot" style="background:var(--yellow)"></div><div class="feed-content"><div class="msg">⏳ <strong>Moustapha Ndiaye</strong> — 7 invitations LinkedIn</div><div class="time">Hier 18:44</div></div></div>
-              <div class="feed-item"><div class="feed-dot" style="background:var(--orange)"></div><div class="feed-content"><div class="msg">🔭 Concurrent <strong>Fleeti</strong> — 3 nouveaux posts</div><div class="time">Hier 14:20</div></div></div>
-              <div class="feed-item"><div class="feed-dot" style="background:var(--green)"></div><div class="feed-content"><div class="msg">📧 Newsletter — <strong>847 destinataires</strong>, 24.3% ouverture</div><div class="time">Lundi 09:00</div></div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-header"><div class="card-title">Objectifs Hebdomadaires — Semaine du 07/03/2026</div></div>
-          <div class="grid-4">
-            <div><div style="font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;">Posts LinkedIn</div><div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div><div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:600;">3 / 4 publiés</div></div>
-            <div><div style="font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;">Posts Facebook</div><div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div><div style="font-size:12px;color:var(--green);margin-top:4px;font-weight:700;">3 / 3 ✓</div></div>
-            <div><div style="font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;">Posts Instagram</div><div class="progress-bar"><div class="progress-fill" style="width:50%;background:var(--yellow)"></div></div><div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:600;">1 / 2 publiés</div></div>
-            <div><div style="font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;">Validations Challenge</div><div class="progress-bar"><div class="progress-fill blue" style="width:60%"></div></div><div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:600;">3 / 5 traitées</div></div>
           </div>
         </div>
       </div>
 
-      <!-- ══ PLATEFORMES ══ -->
-      <div class="section" id="section-platforms">
-        <div class="section-header"><div><h2>Plateformes Sociales</h2><p>Métriques détaillées LinkedIn · Facebook · Instagram</p></div></div>
-        <div class="grid-3" style="margin-bottom:14px;">
+      <!-- ══ GLOBO AFRIQUE — APERÇU ══ -->
+      <div class="section" id="section-ga-overview">
+        <div class="section-header">
+          <div><h2>🔵 Globo Afrique</h2><p>LinkedIn · Facebook · Instagram · Pipeline Contenu</p></div>
+          <button class="btn btn-primary" onclick="refreshData()">↻ Actualiser</button>
+        </div>
+        <div class="grid-4" style="margin-bottom:14px;">
+          <div class="kpi-card"><div class="kpi-icon">💼</div><div class="kpi-value" id="ga-kpi-linkedin">—</div><div class="kpi-label">LinkedIn Followers</div><div class="kpi-delta neutral" id="ga-kpi-linkedin-d">—</div></div>
+          <div class="kpi-card green"><div class="kpi-icon">📘</div><div class="kpi-value" id="ga-kpi-facebook">—</div><div class="kpi-label">Facebook Abonnés</div><div class="kpi-delta neutral">Globo Afrique</div></div>
+          <div class="kpi-card yellow"><div class="kpi-icon">📸</div><div class="kpi-value" id="ga-kpi-instagram">—</div><div class="kpi-label">Instagram Abonnés</div><div class="kpi-delta neutral">@globoafrique</div></div>
+          <div class="kpi-card blue"><div class="kpi-icon">📤</div><div class="kpi-value" id="ga-kpi-posts">—</div><div class="kpi-label">Posts LinkedIn (Mars)</div><div class="kpi-delta neutral" id="ga-kpi-posts-d">—</div></div>
+        </div>
+        <div class="grid-3">
           <div class="platform-card">
-            <div class="platform-header"><div class="platform-logo linkedin">💼</div><div><div class="platform-name">LinkedIn</div><div class="platform-handle">Globo Afrique · Globo Corps</div></div></div>
+            <div class="platform-header"><div class="platform-logo linkedin">💼</div><div><div class="platform-name">LinkedIn</div><div class="platform-handle">Globo Afrique</div></div></div>
             <div class="platform-stats">
               <div class="platform-stat"><div class="val" id="plat-linkedin-followers">—</div><div class="lbl">Followers</div></div>
               <div class="platform-stat"><div class="val" id="plat-linkedin-engage">—</div><div class="lbl">Engagement</div></div>
@@ -1064,16 +1173,178 @@ body {
               <div class="platform-stat"><div class="val" id="plat-instagram-posts">—</div><div class="lbl">Posts (Mars)</div></div>
               <div class="platform-stat"><div class="val" id="plat-instagram-likes">—</div><div class="lbl">Likes (Mars)</div></div>
             </div>
-            <div style="margin-top:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Objectif 5 000</span><span id="plat-instagram-pct">—%</span></div><div class="progress-bar" style=""><div class="progress-fill" id="plat-instagram-bar" style="width:0%;background:var(--purple)"></div></div></div>
+            <div style="margin-top:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Objectif 5 000</span><span id="plat-instagram-pct">—%</span></div><div class="progress-bar"><div class="progress-fill" id="plat-instagram-bar" style="width:0%;background:var(--purple)"></div></div></div>
           </div>
         </div>
-
       </div>
 
-      <!-- ══ PIPELINE ══ -->
-      <div class="section" id="section-pipeline">
+      <!-- ══ GLOBO AFRIQUE — PLATEFORMES ══ -->
+      <div class="section" id="section-ga-platforms">
+        <div class="section-header"><div><h2>🔵 Plateformes — Globo Afrique</h2><p>Métriques détaillées LinkedIn · Facebook · Instagram</p></div></div>
+        <div class="grid-3">
+          <div class="platform-card">
+            <div class="platform-header"><div class="platform-logo linkedin">💼</div><div><div class="platform-name">LinkedIn</div><div class="platform-handle">Globo Afrique</div></div></div>
+            <div class="platform-stats">
+              <div class="platform-stat"><div class="val" id="ga-plat-linkedin-followers">—</div><div class="lbl">Followers</div></div>
+              <div class="platform-stat"><div class="val" id="ga-plat-linkedin-engage">—</div><div class="lbl">Engagement</div></div>
+              <div class="platform-stat"><div class="val" id="ga-plat-linkedin-posts">—</div><div class="lbl">Posts (Mars)</div></div>
+              <div class="platform-stat"><div class="val" id="ga-plat-linkedin-likes">—</div><div class="lbl">Likes (Mars)</div></div>
+            </div>
+            <div style="margin-top:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Objectif 10 000</span><span id="ga-plat-linkedin-pct">—%</span></div><div class="progress-bar"><div class="progress-fill" id="ga-plat-linkedin-bar" style="width:0%"></div></div></div>
+          </div>
+          <div class="platform-card">
+            <div class="platform-header"><div class="platform-logo facebook">📘</div><div><div class="platform-name">Facebook</div><div class="platform-handle">Globo Afrique</div></div></div>
+            <div class="platform-stats">
+              <div class="platform-stat"><div class="val" id="ga-plat-facebook-followers">—</div><div class="lbl">Abonnés</div></div>
+              <div class="platform-stat"><div class="val" id="ga-plat-facebook-engage">N/D</div><div class="lbl">Engagement</div></div>
+              <div class="platform-stat"><div class="val" id="ga-plat-facebook-posts">N/D</div><div class="lbl">Posts (Mars)</div></div>
+              <div class="platform-stat"><div class="val" id="ga-plat-facebook-likes">N/D</div><div class="lbl">Likes (Mars)</div></div>
+            </div>
+            <div style="margin-top:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Objectif 20 000</span><span id="ga-plat-facebook-pct">—%</span></div><div class="progress-bar"><div class="progress-fill green" id="ga-plat-facebook-bar" style="width:0%"></div></div></div>
+          </div>
+          <div class="platform-card">
+            <div class="platform-header"><div class="platform-logo instagram">📸</div><div><div class="platform-name">Instagram</div><div class="platform-handle">@globoafrique</div></div></div>
+            <div class="platform-stats">
+              <div class="platform-stat"><div class="val" id="ga-plat-instagram-followers">—</div><div class="lbl">Abonnés</div></div>
+              <div class="platform-stat"><div class="val" id="ga-plat-instagram-engage">N/D</div><div class="lbl">Engagement</div></div>
+              <div class="platform-stat"><div class="val" id="ga-plat-instagram-posts">N/D</div><div class="lbl">Posts (Mars)</div></div>
+              <div class="platform-stat"><div class="val" id="ga-plat-instagram-likes">N/D</div><div class="lbl">Likes (Mars)</div></div>
+            </div>
+            <div style="margin-top:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Objectif 5 000</span><span id="ga-plat-instagram-pct">—%</span></div><div class="progress-bar"><div class="progress-fill" id="ga-plat-instagram-bar" style="width:0%;background:var(--purple)"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ GES — APERÇU ══ -->
+      <div class="section" id="section-ges-overview">
         <div class="section-header">
-          <div><h2>Pipeline Contenu</h2><p>Idées → Rédaction → Validation → Publication</p></div>
+          <div><h2>🟠 GES — Globo Equipment &amp; Security</h2><p>LinkedIn · Facebook · Instagram</p></div>
+          <button class="btn btn-primary" onclick="refreshData()">↻ Actualiser</button>
+        </div>
+        <div class="grid-4" style="margin-bottom:14px;">
+          <div class="kpi-card"><div class="kpi-icon">💼</div><div class="kpi-value" id="ges-kpi-linkedin">—</div><div class="kpi-label">LinkedIn Followers</div><div class="kpi-delta neutral">linkedin.com/company/globo-e</div></div>
+          <div class="kpi-card green"><div class="kpi-icon">📘</div><div class="kpi-value" id="ges-kpi-facebook">—</div><div class="kpi-label">Facebook Abonnés</div><div class="kpi-delta neutral">À connecter</div></div>
+          <div class="kpi-card yellow"><div class="kpi-icon">📸</div><div class="kpi-value" id="ges-kpi-instagram">—</div><div class="kpi-label">Instagram Abonnés</div><div class="kpi-delta neutral">À connecter</div></div>
+          <div class="kpi-card blue"><div class="kpi-icon">📤</div><div class="kpi-value" id="ges-kpi-posts">—</div><div class="kpi-label">Posts LinkedIn (Mars)</div><div class="kpi-delta neutral">—</div></div>
+        </div>
+        <div class="grid-3">
+          <div class="platform-card">
+            <div class="platform-header"><div class="platform-logo linkedin">💼</div><div><div class="platform-name">LinkedIn</div><div class="platform-handle">globo-e</div></div></div>
+            <div class="platform-stats">
+              <div class="platform-stat"><div class="val" id="ges-plat-linkedin-followers">—</div><div class="lbl">Followers</div></div>
+              <div class="platform-stat"><div class="val" id="ges-plat-linkedin-engage">—</div><div class="lbl">Engagement</div></div>
+              <div class="platform-stat"><div class="val" id="ges-plat-linkedin-posts">—</div><div class="lbl">Posts (Mars)</div></div>
+              <div class="platform-stat"><div class="val" id="ges-plat-linkedin-likes">—</div><div class="lbl">Likes (Mars)</div></div>
+            </div>
+            <div style="margin-top:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Objectif 5 000</span><span id="ges-plat-linkedin-pct">—%</span></div><div class="progress-bar"><div class="progress-fill" id="ges-plat-linkedin-bar" style="width:0%;background:var(--orange)"></div></div></div>
+          </div>
+          <div class="platform-card" style="opacity:0.6;">
+            <div class="platform-header"><div class="platform-logo facebook">📘</div><div><div class="platform-name">Facebook</div><div class="platform-handle">À configurer</div></div></div>
+            <div style="padding:20px 0;text-align:center;color:var(--text2);font-size:13px;">Page ID à connecter</div>
+          </div>
+          <div class="platform-card" style="opacity:0.6;">
+            <div class="platform-header"><div class="platform-logo instagram">📸</div><div><div class="platform-name">Instagram</div><div class="platform-handle">À configurer</div></div></div>
+            <div style="padding:20px 0;text-align:center;color:var(--text2);font-size:13px;">Compte à connecter</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ GES — PLATEFORMES ══ -->
+      <div class="section" id="section-ges-platforms">
+        <div class="section-header"><div><h2>🟠 Plateformes — GES</h2><p>Métriques LinkedIn · Facebook · Instagram</p></div></div>
+        <div class="grid-3">
+          <div class="platform-card">
+            <div class="platform-header"><div class="platform-logo linkedin">💼</div><div><div class="platform-name">LinkedIn</div><div class="platform-handle">globo-e</div></div></div>
+            <div class="platform-stats">
+              <div class="platform-stat"><div class="val" id="ges-plat2-linkedin-followers">—</div><div class="lbl">Followers</div></div>
+              <div class="platform-stat"><div class="val" id="ges-plat2-linkedin-engage">—</div><div class="lbl">Engagement</div></div>
+              <div class="platform-stat"><div class="val" id="ges-plat2-linkedin-posts">—</div><div class="lbl">Posts (Mars)</div></div>
+              <div class="platform-stat"><div class="val" id="ges-plat2-linkedin-likes">—</div><div class="lbl">Likes (Mars)</div></div>
+            </div>
+            <div style="margin-top:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Objectif 5 000</span><span id="ges-plat2-linkedin-pct">—%</span></div><div class="progress-bar"><div class="progress-fill" id="ges-plat2-linkedin-bar" style="width:0%;background:var(--orange)"></div></div></div>
+          </div>
+          <div class="platform-card" style="opacity:0.6;"><div class="platform-header"><div class="platform-logo facebook">📘</div><div><div class="platform-name">Facebook</div><div class="platform-handle">À configurer</div></div></div><div style="padding:20px;text-align:center;color:var(--text2);font-size:13px;">Page ID à connecter via Admin</div></div>
+          <div class="platform-card" style="opacity:0.6;"><div class="platform-header"><div class="platform-logo instagram">📸</div><div><div class="platform-name">Instagram</div><div class="platform-handle">À configurer</div></div></div><div style="padding:20px;text-align:center;color:var(--text2);font-size:13px;">Compte à connecter via Admin</div></div>
+        </div>
+      </div>
+
+      <!-- ══ GES — PIPELINE ══ -->
+      <div class="section" id="section-ges-pipeline">
+        <div class="section-header"><div><h2>🟠 Pipeline Contenu — GES</h2><p>Idées → Rédaction → Validation → Publication</p></div></div>
+        <div class="grid-2" style="margin-bottom:12px;">
+          <div class="card"><div class="card-header"><div class="card-title">🟡 À Valider</div></div><div id="ges-pipeline-review"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Connecter Google Sheets GES</div></div></div>
+          <div class="card"><div class="card-header"><div class="card-title">🔵 Planifiés</div></div><div id="ges-pipeline-scheduled"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Connecter Google Sheets GES</div></div></div>
+        </div>
+        <div class="grid-2">
+          <div class="card"><div class="card-header"><div class="card-title">✏️ Brouillons</div></div><div id="ges-pipeline-draft"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Connecter Google Sheets GES</div></div></div>
+          <div class="card"><div class="card-header"><div class="card-title">✅ Publiés</div></div><div id="ges-pipeline-published"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Connecter Google Sheets GES</div></div></div>
+        </div>
+      </div>
+
+      <!-- ══ AOE — APERÇU ══ -->
+      <div class="section" id="section-aoe-overview">
+        <div class="section-header">
+          <div><h2>🟡 AOE — African Office of Engineering</h2><p>LinkedIn · Facebook · Instagram</p></div>
+          <button class="btn btn-primary" onclick="refreshData()">↻ Actualiser</button>
+        </div>
+        <div class="grid-4" style="margin-bottom:14px;">
+          <div class="kpi-card"><div class="kpi-icon">💼</div><div class="kpi-value" id="aoe-kpi-linkedin">—</div><div class="kpi-label">LinkedIn Followers</div><div class="kpi-delta neutral">african-office-of-engineering</div></div>
+          <div class="kpi-card green"><div class="kpi-icon">📘</div><div class="kpi-value" id="aoe-kpi-facebook">—</div><div class="kpi-label">Facebook Abonnés</div><div class="kpi-delta neutral">À connecter</div></div>
+          <div class="kpi-card yellow"><div class="kpi-icon">📸</div><div class="kpi-value" id="aoe-kpi-instagram">—</div><div class="kpi-label">Instagram Abonnés</div><div class="kpi-delta neutral">À connecter</div></div>
+          <div class="kpi-card blue"><div class="kpi-icon">📤</div><div class="kpi-value" id="aoe-kpi-posts">—</div><div class="kpi-label">Posts LinkedIn (Mars)</div><div class="kpi-delta neutral">—</div></div>
+        </div>
+        <div class="grid-3">
+          <div class="platform-card">
+            <div class="platform-header"><div class="platform-logo linkedin">💼</div><div><div class="platform-name">LinkedIn</div><div class="platform-handle">african-office-of-engineering</div></div></div>
+            <div class="platform-stats">
+              <div class="platform-stat"><div class="val" id="aoe-plat-linkedin-followers">—</div><div class="lbl">Followers</div></div>
+              <div class="platform-stat"><div class="val" id="aoe-plat-linkedin-engage">—</div><div class="lbl">Engagement</div></div>
+              <div class="platform-stat"><div class="val" id="aoe-plat-linkedin-posts">—</div><div class="lbl">Posts (Mars)</div></div>
+              <div class="platform-stat"><div class="val" id="aoe-plat-linkedin-likes">—</div><div class="lbl">Likes (Mars)</div></div>
+            </div>
+            <div style="margin-top:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Objectif 3 000</span><span id="aoe-plat-linkedin-pct">—%</span></div><div class="progress-bar"><div class="progress-fill" id="aoe-plat-linkedin-bar" style="width:0%;background:var(--yellow)"></div></div></div>
+          </div>
+          <div class="platform-card" style="opacity:0.6;"><div class="platform-header"><div class="platform-logo facebook">📘</div><div><div class="platform-name">Facebook</div><div class="platform-handle">À configurer</div></div></div><div style="padding:20px 0;text-align:center;color:var(--text2);font-size:13px;">Page ID à connecter</div></div>
+          <div class="platform-card" style="opacity:0.6;"><div class="platform-header"><div class="platform-logo instagram">📸</div><div><div class="platform-name">Instagram</div><div class="platform-handle">À configurer</div></div></div><div style="padding:20px 0;text-align:center;color:var(--text2);font-size:13px;">Compte à connecter</div></div>
+        </div>
+      </div>
+
+      <!-- ══ AOE — PLATEFORMES ══ -->
+      <div class="section" id="section-aoe-platforms">
+        <div class="section-header"><div><h2>🟡 Plateformes — AOE</h2><p>Métriques LinkedIn · Facebook · Instagram</p></div></div>
+        <div class="grid-3">
+          <div class="platform-card">
+            <div class="platform-header"><div class="platform-logo linkedin">💼</div><div><div class="platform-name">LinkedIn</div><div class="platform-handle">african-office-of-engineering</div></div></div>
+            <div class="platform-stats">
+              <div class="platform-stat"><div class="val" id="aoe-plat2-linkedin-followers">—</div><div class="lbl">Followers</div></div>
+              <div class="platform-stat"><div class="val" id="aoe-plat2-linkedin-engage">—</div><div class="lbl">Engagement</div></div>
+              <div class="platform-stat"><div class="val" id="aoe-plat2-linkedin-posts">—</div><div class="lbl">Posts (Mars)</div></div>
+              <div class="platform-stat"><div class="val" id="aoe-plat2-linkedin-likes">—</div><div class="lbl">Likes (Mars)</div></div>
+            </div>
+            <div style="margin-top:14px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Objectif 3 000</span><span id="aoe-plat2-linkedin-pct">—%</span></div><div class="progress-bar"><div class="progress-fill" id="aoe-plat2-linkedin-bar" style="width:0%;background:var(--yellow)"></div></div></div>
+          </div>
+          <div class="platform-card" style="opacity:0.6;"><div class="platform-header"><div class="platform-logo facebook">📘</div><div><div class="platform-name">Facebook</div><div class="platform-handle">À configurer</div></div></div><div style="padding:20px;text-align:center;color:var(--text2);font-size:13px;">Page ID à connecter via Admin</div></div>
+          <div class="platform-card" style="opacity:0.6;"><div class="platform-header"><div class="platform-logo instagram">📸</div><div><div class="platform-name">Instagram</div><div class="platform-handle">À configurer</div></div></div><div style="padding:20px;text-align:center;color:var(--text2);font-size:13px;">Compte à connecter via Admin</div></div>
+        </div>
+      </div>
+
+      <!-- ══ AOE — PIPELINE ══ -->
+      <div class="section" id="section-aoe-pipeline">
+        <div class="section-header"><div><h2>🟡 Pipeline Contenu — AOE</h2><p>Idées → Rédaction → Validation → Publication</p></div></div>
+        <div class="grid-2" style="margin-bottom:12px;">
+          <div class="card"><div class="card-header"><div class="card-title">🟡 À Valider</div></div><div id="aoe-pipeline-review"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Connecter Google Sheets AOE</div></div></div>
+          <div class="card"><div class="card-header"><div class="card-title">🔵 Planifiés</div></div><div id="aoe-pipeline-scheduled"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Connecter Google Sheets AOE</div></div></div>
+        </div>
+        <div class="grid-2">
+          <div class="card"><div class="card-header"><div class="card-title">✏️ Brouillons</div></div><div id="aoe-pipeline-draft"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Connecter Google Sheets AOE</div></div></div>
+          <div class="card"><div class="card-header"><div class="card-title">✅ Publiés</div></div><div id="aoe-pipeline-published"><div style="color:var(--text2);font-size:13px;padding:12px 0;">Connecter Google Sheets AOE</div></div></div>
+        </div>
+      </div>
+
+      <!-- ══ GLOBO AFRIQUE — PIPELINE ══ -->
+      <div class="section" id="section-ga-pipeline">
+        <div class="section-header">
+          <div><h2>🔵 Pipeline Contenu — Globo Afrique</h2><p>Idées → Rédaction → Validation → Publication</p></div>
           <div style="font-size:12px;color:var(--text2);font-weight:600;" id="pipeline-updated">—</div>
         </div>
         <div class="grid-2" style="margin-bottom:12px;">
@@ -1086,8 +1357,8 @@ body {
         </div>
       </div>
 
-      <!-- ══ CALENDRIER ══ -->
-      <div class="section" id="section-calendar">
+      <!-- ══ GLOBO AFRIQUE — CALENDRIER ══ -->
+      <div class="section" id="section-ga-calendar">
         <div class="section-header">
           <div><h2>Plan Éditorial — Mars 2026</h2><p>Calendrier de publication multi-plateformes</p></div>
           <div style="display:flex;gap:8px;"><button class="btn btn-secondary" style="padding:7px 12px;font-size:12px;">← Fév</button><button class="btn btn-secondary" style="padding:7px 12px;font-size:12px;">Avr →</button></div>
@@ -1159,10 +1430,10 @@ body {
         </div>
       </div>
 
-      <!-- ══ VEILLE ══ -->
-      <div class="section" id="section-veille">
+      <!-- ══ GLOBO AFRIQUE — VEILLE ══ -->
+      <div class="section" id="section-ga-veille">
         <div class="section-header">
-          <div><h2>Veille Concurrentielle</h2><p>Georis · Fleeti · ON TRACK · Mapping Control · SAGAM · IT Mobile · Iris Afrique · Teletrack · Camtrack</p></div>
+          <div><h2>🔵 Veille Concurrentielle — Globo Afrique</h2><p>Georis · Fleeti · ON TRACK · Mapping Control · SAGAM · IT Mobile · Iris Afrique · Teletrack · Camtrack</p></div>
           <div style="display:flex;align-items:center;gap:10px;">
             <span id="veille-count-badge" style="background:var(--orange-dim);color:var(--orange2);font-size:12px;font-weight:800;padding:4px 12px;border-radius:2px;border:1px solid rgba(232,80,10,0.2);">— signaux</span>
             <span style="font-size:11px;color:var(--text3);font-weight:600;" id="veille-updated"></span>
@@ -1213,21 +1484,76 @@ body {
         </div>
       </div>
 
-      <!-- ══ ANALYTICS ══ -->
-      <div class="section" id="section-analytics">
-        <div class="section-header"><div><h2>Analytics</h2><p>Performance globale — 30 derniers jours</p></div></div>
-        <div class="grid-4" style="margin-bottom:20px;">
-          <div class="kpi-card"><div class="kpi-icon">👁️</div><div class="kpi-value">184K</div><div class="kpi-label">Impressions Totales</div><div class="kpi-delta up">↑ +22% vs mois préc.</div></div>
-          <div class="kpi-card green"><div class="kpi-icon">💬</div><div class="kpi-value">8 632</div><div class="kpi-label">Interactions Totales</div><div class="kpi-delta up">↑ +18%</div></div>
-          <div class="kpi-card yellow"><div class="kpi-icon">🔗</div><div class="kpi-value">1 247</div><div class="kpi-label">Clics sur Liens</div><div class="kpi-delta up">↑ +31%</div></div>
-          <div class="kpi-card blue"><div class="kpi-icon">📧</div><div class="kpi-value">24.3%</div><div class="kpi-label">Taux ouverture Newsletter</div><div class="kpi-delta up">↑ +3.1%</div></div>
+      <!-- ══ GES — VEILLE ══ -->
+      <div class="section" id="section-ges-veille">
+        <div class="section-header">
+          <div><h2>🟠 Veille Concurrentielle — GES</h2><p>Concurrents à définir</p></div>
         </div>
-        <div class="card">
-          <div class="card-header"><div class="card-title">Top Posts du Mois</div></div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div class="card-title">🔔 Signaux Actifs</div></div>
+            <div style="padding:48px;text-align:center;color:var(--text2);">
+              <div style="font-size:40px;margin-bottom:16px;">🔭</div>
+              <div style="font-weight:700;font-size:15px;margin-bottom:8px;color:var(--white);">Veille GES à configurer</div>
+              <div style="font-size:13px;">Définir les concurrents à surveiller<br>puis connecter le workflow n8n</div>
+            </div>
+          </div>
           <div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px;"><div style="display:flex;align-items:center;gap:12px;min-width:0;"><div style="background:var(--navy2);border-radius:2px;padding:3px 8px;font-size:11px;color:var(--text2);flex-shrink:0;font-weight:700;">💼 LinkedIn</div><div style="font-size:13px;font-weight:500;">Fleet Management & Sécurité en Afrique de l'Ouest</div></div><div style="display:flex;gap:14px;font-size:12px;color:var(--text2);flex-shrink:0;font-weight:600;"><span>👍 47</span><span>💬 12</span><span style="color:var(--orange2);">↗️ 8.4%</span></div></div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px;"><div style="display:flex;align-items:center;gap:12px;min-width:0;"><div style="background:var(--navy2);border-radius:2px;padding:3px 8px;font-size:11px;color:var(--text2);flex-shrink:0;font-weight:700;">📘 Facebook</div><div style="font-size:13px;font-weight:500;">Petrosen — Globo assure la sécurité incendie de 3 nouveaux sites</div></div><div style="display:flex;gap:14px;font-size:12px;color:var(--text2);flex-shrink:0;font-weight:600;"><span>👍 89</span><span>💬 24</span><span style="color:var(--orange2);">↗️ 7.2%</span></div></div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;flex-wrap:wrap;gap:8px;"><div style="display:flex;align-items:center;gap:12px;min-width:0;"><div style="background:var(--navy2);border-radius:2px;padding:3px 8px;font-size:11px;color:var(--text2);flex-shrink:0;font-weight:700;">📸 Instagram</div><div style="font-size:13px;font-weight:500;">Behind the scenes — Installation système anti-incendie TotalEnergies</div></div><div style="display:flex;gap:14px;font-size:12px;color:var(--text2);flex-shrink:0;font-weight:600;"><span>👍 134</span><span>💬 18</span><span style="color:var(--orange2);">↗️ 9.1%</span></div></div>
+            <div class="card" style="margin-bottom:12px;">
+              <div class="card-header"><div class="card-title">📡 Sources à configurer</div></div>
+              <div style="padding:16px;color:var(--text2);font-size:13px;line-height:1.8;">
+                <div style="font-weight:700;color:var(--orange2);margin-bottom:8px;">Étapes :</div>
+                <div>1. Lister les concurrents GES</div>
+                <div>2. Ajouter leurs URLs dans n8n Veille</div>
+                <div>3. Connecter le Google Sheets signaux GES</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><div class="card-title">📊 Résumé</div></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--red);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Gravité haute</div></div>
+                <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--orange2);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Action requise</div></div>
+                <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--yellow);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">En cours</div></div>
+                <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--green);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">→ Pipeline</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ AOE — VEILLE ══ -->
+      <div class="section" id="section-aoe-veille">
+        <div class="section-header">
+          <div><h2>🟡 Veille Concurrentielle — AOE</h2><p>Concurrents à définir</p></div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><div class="card-title">🔔 Signaux Actifs</div></div>
+            <div style="padding:48px;text-align:center;color:var(--text2);">
+              <div style="font-size:40px;margin-bottom:16px;">🔭</div>
+              <div style="font-weight:700;font-size:15px;margin-bottom:8px;color:var(--white);">Veille AOE à configurer</div>
+              <div style="font-size:13px;">Définir les concurrents à surveiller<br>puis connecter le workflow n8n</div>
+            </div>
+          </div>
+          <div>
+            <div class="card" style="margin-bottom:12px;">
+              <div class="card-header"><div class="card-title">📡 Sources à configurer</div></div>
+              <div style="padding:16px;color:var(--text2);font-size:13px;line-height:1.8;">
+                <div style="font-weight:700;color:var(--yellow);margin-bottom:8px;">Étapes :</div>
+                <div>1. Lister les concurrents AOE</div>
+                <div>2. Ajouter leurs URLs dans n8n Veille</div>
+                <div>3. Connecter le Google Sheets signaux AOE</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><div class="card-title">📊 Résumé</div></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--red);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Gravité haute</div></div>
+                <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--orange2);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Action requise</div></div>
+                <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--yellow);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">En cours</div></div>
+                <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--green);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">→ Pipeline</div></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1464,11 +1790,36 @@ function closeSidebar() {
    NAVIGATION
 ══════════════════════════════ */
 var TITLES = {
-  'overview':'Command Center','platforms':'Plateformes Sociales',
-  'pipeline':'Pipeline Contenu','calendar':'Plan Éditorial',
-  'agents':'AI Team','challenge':'Challenge Ambassadeurs',
-  'veille':'Veille Concurrentielle','analytics':'Analytics','admin':'Administration'
+  'overview':'Vue Groupe',
+  'challenge':'Challenge Ambassadeurs',
+  'agents':'AI Team',
+  'admin':'Administration',
+  // Globo Afrique
+  'ga-overview':'Globo Afrique — Aperçu',
+  'ga-platforms':'Globo Afrique — Plateformes',
+  'ga-pipeline':'Globo Afrique — Pipeline',
+  'ga-calendar':'Globo Afrique — Plan Éditorial',
+  'ga-veille':'Globo Afrique — Veille Concurrentielle',
+  // GES
+  'ges-overview':'GES — Aperçu',
+  'ges-platforms':'GES — Plateformes',
+  'ges-pipeline':'GES — Pipeline',
+  'ges-veille':'GES — Veille Concurrentielle',
+  // AOE
+  'aoe-overview':'AOE — Aperçu',
+  'aoe-platforms':'AOE — Plateformes',
+  'aoe-pipeline':'AOE — Pipeline',
+  'aoe-veille':'AOE — Veille Concurrentielle'
 };
+
+function toggleEntity(id) {
+  var nav = document.getElementById('entity-' + id + '-nav');
+  var arrow = document.getElementById('entity-' + id + '-arrow');
+  if (!nav) return;
+  var isOpen = nav.style.display !== 'none';
+  nav.style.display = isOpen ? 'none' : 'block';
+  if (arrow) arrow.textContent = isOpen ? '▶' : '▼';
+}
 
 function showSection(id) {
   document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
@@ -1677,63 +2028,131 @@ function loadRealData() {
       var upd = data.updated || '';
       var set = function(id, val) { var el = document.getElementById(id); if (el) el.textContent = val; };
 
-      if (data.followers) {
-        var li = data.followers.linkedin || 0;
-        var fb = data.followers.facebook || 0;
-        var ig = data.followers.instagram || 0;
-        var total = li + fb + ig;
-        set('followers-linkedin', li.toLocaleString('fr-FR'));
-        set('followers-facebook', fb ? fb.toLocaleString('fr-FR') : '');
-        set('followers-instagram', ig ? ig.toLocaleString('fr-FR') : '');
-        set('followers-facebook-updated', 'MAJ ' + upd);
-        set('followers-instagram-updated', 'MAJ ' + upd);
-        set('kpi-reach', total.toLocaleString('fr-FR'));
-        set('kpi-reach-delta', 'MAJ ' + upd);
-        var pct = Math.round((li / 10000) * 1000) / 10;
-        set('linkedin-10k-label', li.toLocaleString('fr-FR') + ' / 10 000');
-        set('linkedin-10k-pct', pct + '% atteint');
-        set('linkedin-10k-rest', '+' + (10000-li).toLocaleString('fr-FR') + ' restants');
-        var bar = document.getElementById('linkedin-10k-bar'); if (bar) bar.style.width = pct + '%';
-        set('plat-linkedin-followers', li.toLocaleString('fr-FR'));
-        set('plat-facebook-followers', fb ? fb.toLocaleString('fr-FR') : '');
-        set('plat-instagram-followers', ig ? ig.toLocaleString('fr-FR') : '');
-        var pctFB = Math.round((fb/20000)*1000)/10, pctIG = Math.round((ig/5000)*1000)/10;
-        set('plat-linkedin-pct', pct+'%'); set('plat-facebook-pct', pctFB+'%'); set('plat-instagram-pct', pctIG+'%');
-        var b1=document.getElementById('plat-linkedin-bar'),b2=document.getElementById('plat-facebook-bar'),b3=document.getElementById('plat-instagram-bar');
-        if(b1) b1.style.width=pct+'%'; if(b2) b2.style.width=pctFB+'%'; if(b3) b3.style.width=pctIG+'%';
+      // ── Détecte format multi-entités vs ancien format ──
+      var gaData = (data.entites && data.entites.globo_afrique) ? data.entites.globo_afrique : data;
+      var gesData = (data.entites && data.entites.ges) ? data.entites.ges : null;
+      var aoeData = (data.entites && data.entites.aoe) ? data.entites.aoe : null;
+
+      // ── Globo Afrique ──
+      var gaFollowers = gaData.followers || {};
+      var gaLI = gaFollowers.linkedin || 0;
+      var gaFB = gaFollowers.facebook || 0;
+      var gaIG = gaFollowers.instagram || 0;
+      var gaTotal = gaLI + gaFB + gaIG;
+
+      // Vue Groupe - cartes entités
+      set('groupe-ga-linkedin', gaLI ? gaLI.toLocaleString('fr-FR') : '—');
+      set('groupe-ga-facebook', gaFB ? gaFB.toLocaleString('fr-FR') : '—');
+      set('groupe-ga-instagram', gaIG ? gaIG.toLocaleString('fr-FR') : '—');
+      set('groupe-ga-total', gaTotal ? gaTotal.toLocaleString('fr-FR') : '—');
+
+      // KPIs aperçu GA
+      set('ga-kpi-linkedin', gaLI ? gaLI.toLocaleString('fr-FR') : '—');
+      set('ga-kpi-facebook', gaFB ? gaFB.toLocaleString('fr-FR') : '—');
+      set('ga-kpi-instagram', gaIG ? gaIG.toLocaleString('fr-FR') : '—');
+
+      // Plateformes GA (section ga-overview et ga-platforms)
+      var gaPct = Math.round((gaLI / 10000) * 1000) / 10;
+      var gaFBPct = Math.round((gaFB / 20000) * 1000) / 10;
+      var gaIGPct = Math.round((gaIG / 5000) * 1000) / 10;
+      ['plat-linkedin-followers','ga-plat-linkedin-followers'].forEach(function(id){ set(id, gaLI ? gaLI.toLocaleString('fr-FR') : '—'); });
+      ['plat-facebook-followers','ga-plat-facebook-followers'].forEach(function(id){ set(id, gaFB ? gaFB.toLocaleString('fr-FR') : '—'); });
+      ['plat-instagram-followers','ga-plat-instagram-followers'].forEach(function(id){ set(id, gaIG ? gaIG.toLocaleString('fr-FR') : '—'); });
+      ['plat-linkedin-pct','ga-plat-linkedin-pct'].forEach(function(id){ set(id, gaPct + '%'); });
+      ['plat-facebook-pct','ga-plat-facebook-pct'].forEach(function(id){ set(id, gaFBPct + '%'); });
+      ['plat-instagram-pct','ga-plat-instagram-pct'].forEach(function(id){ set(id, gaIGPct + '%'); });
+      var bars = [['plat-linkedin-bar','ga-plat-linkedin-bar',gaPct],['plat-facebook-bar','ga-plat-facebook-bar',gaFBPct],['plat-instagram-bar','ga-plat-instagram-bar',gaIGPct]];
+      bars.forEach(function(b){ b.forEach(function(id,i){ if(i<2){ var el=document.getElementById(id); if(el) el.style.width=b[2]+'%'; } }); });
+
+      // Stats LinkedIn GA
+      var gaStats = gaData.linkedin_stats || {};
+      var gaPosts = gaStats.posts_mois, gaEngage = gaStats.engagement_rate, gaLikes = gaStats.total_likes;
+      ['plat-linkedin-engage','ga-plat-linkedin-engage'].forEach(function(id){ set(id, gaEngage !== undefined ? gaEngage.toFixed(1)+'%' : '—'); });
+      ['plat-linkedin-posts','ga-plat-linkedin-posts'].forEach(function(id){ set(id, gaPosts !== undefined ? gaPosts : '—'); });
+      ['plat-linkedin-likes','ga-plat-linkedin-likes'].forEach(function(id){ set(id, gaLikes !== undefined ? gaLikes : '—'); });
+      set('ga-kpi-posts', gaPosts !== undefined ? gaPosts : '—');
+      set('kpi-posts', gaPosts !== undefined ? gaPosts : '—');
+      set('kpi-posts-delta', 'Globo Afrique · MAJ ' + upd);
+      set('kpi-engage', gaEngage !== undefined ? gaEngage.toFixed(1)+'%' : '—');
+
+      // ── GES ──
+      var gesLI = 0, gesFB = 0, gesIG = 0;
+      if (gesData) {
+        var gesFollowers = gesData.followers || {};
+        gesLI = gesFollowers.linkedin || 0;
+        gesFB = gesFollowers.facebook || 0;
+        gesIG = gesFollowers.instagram || 0;
+      }
+      set('groupe-ges-linkedin', gesLI ? gesLI.toLocaleString('fr-FR') : '—');
+      set('groupe-ges-facebook', gesFB ? gesFB.toLocaleString('fr-FR') : '—');
+      set('groupe-ges-instagram', gesIG ? gesIG.toLocaleString('fr-FR') : '—');
+      set('groupe-ges-total', (gesLI+gesFB+gesIG) ? (gesLI+gesFB+gesIG).toLocaleString('fr-FR') : '—');
+      set('ges-kpi-linkedin', gesLI ? gesLI.toLocaleString('fr-FR') : '—');
+      ['ges-plat-linkedin-followers','ges-plat2-linkedin-followers'].forEach(function(id){ set(id, gesLI ? gesLI.toLocaleString('fr-FR') : '—'); });
+      var gesPct = gesLI ? Math.round((gesLI/5000)*1000)/10 : 0;
+      ['ges-plat-linkedin-pct','ges-plat2-linkedin-pct'].forEach(function(id){ set(id, gesPct + '%'); });
+      ['ges-plat-linkedin-bar','ges-plat2-linkedin-bar'].forEach(function(id){ var el=document.getElementById(id); if(el) el.style.width=gesPct+'%'; });
+      if (gesData && gesData.linkedin_stats) {
+        var gs = gesData.linkedin_stats;
+        ['ges-plat-linkedin-engage','ges-plat2-linkedin-engage'].forEach(function(id){ set(id, gs.engagement_rate ? gs.engagement_rate.toFixed(1)+'%' : '—'); });
+        ['ges-plat-linkedin-posts','ges-plat2-linkedin-posts'].forEach(function(id){ set(id, gs.posts_mois !== undefined ? gs.posts_mois : '—'); });
+        ['ges-plat-linkedin-likes','ges-plat2-linkedin-likes'].forEach(function(id){ set(id, gs.total_likes !== undefined ? gs.total_likes : '—'); });
+        set('ges-kpi-posts', gs.posts_mois !== undefined ? gs.posts_mois : '—');
       }
 
-      if (data.linkedin_stats) {
-        var posts2=data.linkedin_stats.posts_mois, engage=data.linkedin_stats.engagement_rate;
-        var likes2=data.linkedin_stats.total_likes;
-        set('kpi-posts', posts2!==undefined?posts2:'');
-        set('kpi-engage', engage!==undefined?engage.toFixed(1)+'%':'');
-        set('kpi-posts-delta', 'LinkedIn · MAJ '+upd);
-        set('kpi-engage-delta', 'LinkedIn · MAJ '+upd);
-        set('plat-linkedin-posts', posts2!==undefined?posts2:'');
-        set('plat-linkedin-engage', engage!==undefined?engage.toFixed(1)+'%':'');
-        set('plat-linkedin-likes', likes2!==undefined?likes2:'');
-        // Facebook stats (depuis linkedin_stats si disponible, sinon N/D)
-        set('plat-facebook-engage', data.facebook_stats ? data.facebook_stats.engagement_rate.toFixed(1)+'%' : 'N/D');
-        set('plat-facebook-posts', data.facebook_stats ? data.facebook_stats.posts_mois : 'N/D');
-        set('plat-facebook-likes', data.facebook_stats ? data.facebook_stats.total_likes : 'N/D');
-        // Instagram stats
-        set('plat-instagram-engage', data.instagram_stats ? data.instagram_stats.engagement_rate.toFixed(1)+'%' : 'N/D');
-        set('plat-instagram-posts', data.instagram_stats ? data.instagram_stats.posts_mois : 'N/D');
-        set('plat-instagram-likes', data.instagram_stats ? data.instagram_stats.total_likes : 'N/D');
+      // ── AOE ──
+      var aoeLI = 0, aoeFB = 0, aoeIG = 0;
+      if (aoeData) {
+        var aoeFollowers = aoeData.followers || {};
+        aoeLI = aoeFollowers.linkedin || 0;
+        aoeFB = aoeFollowers.facebook || 0;
+        aoeIG = aoeFollowers.instagram || 0;
+      }
+      set('groupe-aoe-linkedin', aoeLI ? aoeLI.toLocaleString('fr-FR') : '—');
+      set('groupe-aoe-facebook', aoeFB ? aoeFB.toLocaleString('fr-FR') : '—');
+      set('groupe-aoe-instagram', aoeIG ? aoeIG.toLocaleString('fr-FR') : '—');
+      set('groupe-aoe-total', (aoeLI+aoeFB+aoeIG) ? (aoeLI+aoeFB+aoeIG).toLocaleString('fr-FR') : '—');
+      set('aoe-kpi-linkedin', aoeLI ? aoeLI.toLocaleString('fr-FR') : '—');
+      ['aoe-plat-linkedin-followers','aoe-plat2-linkedin-followers'].forEach(function(id){ set(id, aoeLI ? aoeLI.toLocaleString('fr-FR') : '—'); });
+      var aoePct = aoeLI ? Math.round((aoeLI/3000)*1000)/10 : 0;
+      ['aoe-plat-linkedin-pct','aoe-plat2-linkedin-pct'].forEach(function(id){ set(id, aoePct + '%'); });
+      ['aoe-plat-linkedin-bar','aoe-plat2-linkedin-bar'].forEach(function(id){ var el=document.getElementById(id); if(el) el.style.width=aoePct+'%'; });
+      if (aoeData && aoeData.linkedin_stats) {
+        var as = aoeData.linkedin_stats;
+        ['aoe-plat-linkedin-engage','aoe-plat2-linkedin-engage'].forEach(function(id){ set(id, as.engagement_rate ? as.engagement_rate.toFixed(1)+'%' : '—'); });
+        ['aoe-plat-linkedin-posts','aoe-plat2-linkedin-posts'].forEach(function(id){ set(id, as.posts_mois !== undefined ? as.posts_mois : '—'); });
+        ['aoe-plat-linkedin-likes','aoe-plat2-linkedin-likes'].forEach(function(id){ set(id, as.total_likes !== undefined ? as.total_likes : '—'); });
+        set('aoe-kpi-posts', as.posts_mois !== undefined ? as.posts_mois : '—');
       }
 
-      if (data.classement && data.classement.length > 0) {
+      // ── KPIs Groupe consolidés ──
+      var totalFollowers = gaTotal + gesLI + gesFB + gesIG + aoeLI + aoeFB + aoeIG;
+      set('kpi-reach', totalFollowers ? totalFollowers.toLocaleString('fr-FR') : '—');
+      set('kpi-reach-delta', 'MAJ ' + upd);
+
+      // Barre objectif LinkedIn groupe (GA + GES + AOE)
+      var groupeLI = gaLI + gesLI + aoeLI;
+      var groupePct = Math.round((groupeLI/15000)*1000)/10;
+      set('linkedin-10k-label', groupeLI.toLocaleString('fr-FR') + ' / 15 000');
+      set('linkedin-10k-pct', groupePct + '%');
+      var bar10k = document.getElementById('linkedin-10k-bar'); if (bar10k) bar10k.style.width = groupePct + '%';
+
+      // ── Classement Challenge ──
+      var classement = (data.entites && data.groupe) ? data.groupe.classement : data.classement;
+      if (!classement && data.classement) classement = data.classement;
+      if (classement && classement.length > 0) {
         var tbody = document.getElementById('challenge-tbody');
         if (tbody) {
           tbody.innerHTML = '';
           var totalPts = 0;
-          data.classement.forEach(function(emp, i) {
+          classement.forEach(function(emp, i) {
             totalPts += (parseInt(emp.Total_Points)||0);
             var rankClass = i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-n';
             var row = document.createElement('tr');
             var td1=document.createElement('td'); var badge=document.createElement('div'); badge.className='rank-badge '+rankClass; badge.textContent=i+1; td1.appendChild(badge);
             var td2=document.createElement('td'); var s=document.createElement('strong'); s.textContent=emp.Prenom+' '+emp.Nom; td2.appendChild(s);
+            // Afficher l'entité si dispo
+            if (emp.Entite) { var entSpan=document.createElement('span'); entSpan.style.cssText='font-size:10px;color:var(--text2);margin-left:6px;font-weight:600;'; entSpan.textContent='['+emp.Entite+']'; td2.appendChild(entSpan); }
             var td3=document.createElement('td'); td3.textContent=emp.Total_Likes||0;
             var td4=document.createElement('td'); td4.textContent=emp.Total_Commentaires||0;
             var td5=document.createElement('td'); td5.textContent=emp.Total_Invitations||0;
@@ -1745,13 +2164,86 @@ function loadRealData() {
         }
       }
 
-      if (data.activity && data.activity.length > 0) {
+      // ── Activity Feed ──
+      var activity = (data.groupe && data.groupe.activity) ? data.groupe.activity : data.activity;
+      if (activity && activity.length > 0) {
         var feedEl = document.getElementById('activity-feed');
         if (feedEl) {
           feedEl.innerHTML='';
           var colorMap={green:'var(--green)',accent:'var(--orange2)',orange:'var(--orange)',purple:'var(--purple)',yellow:'var(--yellow)',red:'var(--red)',blue:'var(--blue)'};
-          data.activity.forEach(function(item) {
+          activity.forEach(function(item) {
             var fi=document.createElement('div'); fi.className='feed-item';
+            var dot=document.createElement('div'); dot.className='feed-dot'; dot.style.background=colorMap[item.color]||'var(--text2)';
+            var fc=document.createElement('div'); fc.className='feed-content';
+            var msg=document.createElement('div'); msg.className='msg'; msg.innerHTML=item.message||'';
+            var time=document.createElement('div'); time.className='time'; time.textContent=item.time||'';
+            fc.appendChild(msg); fc.appendChild(time); fi.appendChild(dot); fi.appendChild(fc); feedEl.appendChild(fi);
+          });
+        }
+      }
+
+      // ── Signaux Veille ──
+      var signaux = (data.groupe && data.groupe.signaux) ? data.groupe.signaux : data.signaux;
+      if (signaux !== undefined) {
+        window._signauxData = signaux;
+        renderVeille(signaux, window._veilleFilter||'all');
+        set('veille-count-badge', signaux.length+' signaux');
+        set('veille-updated','MAJ '+upd);
+        var critique=signaux.filter(function(s){return s.gravite>=4;}).length;
+        var encours=signaux.filter(function(s){return(s.statut||'')==='en_cours';}).length;
+        var action=signaux.filter(function(s){return(s.action_requise||'').toUpperCase()==='OUI';}).length;
+        set('veille-stat-critique',critique);set('veille-stat-encours',encours);set('veille-stat-action',action);
+        set('veille-stat-pipeline',window._signauxPipelineCount||0);
+        set('grp-veille-critique',critique);set('grp-veille-encours',encours);set('grp-veille-action',action);
+        set('grp-veille-pipeline',window._signauxPipelineCount||0);
+      }
+
+      // ── Pipeline Globo Afrique ──
+      var pipeline = gaData.pipeline || data.pipeline;
+      if (pipeline) {
+        var counts = {review:0, scheduled:0, draft:0, published:0};
+        var groups = {review:[], scheduled:[], draft:[], published:[]};
+        pipeline.forEach(function(p){
+          var st=(p.Statut||p.statut||'').toLowerCase();
+          var key = st.includes('valid')||st.includes('review') ? 'review' : st.includes('plan')||st.includes('sched') ? 'scheduled' : st.includes('publ') ? 'published' : 'draft';
+          groups[key].push(p); counts[key]++;
+        });
+        function renderPipe(containerId, items) {
+          var el = document.getElementById(containerId); if (!el) return;
+          if (!items.length) { el.innerHTML='<div style="color:var(--text2);font-size:13px;padding:8px 0;text-align:center;">Vide</div>'; return; }
+          el.innerHTML = items.map(function(p){ return '<div style="padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;font-weight:500;">'+(p.Titre||p.titre||p.title||'—')+'<div style="font-size:11px;color:var(--text2);margin-top:3px;">'+(p.Plateforme||p.plateforme||'')+(p.Date_Prevue||p.date?' · '+(p.Date_Prevue||p.date):'')+'</div></div>'; }).join('');
+        }
+        renderPipe('pipeline-review', groups.review);
+        renderPipe('pipeline-scheduled', groups.scheduled);
+        renderPipe('pipeline-draft', groups.draft);
+        renderPipe('pipeline-published', groups.published);
+        var total = pipeline.length;
+        set('kpi-pipeline', total);
+        set('pipeline-updated', 'MAJ '+upd);
+        var badge = document.getElementById('pipeline-badge'); if (badge) badge.textContent = total;
+        set('pipeline-review-title', '🟡 À Valider ('+(counts.review||0)+')');
+        set('pipeline-scheduled-title', '🔵 Planifiés ('+(counts.scheduled||0)+')');
+        set('pipeline-draft-title', '✏️ Brouillons ('+(counts.draft||0)+')');
+        set('pipeline-published-title', '✅ Publiés ('+(counts.published||0)+')');
+      }
+
+      // ── Utilisateurs distants ──
+      if (data.users) {
+        var remoteUsers = data.users;
+        if (Array.isArray(remoteUsers)) {
+          var obj = {};
+          remoteUsers.forEach(function(u) {
+            if (u.username) obj[u.username] = { hash: u.password_hash||u.hash||'', name: u.name||u.username, role: u.role||'viewer', initial: u.initial||(u.name?u.name.charAt(0).toUpperCase():u.username.charAt(0).toUpperCase()), remote: true };
+          });
+          remoteUsers = obj;
+        }
+        var PROTECTED = ['christopher'];
+        Object.keys(remoteUsers).forEach(function(u) { if (PROTECTED.indexOf(u)===-1) USERS[u]=Object.assign({},remoteUsers[u],{remote:true}); });
+        if (currentUser && (currentUser.role==='superadmin'||currentUser.role==='admin')) renderUsersList();
+      }
+    })
+    .catch(function(e) { console.log('[Globo] data.json indisponible:', e); });
+}
             var dot=document.createElement('div'); dot.className='feed-dot'; dot.style.background=colorMap[item.color]||'var(--orange2)';
             var content=document.createElement('div'); content.className='feed-content';
             var msg=document.createElement('div'); msg.className='msg'; msg.textContent=item.msg;
