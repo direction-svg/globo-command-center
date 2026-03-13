@@ -1,5 +1,5 @@
 {
-  "updated": "2026-03-13T14:11:08.679Z",
+  "updated": "2026-03-13T14:44:05.099Z",
   "entites": {
     "globo_afrique": {
       "followers": {
@@ -43,5 +43,10 @@
         "engagement": 0.1
       }
     }
-  }
+  },
+  "nb_employes": 0,
+  "classement": [],
+  "activity": [],
+  "pipeline": [],
+  "signaux": []
 }
