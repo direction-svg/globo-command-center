@@ -1,28 +1,28 @@
 ={
-  "updated": "2026-03-13T00:34:42.484Z",
+  "updated": "2026-03-13T10:00:08.341Z",
   "entites": {
     "globo_afrique": {
       "followers": {
-        "linkedin": 5939,
-        "facebook": 13912,
+        "linkedin": 5938,
+        "facebook": 13915,
         "instagram": 2128
       },
       "linkedin_stats": {
-        "followers": 5939,
+        "followers": 5938,
         "posts_month": 4,
-        "likes_month": 34,
+        "likes_month": 36,
         "comments_month": 0,
-        "engagement": 0.14
+        "engagement": 0.15
       }
     },
     "ges": {
       "followers": {
-        "linkedin": 2144,
+        "linkedin": 2143,
         "facebook": 4912,
         "instagram": 643
       },
       "linkedin_stats": {
-        "followers": 2144,
+        "followers": 2143,
         "posts_month": 0,
         "likes_month": 0,
         "comments_month": 0,
