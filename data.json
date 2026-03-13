@@ -1,5 +1,5 @@
 ={
-  "updated": "2026-03-13T10:00:08.341Z",
+  "updated": "2026-03-13T11:04:16.683Z",
   "entites": {
     "globo_afrique": {
       "followers": {
@@ -37,10 +37,10 @@
       },
       "linkedin_stats": {
         "followers": 1442,
-        "posts_month": 0,
-        "likes_month": 0,
+        "posts_month": 4,
+        "likes_month": 6,
         "comments_month": 0,
-        "engagement": null
+        "engagement": 0.1
       }
     }
   }
