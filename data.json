@@ -1,5 +1,5 @@
 ={
-  "updated": "2026-03-13T11:52:32.168Z",
+  "updated": "2026-03-13T12:00:35.692Z",
   "entites": {
     "globo_afrique": {
       "followers": {
@@ -17,30 +17,30 @@
     },
     "ges": {
       "followers": {
-        "linkedin": null,
+        "linkedin": 2143,
         "facebook": 4912,
         "instagram": 643
       },
       "linkedin_stats": {
-        "followers": null,
-        "posts_month": 0,
-        "likes_month": 0,
+        "followers": 2143,
+        "posts_month": 4,
+        "likes_month": 24,
         "comments_month": 0,
-        "engagement": null
+        "engagement": 0.28
       }
     },
     "aoe": {
       "followers": {
-        "linkedin": null,
+        "linkedin": 1442,
         "facebook": 37,
         "instagram": 879
       },
       "linkedin_stats": {
-        "followers": null,
-        "posts_month": 0,
-        "likes_month": 0,
+        "followers": 1442,
+        "posts_month": 4,
+        "likes_month": 6,
         "comments_month": 0,
-        "engagement": null
+        "engagement": 0.1
       }
     }
   }
