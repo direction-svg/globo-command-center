@@ -2095,8 +2095,7 @@ function loadRealData() {
       var bar10k = document.getElementById('linkedin-10k-bar'); if (bar10k) bar10k.style.width = groupePct + '%';
 
       // ── Classement Challenge ──
-      var classement = (data.entites && data.groupe) ? data.groupe.classement : data.classement;
-      if (!classement && data.classement) classement = data.classement;
+      var classement = data.classement || [];
       if (classement && classement.length > 0) {
         var tbody = document.getElementById('challenge-tbody');
         if (tbody) {
@@ -2134,7 +2133,7 @@ function loadRealData() {
       }
 
       // ── Activity Feed ──
-      var activity = (data.groupe && data.groupe.activity) ? data.groupe.activity : data.activity;
+      var activity = data.activity || [];
       if (activity && activity.length > 0) {
         var feedEl = document.getElementById('activity-feed');
         if (feedEl) {
@@ -2152,7 +2151,7 @@ function loadRealData() {
       }
 
       // ── Signaux Veille ──
-      var signaux = (data.groupe && data.groupe.signaux) ? data.groupe.signaux : data.signaux;
+      var signaux = data.signaux || [];
       if (signaux !== undefined) {
         window._signauxData = signaux;
         renderVeille(signaux, window._veilleFilter||'all');
@@ -2168,7 +2167,7 @@ function loadRealData() {
       }
 
       // ── Pipeline Globo Afrique ──
-      var pipeline = gaData.pipeline || data.pipeline;
+      var pipeline = data.pipeline || [];
       if (pipeline) {
         var counts = {review:0, scheduled:0, draft:0, published:0};
         var groups = {review:[], scheduled:[], draft:[], published:[]};
