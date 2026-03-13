@@ -2072,7 +2072,7 @@ function loadRealData() {
 
       // Stats LinkedIn GA
       var gaStats = gaData.linkedin_stats || {};
-      var gaPosts = gaStats.posts_mois, gaEngage = gaStats.engagement_rate, gaLikes = gaStats.total_likes;
+      var gaPosts = gaStats.posts_month, gaEngage = gaStats.engagement, gaLikes = gaStats.likes_month;
       ['plat-linkedin-engage','ga-plat-linkedin-engage'].forEach(function(id){ set(id, gaEngage !== undefined ? gaEngage.toFixed(1)+'%' : '—'); });
       ['plat-linkedin-posts','ga-plat-linkedin-posts'].forEach(function(id){ set(id, gaPosts !== undefined ? gaPosts : '—'); });
       ['plat-linkedin-likes','ga-plat-linkedin-likes'].forEach(function(id){ set(id, gaLikes !== undefined ? gaLikes : '—'); });
@@ -2100,10 +2100,10 @@ function loadRealData() {
       ['ges-plat-linkedin-bar','ges-plat2-linkedin-bar'].forEach(function(id){ var el=document.getElementById(id); if(el) el.style.width=gesPct+'%'; });
       if (gesData && gesData.linkedin_stats) {
         var gs = gesData.linkedin_stats;
-        ['ges-plat-linkedin-engage','ges-plat2-linkedin-engage'].forEach(function(id){ set(id, gs.engagement_rate ? gs.engagement_rate.toFixed(1)+'%' : '—'); });
-        ['ges-plat-linkedin-posts','ges-plat2-linkedin-posts'].forEach(function(id){ set(id, gs.posts_mois !== undefined ? gs.posts_mois : '—'); });
-        ['ges-plat-linkedin-likes','ges-plat2-linkedin-likes'].forEach(function(id){ set(id, gs.total_likes !== undefined ? gs.total_likes : '—'); });
-        set('ges-kpi-posts', gs.posts_mois !== undefined ? gs.posts_mois : '—');
+        ['ges-plat-linkedin-engage','ges-plat2-linkedin-engage'].forEach(function(id){ set(id, gs.engagement !== undefined ? gs.engagement.toFixed(1)+'%' : '—'); });
+        ['ges-plat-linkedin-posts','ges-plat2-linkedin-posts'].forEach(function(id){ set(id, gs.posts_month !== undefined ? gs.posts_month : '—'); });
+        ['ges-plat-linkedin-likes','ges-plat2-linkedin-likes'].forEach(function(id){ set(id, gs.likes_month !== undefined ? gs.likes_month : '—'); });
+        set('ges-kpi-posts', gs.posts_month !== undefined ? gs.posts_month : '—');
       }
 
       // ── AOE ──
@@ -2125,10 +2125,10 @@ function loadRealData() {
       ['aoe-plat-linkedin-bar','aoe-plat2-linkedin-bar'].forEach(function(id){ var el=document.getElementById(id); if(el) el.style.width=aoePct+'%'; });
       if (aoeData && aoeData.linkedin_stats) {
         var as = aoeData.linkedin_stats;
-        ['aoe-plat-linkedin-engage','aoe-plat2-linkedin-engage'].forEach(function(id){ set(id, as.engagement_rate ? as.engagement_rate.toFixed(1)+'%' : '—'); });
-        ['aoe-plat-linkedin-posts','aoe-plat2-linkedin-posts'].forEach(function(id){ set(id, as.posts_mois !== undefined ? as.posts_mois : '—'); });
-        ['aoe-plat-linkedin-likes','aoe-plat2-linkedin-likes'].forEach(function(id){ set(id, as.total_likes !== undefined ? as.total_likes : '—'); });
-        set('aoe-kpi-posts', as.posts_mois !== undefined ? as.posts_mois : '—');
+        ['aoe-plat-linkedin-engage','aoe-plat2-linkedin-engage'].forEach(function(id){ set(id, as.engagement !== undefined ? as.engagement.toFixed(1)+'%' : '—'); });
+        ['aoe-plat-linkedin-posts','aoe-plat2-linkedin-posts'].forEach(function(id){ set(id, as.posts_month !== undefined ? as.posts_month : '—'); });
+        ['aoe-plat-linkedin-likes','aoe-plat2-linkedin-likes'].forEach(function(id){ set(id, as.likes_month !== undefined ? as.likes_month : '—'); });
+        set('aoe-kpi-posts', as.posts_month !== undefined ? as.posts_month : '—');
       }
 
       // ── KPIs Groupe consolidés ──
