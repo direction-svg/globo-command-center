@@ -914,8 +914,7 @@ body {
         </div>
       </div>
       <div id="entity-ga-nav" class="entity-nav">
-        <div class="nav-item sub" onclick="showSection('ga-overview')"><span class="nav-icon">⚡</span>Aperçu</div>
-        <div class="nav-item sub" onclick="showSection('ga-platforms')"><span class="nav-icon">📡</span>Plateformes</div>
+        <div class="nav-item sub" onclick="showSection('ga-overview')"><span class="nav-icon">📡</span>Plateformes</div>
         <div class="nav-item sub" onclick="showSection('ga-pipeline')"><span class="nav-icon">📝</span>Pipeline<span class="nav-badge" id="pipeline-badge">—</span></div>
         <div class="nav-item sub" onclick="showSection('ga-calendar')"><span class="nav-icon">📅</span>Plan Éditorial</div>
         <div class="nav-item sub" onclick="showSection('ga-veille')"><span class="nav-icon">🔭</span>Veille</div>
@@ -928,8 +927,7 @@ body {
         </div>
       </div>
       <div id="entity-ges-nav" class="entity-nav" style="display:none;">
-        <div class="nav-item sub" onclick="showSection('ges-overview')"><span class="nav-icon">⚡</span>Aperçu</div>
-        <div class="nav-item sub" onclick="showSection('ges-platforms')"><span class="nav-icon">📡</span>Plateformes</div>
+        <div class="nav-item sub" onclick="showSection('ges-overview')"><span class="nav-icon">📡</span>Plateformes</div>
         <div class="nav-item sub" onclick="showSection('ges-pipeline')"><span class="nav-icon">📝</span>Pipeline</div>
         <div class="nav-item sub" onclick="showSection('ges-veille')"><span class="nav-icon">🔭</span>Veille</div>
       </div>
@@ -941,8 +939,7 @@ body {
         </div>
       </div>
       <div id="entity-aoe-nav" class="entity-nav" style="display:none;">
-        <div class="nav-item sub" onclick="showSection('aoe-overview')"><span class="nav-icon">⚡</span>Aperçu</div>
-        <div class="nav-item sub" onclick="showSection('aoe-platforms')"><span class="nav-icon">📡</span>Plateformes</div>
+        <div class="nav-item sub" onclick="showSection('aoe-overview')"><span class="nav-icon">📡</span>Plateformes</div>
         <div class="nav-item sub" onclick="showSection('aoe-pipeline')"><span class="nav-icon">📝</span>Pipeline</div>
         <div class="nav-item sub" onclick="showSection('aoe-veille')"><span class="nav-icon">🔭</span>Veille</div>
       </div>
@@ -1298,12 +1295,12 @@ body {
           <a href="https://globocorps-itl.app.n8n.cloud" target="_blank" class="btn btn-secondary" style="font-size:12px;">Ouvrir n8n →</a>
         </div>
         <div class="grid-3">
-          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:var(--green-dim);">🔄</div><div><div class="agent-name">Sync Classement → GitHub</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);">Actif · toutes les heures</span></div></div></div><div class="agent-task">Lit Classement, Employés, Activity depuis Google Sheets + followers FB/IG via API + posts LinkedIn via Apify. Génère et pousse data.json sur GitHub Pages.</div><div class="agent-progress-label"><span>Dernière exécution</span><span id="ai-last-sync" style="color:var(--green);">—</span></div><div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div></div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:var(--green-dim);">🔄</div><div><div class="agent-name">Sync Complet → GitHub</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);">Actif · toutes les heures</span></div></div></div><div class="agent-task">Lit Classement, Employés, Activity depuis Google Sheets + followers FB/IG via API + posts LinkedIn via Apify. Génère et pousse data.json sur GitHub Pages.</div><div class="agent-progress-label"><span>Dernière exécution</span><span id="ai-last-sync" style="color:var(--green);">—</span></div><div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div></div>
           <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:var(--orange-dim);">💬</div><div><div class="agent-name">Invitations LinkedIn WhatsApp</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);">Actif · webhook Twilio</span></div></div></div><div class="agent-task">Reçoit déclarations et validations ("ok Prénom Nom") via WhatsApp. Met à jour Classement, Slack et Activity.</div><div class="agent-progress-label"><span>Numéro actif</span><span style="color:var(--orange2);">+1 555 718 9862</span></div><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div></div>
-          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:var(--yellow-dim);">🏆</div><div><div class="agent-name">Challenge Ambassadeurs Globo</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);">Actif · Apify scraper</span></div></div></div><div class="agent-task">Scrape posts LinkedIn des employés via Apify. Calcule points (1/like, 2/comm., 3/repost). Leaderboard Slack chaque lundi.</div><div class="agent-progress-label"><span>Participants actifs</span><span id="ai-participants" style="color:var(--yellow);">—</span></div><div class="progress-bar"><div class="progress-fill" id="ai-participants-bar" style="width:0%;background:var(--yellow)"></div></div></div>
-          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(139,92,246,0.1);">🔭</div><div><div class="agent-name">Veille LinkedIn Concurrentielle</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);">Actif · Apify LinkedIn</span></div></div></div><div class="agent-task">Scrape posts LinkedIn de 9 concurrents. Alimente Google Sheet Signaux.</div><div class="agent-progress-label"><span>Concurrents surveillés</span><span style="color:var(--purple);">9 profils</span></div><div class="progress-bar"><div class="progress-fill" style="width:100%;background:var(--purple)"></div></div></div>
-          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:var(--blue-dim);">🌐</div><div><div class="agent-name">Veille Sites Concurrents</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);">Actif · quotidien</span></div></div></div><div class="agent-task">Scrape 15 pages web des concurrents. Détecte nouveautés. Enregistre dans Google Sheet + notifie Slack.</div><div class="agent-progress-label"><span>Pages surveillées</span><span style="color:var(--blue);">15 sources</span></div><div class="progress-bar"><div class="progress-fill blue" style="width:100%"></div></div></div>
-          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:var(--orange-dim);">📡</div><div><div class="agent-name">Veille Google Alerts</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);">Actif · quotidien</span></div></div></div><div class="agent-task">Lit 13 flux RSS Google Alerts. Filtre, déduplique, enregistre Signaux + notifie Slack.</div><div class="agent-progress-label"><span>Flux RSS actifs</span><span style="color:var(--orange2);">13 alertes</span></div><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div></div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:var(--yellow-dim);">🏆</div><div><div class="agent-name">Challenge Ambassadeurs Globo</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);">Actif · Apify scraper</span></div></div></div><div class="agent-task">Scrape posts LinkedIn des employés via Apify. Calcule points (1/like, 2/comm., 3/repost). Leaderboard Slack chaque lundi.</div><div class="agent-progress-label"><span>Dernière MAJ</span><span id="ai-last-challenge" style="color:var(--yellow);">—</span></div><div class="progress-bar"><div class="progress-fill" id="ai-participants-bar" style="width:0%;background:var(--yellow)"></div></div></div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:rgba(139,92,246,0.1);">🔭</div><div><div class="agent-name">Veille LinkedIn Concurrentielle</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);">Actif · Apify LinkedIn</span></div></div></div><div class="agent-task">Scrape posts LinkedIn de 9 concurrents. Alimente Google Sheet Signaux.</div><div class="agent-progress-label"><span>Dernière MAJ</span><span id="ai-last-veille-li" style="color:var(--purple);">—</span></div><div class="progress-bar"><div class="progress-fill" style="width:100%;background:var(--purple)"></div></div></div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:var(--blue-dim);">🌐</div><div><div class="agent-name">Veille Sites Concurrents</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);">Actif · quotidien</span></div></div></div><div class="agent-task">Scrape 15 pages web des concurrents. Détecte nouveautés. Enregistre dans Google Sheet + notifie Slack.</div><div class="agent-progress-label"><span>Dernière MAJ</span><span id="ai-last-veille-sites" style="color:var(--blue);">—</span></div><div class="progress-bar"><div class="progress-fill blue" style="width:100%"></div></div></div>
+          <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:var(--orange-dim);">📡</div><div><div class="agent-name">Veille Google Alerts</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);">Actif · quotidien</span></div></div></div><div class="agent-task">Lit 13 flux RSS Google Alerts. Filtre, déduplique, enregistre Signaux + notifie Slack.</div><div class="agent-progress-label"><span>Dernière MAJ</span><span id="ai-last-veille-alerts" style="color:var(--orange2);">—</span></div><div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div></div>
           <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:var(--green-dim);">🧠</div><div><div class="agent-name">Synthèse Hebdomadaire IA</div><div class="agent-status"><div class="status-dot active"></div><span style="color:var(--green);">Actif · lundi 9h</span></div></div></div><div class="agent-task">Chaque lundi à 9h, lit les signaux depuis Google Sheet et génère rapport via Claude Sonnet. Distribue PDF par Slack et Gmail.</div><div class="agent-progress-label"><span>Prochain rapport</span><span style="color:var(--green);">Lundi 09:00</span></div><div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div></div>
           <div class="agent-card"><div class="agent-header"><div class="agent-avatar" style="background:var(--red-dim);">📲</div><div><div class="agent-name">Suivi Déploiement Social Media</div><div class="agent-status"><div class="status-dot idle"></div><span style="color:var(--yellow);">En cours de déploiement</span></div></div></div><div class="agent-task">Suivi déploiement stratégie social media 15 jours : SocialBee, Canva Teams, n8n Cloud, Brevo.</div><div class="agent-progress-label"><span>Déploiement</span><span style="color:var(--yellow);">En cours</span></div><div class="progress-bar"><div class="progress-fill" style="width:60%;background:var(--yellow)"></div></div></div>
         </div>
@@ -1715,19 +1712,16 @@ var TITLES = {
   'agents':'AI Team',
   'admin':'Administration',
   // Globo Afrique
-  'ga-overview':'Globo Afrique — Aperçu',
-  'ga-platforms':'Globo Afrique — Plateformes',
+  'ga-overview':'Globo Afrique — Plateformes',
   'ga-pipeline':'Globo Afrique — Pipeline',
   'ga-calendar':'Globo Afrique — Plan Éditorial',
   'ga-veille':'Globo Afrique — Veille Concurrentielle',
   // GES
-  'ges-overview':'GES — Aperçu',
-  'ges-platforms':'GES — Plateformes',
+  'ges-overview':'GES — Plateformes',
   'ges-pipeline':'GES — Pipeline',
   'ges-veille':'GES — Veille Concurrentielle',
   // AOE
-  'aoe-overview':'AOE — Aperçu',
-  'aoe-platforms':'AOE — Plateformes',
+  'aoe-overview':'AOE — Plateformes',
   'aoe-pipeline':'AOE — Pipeline',
   'aoe-veille':'AOE — Veille Concurrentielle'
 };
@@ -2141,7 +2135,16 @@ function loadRealData() {
           var barP = document.getElementById('stats-participants-bar'); if(barP) barP.style.width = pctActifs+'%';
           var barA = document.getElementById('ai-participants-bar'); if(barA) barA.style.width = pctActifs+'%';
           // AI Team dernière exécution
-          set('ai-last-sync', upd ? 'MAJ ' + upd : '—');
+          var updLabel = '—';
+          if (data.updated) {
+            var d = new Date(data.updated);
+            updLabel = d.toLocaleDateString('fr-FR') + ' ' + d.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
+          }
+          set('ai-last-sync', updLabel);
+          set('ai-last-challenge', updLabel);
+          set('ai-last-veille-li', updLabel);
+          set('ai-last-veille-sites', updLabel);
+          set('ai-last-veille-alerts', updLabel);
         }
       }
 
