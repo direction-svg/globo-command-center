@@ -981,8 +981,20 @@ body {
           <div class="kpi-card blue">
             <div class="kpi-icon">🏆</div>
             <div class="kpi-value" id="kpi-challenge-leader">—</div>
-            <div class="kpi-label">Leader Challenge</div>
+            <div class="kpi-label">Leader Semaine</div>
             <div class="kpi-delta neutral" id="kpi-challenge-leader-pts">— pts cette semaine</div>
+          </div>
+        </div>
+
+        <!-- Leader Annuel -->
+        <div class="grid-4" style="margin-bottom:14px;">
+          <div class="kpi-card" style="grid-column:1/-1;display:flex;align-items:center;gap:20px;padding:14px 20px;">
+            <div style="font-size:28px;">🏆</div>
+            <div>
+              <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--text2);margin-bottom:2px;">Leader Annuel Cumulé</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--yellow);" id="kpi-challenge-leader-annuel">—</div>
+              <div style="font-size:12px;color:var(--text2);font-weight:600;" id="kpi-challenge-leader-annuel-pts">— pts cumulés</div>
+            </div>
           </div>
         </div>
 
@@ -1121,7 +1133,7 @@ body {
             <div style="display:flex;flex-direction:column;gap:12px;">
               <!-- LinkedIn Groupe -->
               <div>
-                <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:700;"><span>💼 LinkedIn — Groupe</span><span style="display:flex;gap:12px;"><span id="linkedin-10k-label" style="color:var(--text2);">— / 15 000</span><span id="linkedin-10k-pct" style="color:var(--orange2);">—%</span></span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:700;"><span>💼 LinkedIn — Groupe</span><span style="display:flex;gap:12px;"><span id="linkedin-10k-label" style="color:var(--text2);">— / 18 000</span><span id="linkedin-10k-pct" style="color:var(--orange2);">—%</span></span></div>
                 <div class="progress-bar"><div class="progress-fill" id="linkedin-10k-bar" style="width:0%"></div></div>
                 <div style="font-size:11px;color:var(--text3);margin-top:3px;" id="linkedin-10k-rest"></div>
               </div>
@@ -2199,8 +2211,8 @@ function loadRealData() {
       // ── Objectifs Réseaux Sociaux ──────────────────────────────────────────────────
       // LinkedIn Groupe
       var groupeLI = gaLI + gesLI + aoeLI;
-      var groupePct = Math.round((groupeLI/15000)*1000)/10;
-      set('linkedin-10k-label', groupeLI.toLocaleString('fr-FR') + ' / 15 000');
+      var groupePct = Math.round((groupeLI/18000)*1000)/10;
+      set('linkedin-10k-label', groupeLI.toLocaleString('fr-FR') + ' / 18 000');
       set('linkedin-10k-pct', groupePct + '%');
       var bar10k = document.getElementById('linkedin-10k-bar'); if (bar10k) bar10k.style.width = Math.min(groupePct,100) + '%';
 
@@ -2226,7 +2238,7 @@ function loadRealData() {
       set('ig-groupe-pct', groupeIGPct + '%');
       var barIGG = document.getElementById('ig-groupe-bar'); if (barIGG) barIGG.style.width = Math.min(groupeIGPct,100) + '%';
 
-      // Leader Challenge
+      // Leader Semaine
       var classementSem = data.classement_semaine || data.classement || [];
       if (classementSem.length > 0) {
         var leader = classementSem[0];
@@ -2234,6 +2246,15 @@ function loadRealData() {
         var leaderPts = leader.Points || leader.Total_Points || 0;
         set('kpi-challenge-leader', leaderNom || '—');
         set('kpi-challenge-leader-pts', leaderPts + ' pts cette semaine');
+      }
+      // Leader Annuel
+      var classementAnn = data.classement_annuel || data.classement || [];
+      if (classementAnn.length > 0) {
+        var leaderAnn = classementAnn[0];
+        var leaderAnnNom = ((leaderAnn.Prenom||'') + ' ' + (leaderAnn.Nom||'')).trim();
+        var leaderAnnPts = leaderAnn.Total_Points || 0;
+        set('kpi-challenge-leader-annuel', leaderAnnNom || '—');
+        set('kpi-challenge-leader-annuel-pts', leaderAnnPts + ' pts cumulés');
       }
 
       // ── Fonction helper pour rendre un tableau classement ──
