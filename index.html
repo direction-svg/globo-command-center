@@ -2141,9 +2141,13 @@ function loadRealData() {
       // ── Classement Semaine ──
       var classement = data.classement || [];
       if (classement && classement.length > 0) {
-        var totalPtsSemaine = renderClassement('challenge-tbody', classement, 'Total_Points');
+        // Classement semaine — depuis data.classement_semaine si dispo, sinon fallback sur classement
+        var classementSemaine = data.classement_semaine || [];
+        var sourceHebdo = classementSemaine.length > 0 ? classementSemaine : classement;
+        var pointsFieldHebdo = classementSemaine.length > 0 ? 'Points' : 'Total_Points';
+        var totalPtsSemaine = renderClassement('challenge-tbody', sourceHebdo, pointsFieldHebdo);
         set('stats-total-pts', totalPtsSemaine+' pts');
-        var nbActifs = classement.filter(function(e){ return (parseInt(e.Total_Points)||0) > 0; }).length;
+        var nbActifs = sourceHebdo.filter(function(e){ return (parseInt(e[pointsFieldHebdo])||0) > 0; }).length;
         var nbTotal = data.nb_employes || classement.length;
         var pctActifs = nbTotal > 0 ? Math.round((nbActifs/nbTotal)*100) : 0;
         set('stats-participants', nbActifs + ' / ' + nbTotal);
