@@ -1313,19 +1313,30 @@ body {
         </div>
 
         <!-- Stats + WhatsApp -->
-        <div class="grid-2-1" style="margin-bottom:0;">
+        <div class="grid-3" style="margin-bottom:0;">
+          <!-- Stats Semaine -->
           <div class="card">
-            <div class="card-header"><div class="card-title">📊 Stats Globales</div></div>
+            <div class="card-header"><div class="card-title">📊 Stats Semaine</div></div>
             <div style="display:flex;flex-direction:column;gap:12px;">
-              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Participants actifs (semaine)</span><span id="stats-participants" style="color:var(--orange2);">—</span></div><div class="progress-bar"><div class="progress-fill" id="stats-participants-bar" style="width:0%"></div></div></div>
-              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);font-weight:600;"><span>Total points semaine</span><span id="stats-total-pts" style="color:var(--orange2);">—</span></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Participants actifs</span><span id="stats-participants" style="color:var(--orange2);">—</span></div><div class="progress-bar"><div class="progress-fill" id="stats-participants-bar" style="width:0%"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);font-weight:600;"><span>Total points</span><span id="stats-total-pts" style="color:var(--orange2);">—</span></div></div>
               <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);font-weight:600;"><span>Total employés</span><span id="stats-nb-employes" style="color:var(--yellow);">—</span></div></div>
             </div>
           </div>
+          <!-- Stats Annuel -->
+          <div class="card">
+            <div class="card-header"><div class="card-title">🎯 Stats Annuelles</div></div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Participants actifs</span><span id="stats-annuel-participants" style="color:var(--orange2);">—</span></div><div class="progress-bar"><div class="progress-fill" id="stats-annuel-participants-bar" style="width:0%"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);font-weight:600;"><span>Total points cumulés</span><span id="stats-annuel-pts" style="color:var(--orange2);">—</span></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);font-weight:600;"><span>Total invitations</span><span id="stats-annuel-invitations" style="color:var(--yellow);">—</span></div></div>
+            </div>
+          </div>
+          <!-- WhatsApp -->
           <div class="card">
             <div class="card-header"><div class="card-title">📱 Déclarations WhatsApp</div></div>
             <div style="font-size:12px;color:var(--text2);margin-bottom:12px;font-weight:500;">Déclarez vos invitations LinkedIn en envoyant un nombre au numéro WhatsApp dédié.</div>
-            <div style="background:var(--navy2);border-radius:3px;padding:11px;margin-bottom:6px;border:1px solid var(--border);"><div style="font-size:10px;color:var(--text3);margin-bottom:4px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;">Numéro actif</div><div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--orange2);font-weight:500;" id="whatsapp-numero-actif">+1 555 718 9862</div></div>
+            <div style="background:var(--navy2);border-radius:3px;padding:11px;border:1px solid var(--border);"><div style="font-size:10px;color:var(--text3);margin-bottom:4px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;">Numéro actif</div><div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--orange2);font-weight:500;" id="whatsapp-numero-actif">+1 555 718 9862</div></div>
           </div>
         </div>
       </div>
@@ -2158,6 +2169,23 @@ function loadRealData() {
       var classementAnnuel = data.classement_annuel || [];
       if (classementAnnuel && classementAnnuel.length > 0) {
         renderClassement('challenge-annuel-tbody', classementAnnuel, 'Total_Points');
+        // Stats annuelles
+        var totalPtsAnnuel = 0;
+        var totalInvitations = 0;
+        var nbActifsAnnuel = 0;
+        var nbTotalAnnuel = data.nb_employes || classementAnnuel.length;
+        classementAnnuel.forEach(function(e) {
+          var pts = parseInt(e.Total_Points) || 0;
+          totalPtsAnnuel += pts;
+          totalInvitations += parseInt(e.Total_Invitations) || 0;
+          if (pts > 0) nbActifsAnnuel++;
+        });
+        var pctAnnuel = nbTotalAnnuel > 0 ? Math.round((nbActifsAnnuel/nbTotalAnnuel)*100) : 0;
+        set('stats-annuel-participants', nbActifsAnnuel + ' / ' + nbTotalAnnuel);
+        set('stats-annuel-pts', totalPtsAnnuel + ' pts');
+        set('stats-annuel-invitations', totalInvitations + ' invitations');
+        var barAnnuel = document.getElementById('stats-annuel-participants-bar');
+        if (barAnnuel) barAnnuel.style.width = pctAnnuel + '%';
       }
 
       // ── Activity Feed ──
