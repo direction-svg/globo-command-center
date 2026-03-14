@@ -1277,11 +1277,18 @@ body {
       <div class="section" id="section-challenge">
         <div class="section-header">
           <div><h2>Challenge Ambassadeurs</h2><p>1 pt/like · 2 pts/commentaire · 2 pts/invitation · 3 pts/repost</p></div>
-          <div style="font-size:12px;color:var(--text2);font-weight:600;">Semaine du 07/03/2026</div>
+          <div style="font-size:12px;color:var(--text2);font-weight:600;" id="challenge-semaine-label">Semaine en cours</div>
         </div>
-        <div class="grid-2-1">
+
+        <!-- 2 classements côte à côte -->
+        <div class="grid-2" style="margin-bottom:14px;">
+
+          <!-- Classement Semaine -->
           <div class="card">
-            <div class="card-header"><div class="card-title">🏆 Classement Semaine</div></div>
+            <div class="card-header">
+              <div class="card-title">🏆 Classement Semaine</div>
+              <span style="font-size:11px;color:var(--text2);font-weight:600;">Likes · Comm. · Invit. · Reposts</span>
+            </div>
             <div class="table-scroll">
               <table class="challenge-table">
                 <thead><tr><th>#</th><th>Employé</th><th>Likes</th><th>Comm.</th><th>Invit.</th><th>Reposts</th><th>Total</th></tr></thead>
@@ -1289,21 +1296,36 @@ body {
               </table>
             </div>
           </div>
-          <div>
-            <div class="card" style="margin-bottom:12px;">
-              <div class="card-header"><div class="card-title">📊 Stats Globales</div></div>
-              <div style="display:flex;flex-direction:column;gap:12px;">
-                <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Participants actifs</span><span id="stats-participants" style="color:var(--orange2);">—</span></div><div class="progress-bar"><div class="progress-fill" id="stats-participants-bar" style="width:0%"></div></div></div>
-                <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);font-weight:600;"><span>Total points distribués</span><span id="stats-total-pts" style="color:var(--orange2);">—</span></div></div>
-                <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);font-weight:600;"><span>Total employés</span><span id="stats-nb-employes" style="color:var(--yellow);">—</span></div></div>
-              </div>
+
+          <!-- Classement Annuel Cumulé -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">🎯 Classement Annuel Cumulé</div>
+              <span style="font-size:11px;color:var(--text2);font-weight:600;">Depuis le début</span>
             </div>
-            <div class="card">
-              <div class="card-header"><div class="card-title">📱 Déclarations WhatsApp</div></div>
-              <div style="font-size:12px;color:var(--text2);margin-bottom:12px;font-weight:500;">Déclarez vos invitations LinkedIn en envoyant un nombre au numéro WhatsApp dédié.</div>
-              <div style="background:var(--navy2);border-radius:3px;padding:11px;margin-bottom:6px;border:1px solid var(--border);"><div style="font-size:10px;color:var(--text3);margin-bottom:4px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;">Numéro actif</div><div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--orange2);font-weight:500;">+1 555 718 9862</div></div>
-              <div style="background:var(--navy2);border-radius:3px;padding:11px;border:1px solid var(--border);"><div style="font-size:10px;color:var(--text3);margin-bottom:4px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;">Numéro dédié (en attente Meta)</div><div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--yellow);font-weight:500;">+1 302 343 2720</div></div>
+            <div class="table-scroll">
+              <table class="challenge-table">
+                <thead><tr><th>#</th><th>Employé</th><th>Likes</th><th>Comm.</th><th>Invit.</th><th>Reposts</th><th>Total</th></tr></thead>
+                <tbody id="challenge-annuel-tbody"><tr><td colspan="7" style="text-align:center;color:var(--text2);padding:20px;">Chargement...</td></tr></tbody>
+              </table>
             </div>
+          </div>
+        </div>
+
+        <!-- Stats + WhatsApp -->
+        <div class="grid-2-1" style="margin-bottom:0;">
+          <div class="card">
+            <div class="card-header"><div class="card-title">📊 Stats Globales</div></div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Participants actifs (semaine)</span><span id="stats-participants" style="color:var(--orange2);">—</span></div><div class="progress-bar"><div class="progress-fill" id="stats-participants-bar" style="width:0%"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);font-weight:600;"><span>Total points semaine</span><span id="stats-total-pts" style="color:var(--orange2);">—</span></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);font-weight:600;"><span>Total employés</span><span id="stats-nb-employes" style="color:var(--yellow);">—</span></div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">📱 Déclarations WhatsApp</div></div>
+            <div style="font-size:12px;color:var(--text2);margin-bottom:12px;font-weight:500;">Déclarez vos invitations LinkedIn en envoyant un nombre au numéro WhatsApp dédié.</div>
+            <div style="background:var(--navy2);border-radius:3px;padding:11px;margin-bottom:6px;border:1px solid var(--border);"><div style="font-size:10px;color:var(--text3);margin-bottom:4px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;">Numéro actif</div><div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--orange2);font-weight:500;" id="whatsapp-numero-actif">+1 555 718 9862</div></div>
           </div>
         </div>
       </div>
@@ -2086,42 +2108,56 @@ function loadRealData() {
       set('linkedin-10k-pct', groupePct + '%');
       var bar10k = document.getElementById('linkedin-10k-bar'); if (bar10k) bar10k.style.width = groupePct + '%';
 
-      // ── Classement Challenge ──
+      // ── Fonction helper pour rendre un tableau classement ──
+      function renderClassement(tbodyId, rows, pointsField) {
+        var tbody = document.getElementById(tbodyId);
+        if (!tbody) return 0;
+        tbody.innerHTML = '';
+        var totalPts = 0;
+        var filtered = rows.filter(function(e){ return (parseInt(e[pointsField])||0) > 0; });
+        if (filtered.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text2);padding:20px;">Aucune donnée</td></tr>';
+          return 0;
+        }
+        filtered.forEach(function(emp, i) {
+          totalPts += (parseInt(emp[pointsField])||0);
+          var rankClass = i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-n';
+          var row = document.createElement('tr');
+          var td1=document.createElement('td'); var badge=document.createElement('div'); badge.className='rank-badge '+rankClass; badge.textContent=i+1; td1.appendChild(badge);
+          var td2=document.createElement('td'); var s=document.createElement('strong');
+          var prenom = emp.Prenom || emp.prenom || '';
+          var nom = emp.Nom || emp.nom || '';
+          s.textContent=(prenom+' '+nom).trim(); td2.appendChild(s);
+          var td3=document.createElement('td'); td3.textContent=emp.Total_Likes||emp.Likes||0;
+          var td4=document.createElement('td'); td4.textContent=emp.Total_Commentaires||emp.Commentaires||0;
+          var td5=document.createElement('td'); td5.textContent=emp.Total_Invitations||emp.Invitations||0;
+          var td6=document.createElement('td'); td6.textContent=emp.Total_Reposts||emp.Reposts||0;
+          var td7=document.createElement('td'); var pill=document.createElement('div'); pill.className='points-pill'; pill.textContent=(emp[pointsField]||0)+' pts'; td7.appendChild(pill);
+          [td1,td2,td3,td4,td5,td6,td7].forEach(function(td){row.appendChild(td);}); tbody.appendChild(row);
+        });
+        return totalPts;
+      }
+
+      // ── Classement Semaine ──
       var classement = data.classement || [];
       if (classement && classement.length > 0) {
-        var tbody = document.getElementById('challenge-tbody');
-        if (tbody) {
-          tbody.innerHTML = '';
-          var totalPts = 0;
-          classement.forEach(function(emp, i) {
-            totalPts += (parseInt(emp.Total_Points)||0);
-            var rankClass = i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-n';
-            var row = document.createElement('tr');
-            var td1=document.createElement('td'); var badge=document.createElement('div'); badge.className='rank-badge '+rankClass; badge.textContent=i+1; td1.appendChild(badge);
-            var td2=document.createElement('td'); var s=document.createElement('strong'); s.textContent=emp.Prenom+' '+emp.Nom; td2.appendChild(s);
-            // Afficher l'entité si dispo
-            if (emp.Entite) { var entSpan=document.createElement('span'); entSpan.style.cssText='font-size:10px;color:var(--text2);margin-left:6px;font-weight:600;'; entSpan.textContent='['+emp.Entite+']'; td2.appendChild(entSpan); }
-            var td3=document.createElement('td'); td3.textContent=emp.Total_Likes||0;
-            var td4=document.createElement('td'); td4.textContent=emp.Total_Commentaires||0;
-            var td5=document.createElement('td'); td5.textContent=emp.Total_Invitations||0;
-            var td6=document.createElement('td'); td6.textContent=emp.Total_Reposts||0;
-            var td7=document.createElement('td'); var pill=document.createElement('div'); pill.className='points-pill'; pill.textContent=(emp.Total_Points||0)+' pts'; td7.appendChild(pill);
-            [td1,td2,td3,td4,td5,td6,td7].forEach(function(td){row.appendChild(td);}); tbody.appendChild(row);
-          });
-          set('stats-total-pts', totalPts+' pts');
-          // Participants actifs = ceux avec Total_Points > 0
-          var nbActifs = classement.filter(function(e){ return (parseInt(e.Total_Points)||0) > 0; }).length;
-          var nbTotal = data.nb_employes || classement.length;
-          var pctActifs = nbTotal > 0 ? Math.round((nbActifs/nbTotal)*100) : 0;
-          var participantsLabel = nbActifs + ' / ' + nbTotal;
-          set('stats-participants', participantsLabel);
-          set('stats-nb-employes', nbTotal + ' employés');
-          set('ai-participants', nbActifs + ' employés');
-          var barP = document.getElementById('stats-participants-bar'); if(barP) barP.style.width = pctActifs+'%';
-          var barA = document.getElementById('ai-participants-bar'); if(barA) barA.style.width = pctActifs+'%';
-          // AI Team dernière exécution
-          set('ai-last-sync', upd ? 'MAJ ' + upd : '—');
-        }
+        var totalPtsSemaine = renderClassement('challenge-tbody', classement, 'Points');
+        set('stats-total-pts', totalPtsSemaine+' pts');
+        var nbActifs = classement.filter(function(e){ return (parseInt(e.Points)||0) > 0; }).length;
+        var nbTotal = data.nb_employes || classement.length;
+        var pctActifs = nbTotal > 0 ? Math.round((nbActifs/nbTotal)*100) : 0;
+        set('stats-participants', nbActifs + ' / ' + nbTotal);
+        set('stats-nb-employes', nbTotal + ' employés');
+        set('ai-participants', nbActifs + ' employés');
+        var barP = document.getElementById('stats-participants-bar'); if(barP) barP.style.width = pctActifs+'%';
+        var barA = document.getElementById('ai-participants-bar'); if(barA) barA.style.width = pctActifs+'%';
+        set('ai-last-sync', upd ? 'MAJ ' + upd : '—');
+      }
+
+      // ── Classement Annuel Cumulé ──
+      var classementAnnuel = data.classement_annuel || [];
+      if (classementAnnuel && classementAnnuel.length > 0) {
+        renderClassement('challenge-annuel-tbody', classementAnnuel, 'Total_Points');
       }
 
       // ── Activity Feed ──
