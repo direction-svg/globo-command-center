@@ -968,10 +968,10 @@ body {
             <div class="kpi-delta neutral" id="kpi-engage-delta">—</div>
           </div>
           <div class="kpi-card blue">
-            <div class="kpi-icon">⏳</div>
-            <div class="kpi-value" id="kpi-pipeline">—</div>
-            <div class="kpi-label">Contenus en Pipeline</div>
-            <div class="kpi-delta neutral" id="kpi-pipeline-detail">Toutes entités</div>
+            <div class="kpi-icon">🏆</div>
+            <div class="kpi-value" id="kpi-challenge-leader">—</div>
+            <div class="kpi-label">Leader Challenge</div>
+            <div class="kpi-delta neutral" id="kpi-challenge-leader-pts">— pts cette semaine</div>
           </div>
         </div>
 
@@ -1102,48 +1102,78 @@ body {
           </div>
         </div>
 
-        <div class="grid-1-2" style="margin-bottom:14px;">
-          <div>
-            <div class="card" style="margin-bottom:12px;">
-              <div class="card-header">
-                <div class="card-title">Activity Feed</div>
-                <div class="live-badge" style="font-size:10px;padding:3px 8px;"><div class="live-dot"></div>Live</div>
+        <!-- Objectifs Réseaux Sociaux -->
+        <div class="card" style="margin-bottom:14px;">
+          <div class="card-header"><div class="card-title">🎯 Objectifs Réseaux Sociaux</div></div>
+          <div class="grid-2" style="gap:20px;">
+            <!-- Colonne gauche : objectifs par réseau -->
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <!-- LinkedIn Groupe -->
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:700;"><span>💼 LinkedIn — Groupe</span><span style="display:flex;gap:12px;"><span id="linkedin-10k-label" style="color:var(--text2);">— / 15 000</span><span id="linkedin-10k-pct" style="color:var(--orange2);">—%</span></span></div>
+                <div class="progress-bar"><div class="progress-fill" id="linkedin-10k-bar" style="width:0%"></div></div>
+                <div style="font-size:11px;color:var(--text3);margin-top:3px;" id="linkedin-10k-rest"></div>
               </div>
-              <div id="activity-feed">
-                <div class="feed-item"><div class="feed-dot" style="background:var(--green)"></div><div class="feed-content"><div class="msg" id="feed-classement">🏆 Classement ambassadeurs — chargement...</div><div class="time" id="feed-classement-time">—</div></div></div>
+              <!-- LinkedIn par entité -->
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+                <div style="background:var(--navy2);border-radius:3px;padding:8px;border:1px solid var(--border);">
+                  <div style="font-size:10px;font-weight:800;color:#3b82f6;margin-bottom:4px;">🔵 GA LinkedIn</div>
+                  <div style="font-size:11px;color:var(--text2);margin-bottom:4px;font-weight:600;"><span id="grp-ga-li-val">—</span> / 10 000</div>
+                  <div class="progress-bar" style="height:3px;"><div class="progress-fill" id="grp-ga-li-bar" style="width:0%;background:#3b82f6"></div></div>
+                </div>
+                <div style="background:var(--navy2);border-radius:3px;padding:8px;border:1px solid var(--border);">
+                  <div style="font-size:10px;font-weight:800;color:var(--orange);margin-bottom:4px;">🟠 GES LinkedIn</div>
+                  <div style="font-size:11px;color:var(--text2);margin-bottom:4px;font-weight:600;"><span id="grp-ges-li-val">—</span> / 5 000</div>
+                  <div class="progress-bar" style="height:3px;"><div class="progress-fill" id="grp-ges-li-bar2" style="width:0%;background:var(--orange)"></div></div>
+                </div>
+                <div style="background:var(--navy2);border-radius:3px;padding:8px;border:1px solid var(--border);">
+                  <div style="font-size:10px;font-weight:800;color:var(--yellow);margin-bottom:4px;">🟡 AOE LinkedIn</div>
+                  <div style="font-size:11px;color:var(--text2);margin-bottom:4px;font-weight:600;"><span id="grp-aoe-li-val">—</span> / 3 000</div>
+                  <div class="progress-bar" style="height:3px;"><div class="progress-fill" id="grp-aoe-li-bar2" style="width:0%;background:var(--yellow)"></div></div>
+                </div>
+              </div>
+              <!-- Facebook Groupe -->
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:700;"><span>📘 Facebook — Groupe</span><span style="display:flex;gap:12px;"><span id="fb-groupe-val" style="color:var(--text2);">—</span><span id="fb-groupe-pct" style="color:var(--orange2);">—%</span></span></div>
+                <div class="progress-bar"><div class="progress-fill green" id="fb-groupe-bar" style="width:0%"></div></div>
+              </div>
+              <!-- Instagram Groupe -->
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:5px;font-weight:700;"><span>📸 Instagram — Groupe</span><span style="display:flex;gap:12px;"><span id="ig-groupe-val" style="color:var(--text2);">—</span><span id="ig-groupe-pct" style="color:var(--orange2);">—%</span></span></div>
+                <div class="progress-bar"><div class="progress-fill" id="ig-groupe-bar" style="width:0%;background:var(--purple)"></div></div>
               </div>
             </div>
-            <div class="card">
-              <div class="card-header"><div class="card-title">Objectifs Hebdomadaires</div></div>
-              <div class="grid-4">
-                <div><div style="font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;">Posts LinkedIn</div><div class="progress-bar"><div class="progress-fill" id="obj-linkedin-bar" style="width:0%"></div></div><div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:600;" id="obj-linkedin-label">— / 4 publiés</div></div>
-                <div><div style="font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;">Posts Facebook</div><div class="progress-bar"><div class="progress-fill green" id="obj-facebook-bar" style="width:0%"></div></div><div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:600;" id="obj-facebook-label">— / 3 publiés</div></div>
-                <div><div style="font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;">Posts Instagram</div><div class="progress-bar"><div class="progress-fill" id="obj-instagram-bar" style="width:0%;background:var(--yellow)"></div></div><div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:600;" id="obj-instagram-label">— / 2 publiés</div></div>
-                <div><div style="font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;">Validations Challenge</div><div class="progress-bar"><div class="progress-fill blue" id="obj-challenge-bar" style="width:0%"></div></div><div style="font-size:12px;color:var(--text2);margin-top:4px;font-weight:600;" id="obj-challenge-label">— / 5 traitées</div></div>
+            <!-- Colonne droite : Veille -->
+            <div>
+              <div class="card-header" style="padding:0 0 10px 0;"><div class="card-title">🔭 Veille Concurrentielle</div><a href="#" onclick="showSection('veille-groupe')" style="font-size:12px;color:var(--orange2);text-decoration:none;font-weight:700;">Détail →</a></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
+                <div style="background:var(--navy3);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--red);" id="grp-veille-critique">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Gravité haute</div></div>
+                <div style="background:var(--navy3);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--orange2);" id="grp-veille-action">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Action requise</div></div>
+                <div style="background:var(--navy3);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--yellow);" id="grp-veille-encours">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">En cours</div></div>
+                <div style="background:var(--navy3);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--green);" id="grp-veille-pipeline">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">→ Pipeline</div></div>
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Colonne droite overview -->
-          <div>
-            <div class="card" style="margin-bottom:12px;">
-              <div class="card-header"><div class="card-title">Objectif Groupe LinkedIn</div></div>
-              <div style="font-size:12px;color:var(--text2);margin-bottom:8px;">Globo Afrique + GES + AOE combinés</div>
-              <div class="progress-bar"><div class="progress-fill" id="linkedin-10k-bar" style="width:0%"></div></div>
-              <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--text2);font-weight:600;">
-                <span id="linkedin-10k-label">— / 15 000</span>
-                <span id="linkedin-10k-pct" style="color:var(--orange2);">—%</span>
-              </div>
-              <div style="font-size:11px;color:var(--text3);margin-top:4px;" id="linkedin-10k-rest"></div>
+        <!-- Activity Feed + Objectifs Hebdo -->
+        <div class="grid-2" style="margin-bottom:14px;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Activity Feed</div>
+              <div class="live-badge" style="font-size:10px;padding:3px 8px;"><div class="live-dot"></div>Live</div>
             </div>
-            <div class="card">
-              <div class="card-header"><div class="card-title">🔭 Veille Concurrentielle</div><a href="#" onclick="showSection('veille-groupe')" style="font-size:12px;color:var(--orange2);text-decoration:none;font-weight:700;">Détail →</a></div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                <div style="background:var(--navy2);border-radius:3px;padding:10px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--red);" id="grp-veille-critique">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Gravité haute</div></div>
-                <div style="background:var(--navy2);border-radius:3px;padding:10px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--orange2);" id="grp-veille-action">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Action requise</div></div>
-                <div style="background:var(--navy2);border-radius:3px;padding:10px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--yellow);" id="grp-veille-encours">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">En cours</div></div>
-                <div style="background:var(--navy2);border-radius:3px;padding:10px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;color:var(--green);" id="grp-veille-pipeline">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">→ Pipeline</div></div>
-              </div>
+            <div id="activity-feed">
+              <div class="feed-item"><div class="feed-dot" style="background:var(--green)"></div><div class="feed-content"><div class="msg" id="feed-classement">🏆 Classement ambassadeurs — chargement...</div><div class="time" id="feed-classement-time">—</div></div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">📋 Objectifs Hebdomadaires</div></div>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;"><span>Posts LinkedIn</span><span id="obj-linkedin-label" style="color:var(--orange2);">— / 4 publiés</span></div><div class="progress-bar"><div class="progress-fill" id="obj-linkedin-bar" style="width:0%"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;"><span>Posts Facebook</span><span id="obj-facebook-label" style="color:var(--orange2);">— / 3 publiés</span></div><div class="progress-bar"><div class="progress-fill green" id="obj-facebook-bar" style="width:0%"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;"><span>Posts Instagram</span><span id="obj-instagram-label" style="color:var(--orange2);">— / 2 publiés</span></div><div class="progress-bar"><div class="progress-fill" id="obj-instagram-bar" style="width:0%;background:var(--yellow)"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;"><span>Validations Challenge</span><span id="obj-challenge-label" style="color:var(--orange2);">— / 5 traitées</span></div><div class="progress-bar"><div class="progress-fill blue" id="obj-challenge-bar" style="width:0%"></div></div></div>
             </div>
           </div>
         </div>
@@ -1527,10 +1557,10 @@ body {
   <!-- BOTTOM NAV -->
   <div class="bottom-nav" id="bottom-nav">
     <div class="bottom-nav-inner">
-      <button class="bnav-item active" id="bnav-overview" onclick="showSection('overview')"><span class="bnav-icon">⚡</span><span class="bnav-label">Home</span></button>
-      <button class="bnav-item" id="bnav-platforms" onclick="showSection('platforms')"><span class="bnav-icon">📡</span><span class="bnav-label">Réseaux</span></button>
-      <button class="bnav-item" id="bnav-pipeline" onclick="showSection('pipeline')"><span class="bnav-icon">📝</span><span class="bnav-label">Pipeline</span><span class="bnav-badge" id="bnav-badge-pipeline">5</span></button>
+      <button class="bnav-item active" id="bnav-overview" onclick="showSection('overview')"><span class="bnav-icon">🌍</span><span class="bnav-label">Home</span></button>
       <button class="bnav-item" id="bnav-challenge" onclick="showSection('challenge')"><span class="bnav-icon">🏆</span><span class="bnav-label">Challenge</span></button>
+      <button class="bnav-item" id="bnav-plan" onclick="showSection('plan-editorial')"><span class="bnav-icon">📅</span><span class="bnav-label">Plan</span></button>
+      <button class="bnav-item" id="bnav-veille" onclick="showSection('veille-groupe')"><span class="bnav-icon">🔭</span><span class="bnav-label">Veille</span></button>
       <button class="bnav-item" id="bnav-more" onclick="openSidebar()"><span class="bnav-icon">⋯</span><span class="bnav-label">Plus</span></button>
     </div>
   </div>
@@ -2155,12 +2185,45 @@ function loadRealData() {
       set('kpi-engage', engageMoy !== undefined ? parseFloat(engageMoy).toFixed(2)+'%' : '—');
       set('kpi-engage-delta', 'Moyenne ' + engageValues.length + ' entités LinkedIn');
 
-      // Barre objectif LinkedIn groupe (GA + GES + AOE)
+      // ── Objectifs Réseaux Sociaux ──────────────────────────────────────────────────
+      // LinkedIn Groupe
       var groupeLI = gaLI + gesLI + aoeLI;
       var groupePct = Math.round((groupeLI/15000)*1000)/10;
       set('linkedin-10k-label', groupeLI.toLocaleString('fr-FR') + ' / 15 000');
       set('linkedin-10k-pct', groupePct + '%');
-      var bar10k = document.getElementById('linkedin-10k-bar'); if (bar10k) bar10k.style.width = groupePct + '%';
+      var bar10k = document.getElementById('linkedin-10k-bar'); if (bar10k) bar10k.style.width = Math.min(groupePct,100) + '%';
+
+      // LinkedIn par entité
+      set('grp-ga-li-val', gaLI ? gaLI.toLocaleString('fr-FR') : '—');
+      set('grp-ges-li-val', gesLI ? gesLI.toLocaleString('fr-FR') : '—');
+      set('grp-aoe-li-val', aoeLI ? aoeLI.toLocaleString('fr-FR') : '—');
+      var barGALI2 = document.getElementById('grp-ga-li-bar'); if (barGALI2) barGALI2.style.width = Math.min(Math.round((gaLI/10000)*100),100) + '%';
+      var barGESLI2 = document.getElementById('grp-ges-li-bar2'); if (barGESLI2) barGESLI2.style.width = Math.min(Math.round((gesLI/5000)*100),100) + '%';
+      var barAOELI2 = document.getElementById('grp-aoe-li-bar2'); if (barAOELI2) barAOELI2.style.width = Math.min(Math.round((aoeLI/3000)*100),100) + '%';
+
+      // Facebook Groupe
+      var groupeFB = (gaData&&gaData.followers?gaData.followers.facebook||0:0) + (gesData&&gesData.followers?gesData.followers.facebook||0:0) + (aoeData&&aoeData.followers?aoeData.followers.facebook||0:0);
+      var groupeFBPct = Math.round((groupeFB/35000)*1000)/10;
+      set('fb-groupe-val', groupeFB.toLocaleString('fr-FR') + ' / 35 000');
+      set('fb-groupe-pct', groupeFBPct + '%');
+      var barFBG = document.getElementById('fb-groupe-bar'); if (barFBG) barFBG.style.width = Math.min(groupeFBPct,100) + '%';
+
+      // Instagram Groupe
+      var groupeIG = (gaData&&gaData.followers?gaData.followers.instagram||0:0) + (gesData&&gesData.followers?gesData.followers.instagram||0:0) + (aoeData&&aoeData.followers?aoeData.followers.instagram||0:0);
+      var groupeIGPct = Math.round((groupeIG/10000)*1000)/10;
+      set('ig-groupe-val', groupeIG.toLocaleString('fr-FR') + ' / 10 000');
+      set('ig-groupe-pct', groupeIGPct + '%');
+      var barIGG = document.getElementById('ig-groupe-bar'); if (barIGG) barIGG.style.width = Math.min(groupeIGPct,100) + '%';
+
+      // Leader Challenge
+      var classementSem = data.classement_semaine || data.classement || [];
+      if (classementSem.length > 0) {
+        var leader = classementSem[0];
+        var leaderNom = ((leader.Prenom||'') + ' ' + (leader.Nom||'')).trim();
+        var leaderPts = leader.Points || leader.Total_Points || 0;
+        set('kpi-challenge-leader', leaderNom || '—');
+        set('kpi-challenge-leader-pts', leaderPts + ' pts cette semaine');
+      }
 
       // ── Fonction helper pour rendre un tableau classement ──
       function renderClassement(tbodyId, rows, pointsField) {
