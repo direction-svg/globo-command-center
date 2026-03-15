@@ -8,39 +8,41 @@
 <meta name="apple-mobile-web-app-title" content="Globo Corps">
 <meta name="theme-color" content="#061221">
 <title>Globo Corps — Command Center</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* === GLOBO CORPORATE PALETTE === */
-  --navy:       #061221;
-  --navy2:      #0a1d30;
-  --navy3:      #0f2640;
-  --card:       #0d2035;
-  --card2:      #122844;
-  --border:     rgba(255,255,255,0.07);
-  --border2:    rgba(255,255,255,0.13);
+  /* === GLOBO CORPS — CHARTE OFFICIELLE v1.0 === */
+  /* Thème B : Light Executive */
+  --navy:       #FFFFFF;
+  --navy2:      #F0F0F0;
+  --navy3:      #E4E4E4;
+  --card:       #FFFFFF;
+  --card2:      #F0F0F0;
+  --border:     rgba(60,60,59,0.10);
+  --border2:    rgba(60,60,59,0.18);
 
-  --orange:     #e8500a;
-  --orange2:    #ff6b1a;
-  --orange-dim: rgba(232,80,10,0.15);
+  /* Accent principal : vert officiel Globo Corps */
+  --orange:     #47AE4D;
+  --orange2:    #3A9B40;
+  --orange-dim: rgba(71,174,77,0.10);
 
-  --white:      #f0f4fa;
-  --text:       #dce6f0;
-  --text2:      #7a96b0;
-  --text3:      #3a5570;
+  --white:      #FFFFFF;
+  --text:       #3C3C3B;
+  --text2:      #5F5F5F;
+  --text3:      #8B8D8D;
 
-  --green:      #22c55e;
-  --green-dim:  rgba(34,197,94,0.12);
-  --red:        #ef4444;
-  --red-dim:    rgba(239,68,68,0.12);
-  --yellow:     #f59e0b;
-  --yellow-dim: rgba(245,158,11,0.12);
-  --blue:       #3b82f6;
-  --blue-dim:   rgba(59,130,246,0.12);
-  --purple:     #8b5cf6;
+  --green:      #47AE4D;
+  --green-dim:  rgba(71,174,77,0.10);
+  --red:        #C0392B;
+  --red-dim:    rgba(192,57,43,0.10);
+  --yellow:     #8FA8B8;
+  --yellow-dim: rgba(143,168,184,0.12);
+  --blue:       #8FA8B8;
+  --blue-dim:   rgba(143,168,184,0.12);
+  --purple:     #8FA8B8;
 
-  --glow-orange: 0 0 40px rgba(232,80,10,0.2);
-  --glow-navy:   0 8px 32px rgba(0,0,0,0.5);
+  --glow-orange: 0 0 0 rgba(0,0,0,0);
+  --glow-navy:   0 2px 8px rgba(60,60,59,0.08);
 
   --sidebar-w: 248px;
   --bnav-h:    56px;
@@ -53,8 +55,8 @@
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 
 body {
-  font-family: 'Barlow', sans-serif;
-  background: var(--navy);
+  font-family: 'DM Sans', sans-serif;
+  background: var(--card2);
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
@@ -122,11 +124,11 @@ body {
 }
 
 .login-logo h1 {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 22px; font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--white);
+  color: var(--text);
 }
 
 .login-logo p {
@@ -147,13 +149,13 @@ body {
 
 .login-field input {
   width: 100%;
-  background: var(--navy2);
+  background: #3C3C3B;
   border: 1px solid var(--border2);
   border-radius: 4px;
   padding: 13px 15px;
   font-size: 16px;
   color: var(--text);
-  font-family: 'Barlow', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
   -webkit-appearance: none;
@@ -192,7 +194,7 @@ body {
   border: none;
   border-radius: 4px;
   padding: 15px;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 16px; font-weight: 800;
   color: white;
   cursor: pointer;
@@ -226,8 +228,8 @@ body {
 .sidebar {
   position: fixed; left: 0; top: 0; bottom: 0;
   width: var(--sidebar-w);
-  background: var(--navy2);
-  border-right: 1px solid var(--border);
+  background: #3C3C3B;
+  border-right: 1px solid rgba(255,255,255,0.06);
   display: flex; flex-direction: column;
   z-index: 300;
   transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
@@ -252,10 +254,10 @@ body {
 .sidebar-logo-mark svg { width: 20px; height: 20px; fill: white; }
 
 .sidebar-logo-text h2 {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 16px; font-weight: 800;
   text-transform: uppercase; letter-spacing: 0.05em;
-  color: var(--white); line-height: 1.1;
+  color: var(--text); line-height: 1.1;
 }
 
 .sidebar-logo-text p {
@@ -273,7 +275,7 @@ body {
 .sidebar-nav { flex: 1; padding: 12px 10px; overflow-y: auto; }
 
 .nav-section-label {
-  font-size: 10px; font-weight: 700; color: var(--text3);
+  font-size: 10px; font-weight: 700; color: rgba(240,240,240,0.3);
   text-transform: uppercase; letter-spacing: 0.12em;
   padding: 10px 10px 5px; margin-top: 6px;
 }
@@ -282,11 +284,11 @@ body {
   display: flex; align-items: center; gap: 10px;
   padding: 10px 10px; border-radius: 4px;
   cursor: pointer; font-size: 13px; font-weight: 600;
-  color: var(--text2); transition: all 0.15s;
+  color: rgba(240,240,240,0.55); transition: all 0.15s;
   position: relative; letter-spacing: 0.01em;
 }
 
-.nav-item:hover { background: var(--navy3); color: var(--text); }
+.nav-item:hover { background: rgba(255,255,255,0.07); color: #FFFFFF; }
 
 .nav-item.active {
   background: var(--orange-dim);
@@ -305,7 +307,7 @@ body {
 .nav-badge { margin-left: auto; background: var(--orange); color: white; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 2px; }
 
 .sidebar-footer {
-  padding: 14px; border-top: 1px solid var(--border);
+  padding: 14px; border-top: 1px solid rgba(255,255,255,0.06);
   flex-shrink: 0;
 }
 
@@ -321,11 +323,11 @@ body {
   background: var(--orange); border-radius: 4px;
   display: flex; align-items: center; justify-content: center;
   font-size: 14px; font-weight: 800; color: white;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .user-info { flex: 1; min-width: 0; }
-.user-info .name { font-size: 13px; font-weight: 700; color: var(--white); }
+.user-info .name { font-size: 13px; font-weight: 700; color: var(--text); }
 .user-info .role { font-size: 11px; color: var(--text2); font-weight: 500; }
 
 .logout-btn {
@@ -382,10 +384,10 @@ body {
 }
 
 .topbar-title {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 18px; font-weight: 800;
   text-transform: uppercase; letter-spacing: 0.05em;
-  color: var(--white);
+  color: var(--text);
 }
 
 .topbar-right { display: flex; align-items: center; gap: 12px; }
@@ -417,6 +419,8 @@ body {
    BOTTOM NAV
 ══════════════════════════════ */
 .bottom-nav {
+  background: var(--white);
+  border-top: 2px solid var(--orange);
   display: none;
   position: fixed; bottom: 0; left: 0; right: 0;
   background: rgba(9,20,36,0.98);
@@ -469,10 +473,10 @@ body {
 }
 
 .section-header h2 {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 26px; font-weight: 800;
   text-transform: uppercase; letter-spacing: 0.04em;
-  color: var(--white);
+  color: var(--text);
 }
 
 .section-header p { font-size: 13px; color: var(--text2); margin-top: 3px; font-weight: 500; }
@@ -483,7 +487,7 @@ body {
 .btn {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 9px 18px; border-radius: 3px;
-  font-family: 'Barlow', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 13px; font-weight: 700;
   cursor: pointer; border: none;
   transition: all 0.15s; -webkit-appearance: none;
@@ -501,6 +505,7 @@ body {
 .card {
   background: var(--card);
   border: 1px solid var(--border);
+  box-shadow: 0 1px 4px rgba(60,60,59,0.06);
   border-radius: 4px;
   padding: 20px;
   transition: border-color 0.2s;
@@ -528,7 +533,7 @@ body {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 4px;
-  padding: 20px;
+  padding: 14px 16px;
   position: relative; overflow: hidden;
   transition: transform 0.2s, border-color 0.2s;
 }
@@ -543,18 +548,18 @@ body {
 .kpi-card.purple::after { background: var(--purple); }
 .kpi-card.yellow::after { background: var(--yellow); }
 
-.kpi-icon { font-size: 22px; margin-bottom: 12px; }
+.kpi-icon { font-size: 18px; margin-bottom: 8px; }
 .kpi-value {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 38px; font-weight: 800;
-  line-height: 1; margin-bottom: 5px;
-  letter-spacing: -0.01em; color: var(--white);
+  font-family: 'Poppins', sans-serif;
+  font-size: 26px; font-weight: 700;
+  line-height: 1; margin-bottom: 4px;
+  letter-spacing: -0.01em; color: var(--text);
 }
-.kpi-label { font-size: 12px; color: var(--text2); font-weight: 600; letter-spacing: 0.02em; }
+.kpi-label { font-size: 11px; color: var(--text2); font-weight: 500; letter-spacing: 0.02em; }
 .kpi-delta {
   display: inline-flex; align-items: center; gap: 4px;
-  font-size: 11px; font-weight: 700; margin-top: 10px;
-  padding: 3px 8px; border-radius: 2px; text-transform: uppercase; letter-spacing: 0.04em;
+  font-size: 10px; font-weight: 600; margin-top: 6px;
+  padding: 2px 6px; border-radius: 2px; text-transform: uppercase; letter-spacing: 0.04em;
 }
 .kpi-delta.up { background: var(--green-dim); color: var(--green); }
 .kpi-delta.down { background: var(--red-dim); color: var(--red); }
@@ -574,11 +579,11 @@ body {
 .platform-logo.linkedin { background: rgba(0,119,181,0.15); }
 .platform-logo.facebook { background: rgba(24,119,242,0.15); }
 .platform-logo.instagram { background: rgba(225,48,108,0.15); }
-.platform-name { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: var(--white); }
+.platform-name { font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text); }
 .platform-handle { font-size: 11px; color: var(--text2); font-weight: 500; }
 .platform-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .platform-stat { background: var(--navy2); border-radius: 3px; padding: 10px; }
-.platform-stat .val { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: var(--white); }
+.platform-stat .val { font-family: 'Poppins', sans-serif; font-size: 22px; font-weight: 800; color: var(--text); }
 .platform-stat .lbl { font-size: 11px; color: var(--text2); margin-top: 2px; font-weight: 500; }
 
 /* ══════════════════════════════
@@ -628,7 +633,7 @@ body {
   display: inline-flex; align-items: center; justify-content: center;
   width: 26px; height: 26px; border-radius: 3px;
   font-weight: 800; font-size: 13px;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 .rank-1 { background: rgba(232,80,10,0.2); color: var(--orange); }
 .rank-2 { background: rgba(122,150,176,0.15); color: var(--text2); }
@@ -639,7 +644,7 @@ body {
   background: var(--orange-dim);
   border: 1px solid rgba(232,80,10,0.2);
   border-radius: 2px; padding: 3px 10px;
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 14px; font-weight: 700; color: var(--orange2);
   letter-spacing: 0.03em;
 }
@@ -665,7 +670,7 @@ body {
 .agent-card:hover { border-color: var(--border2); }
 .agent-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .agent-avatar { width: 36px; height: 36px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
-.agent-name { font-family: 'Barlow', sans-serif; font-size: 13px; font-weight: 700; color: var(--white); }
+.agent-name { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; color: var(--text); }
 .agent-status { font-size: 11px; display: flex; align-items: center; gap: 5px; margin-top: 2px; font-weight: 600; }
 .status-dot { width: 6px; height: 6px; border-radius: 50%; }
 .status-dot.active { background: var(--green); animation: pulse 2s infinite; }
@@ -725,16 +730,16 @@ body {
   border-radius: 4px; padding: 24px; margin-bottom: 16px;
 }
 .admin-section h3 {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 16px; font-weight: 800;
   text-transform: uppercase; letter-spacing: 0.06em;
-  color: var(--white);
+  color: var(--text);
   margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border);
 }
 .admin-user-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
 .admin-user-row:last-child { border-bottom: none; }
 .admin-user-info { display: flex; align-items: center; gap: 10px; }
-.admin-avatar { width: 34px; height: 34px; background: var(--orange); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: white; font-family: 'Barlow Condensed', sans-serif; }
+.admin-avatar { width: 34px; height: 34px; background: var(--orange); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: white; font-family: 'Poppins', sans-serif; }
 .admin-role-badge { font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 2px; text-transform: uppercase; letter-spacing: 0.08em; }
 .admin-role-badge.superadmin { background: var(--orange-dim); color: var(--orange2); border: 1px solid rgba(232,80,10,0.2); }
 .admin-role-badge.admin { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(59,130,246,0.2); }
@@ -746,7 +751,7 @@ body {
 .form-field input, .form-field select {
   width: 100%; background: var(--navy2); border: 1px solid var(--border2); border-radius: 3px;
   padding: 11px 13px; font-size: 16px;
-  color: var(--text); font-family: 'Barlow', sans-serif; outline: none;
+  color: var(--text); font-family: 'DM Sans', sans-serif; outline: none;
   transition: border-color 0.2s; -webkit-appearance: none;
 }
 .form-field input:focus, .form-field select:focus { border-color: var(--orange); }
@@ -829,8 +834,8 @@ body {
     padding-bottom: calc(var(--bnav-h) + var(--sab) + 16px);
   }
   .grid-4, .grid-3, .grid-2, .grid-2-1, .grid-1-2 { grid-template-columns: 1fr; gap: 10px; }
-  .kpi-card { padding: 14px; }
-  .kpi-value { font-size: 32px; }
+  .kpi-card { padding: 12px 14px; }
+  .kpi-value { font-size: 22px; }
   .section-header h2 { font-size: 21px; }
   .card { padding: 14px; }
   .calendar-grid { gap: 3px; }
@@ -856,7 +861,7 @@ body {
 }
 
 @media (max-width:390px) {
-  .kpi-value { font-size: 26px; }
+  .kpi-value { font-size: 20px; }
   .section-header h2 { font-size: 18px; }
   .topbar-title { font-size: 13px; }
   .bnav-label { display: none; }
@@ -971,6 +976,10 @@ body {
             <div class="kpi-value" id="kpi-posts">—</div>
             <div class="kpi-label">Posts LinkedIn (Mars)</div>
             <div class="kpi-delta neutral" id="kpi-posts-delta">—</div>
+            <div style="margin-top:8px;">
+              <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-bottom:3px;font-weight:600;"><span id="kpi-posts-obj-label">— / 30</span><span id="kpi-posts-obj-pct" style="color:var(--green);">—%</span></div>
+              <div class="progress-bar" style="height:3px;"><div class="progress-fill green" id="kpi-posts-obj-bar" style="width:0%"></div></div>
+            </div>
           </div>
           <div class="kpi-card yellow">
             <div class="kpi-icon">💬</div>
@@ -980,20 +989,17 @@ body {
           </div>
           <div class="kpi-card blue">
             <div class="kpi-icon">🏆</div>
-            <div class="kpi-value" id="kpi-challenge-leader">—</div>
-            <div class="kpi-label">Leader Semaine</div>
-            <div class="kpi-delta neutral" id="kpi-challenge-leader-pts">— pts cette semaine</div>
-          </div>
-        </div>
-
-        <!-- Leader Annuel -->
-        <div class="grid-4" style="margin-bottom:14px;">
-          <div class="kpi-card" style="grid-column:1/-1;display:flex;align-items:center;gap:20px;padding:14px 20px;">
-            <div style="font-size:28px;">🏆</div>
-            <div>
-              <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--text2);margin-bottom:2px;">Leader Annuel Cumulé</div>
-              <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--yellow);" id="kpi-challenge-leader-annuel">—</div>
-              <div style="font-size:12px;color:var(--text2);font-weight:600;" id="kpi-challenge-leader-annuel-pts">— pts cumulés</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:3px;overflow:hidden;">
+              <div style="padding:8px 10px;border-right:1px solid var(--border);">
+                <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:4px;">Semaine</div>
+                <div style="font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;color:var(--text);line-height:1.2;" id="kpi-challenge-leader">—</div>
+                <div style="font-size:10px;color:var(--orange2);font-weight:600;margin-top:3px;" id="kpi-challenge-leader-pts">— pts</div>
+              </div>
+              <div style="padding:8px 10px;">
+                <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:4px;">Annuel</div>
+                <div style="font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;color:var(--text);line-height:1.2;" id="kpi-challenge-leader-annuel">—</div>
+                <div style="font-size:10px;color:var(--blue);font-weight:600;margin-top:3px;" id="kpi-challenge-leader-annuel-pts">— pts</div>
+              </div>
             </div>
           </div>
         </div>
@@ -1004,7 +1010,7 @@ body {
           <div class="card" style="border-top:3px solid #3b82f6;">
             <div class="card-header">
               <div class="card-title">🔵 Globo Afrique</div>
-              <span id="groupe-ga-total" style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:#3b82f6;">—</span>
+              <span id="groupe-ga-total" style="font-family:'Poppins',sans-serif;font-size:18px;font-weight:800;color:#3b82f6;">—</span>
             </div>
 
             <!-- LinkedIn détaillé -->
@@ -1045,7 +1051,7 @@ body {
           <div class="card" style="border-top:3px solid var(--orange);">
             <div class="card-header">
               <div class="card-title">🟠 GES</div>
-              <span id="groupe-ges-total" style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--orange);">—</span>
+              <span id="groupe-ges-total" style="font-family:'Poppins',sans-serif;font-size:18px;font-weight:800;color:var(--orange);">—</span>
             </div>
 
             <!-- LinkedIn détaillé -->
@@ -1086,7 +1092,7 @@ body {
           <div class="card" style="border-top:3px solid var(--yellow);">
             <div class="card-header">
               <div class="card-title">🟡 AOE</div>
-              <span id="groupe-aoe-total" style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--yellow);">—</span>
+              <span id="groupe-aoe-total" style="font-family:'Poppins',sans-serif;font-size:18px;font-weight:800;color:var(--yellow);">—</span>
             </div>
 
             <!-- LinkedIn détaillé -->
@@ -1170,33 +1176,37 @@ body {
             <div>
               <div class="card-header" style="padding:0 0 10px 0;"><div class="card-title">🔭 Veille Concurrentielle</div><a href="#" onclick="showSection('veille-groupe')" style="font-size:12px;color:var(--orange2);text-decoration:none;font-weight:700;">Détail →</a></div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
-                <div style="background:var(--navy3);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--red);" id="grp-veille-critique">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Gravité haute</div></div>
-                <div style="background:var(--navy3);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--orange2);" id="grp-veille-action">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Action requise</div></div>
-                <div style="background:var(--navy3);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--yellow);" id="grp-veille-encours">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">En cours</div></div>
-                <div style="background:var(--navy3);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--green);" id="grp-veille-pipeline">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">→ Pipeline</div></div>
+                <div style="background:var(--navy3);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--red);" id="grp-veille-critique">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Gravité haute</div></div>
+                <div style="background:var(--navy3);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--orange2);" id="grp-veille-action">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Action requise</div></div>
+                <div style="background:var(--navy3);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--yellow);" id="grp-veille-encours">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">En cours</div></div>
+                <div style="background:var(--navy3);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--green);" id="grp-veille-pipeline">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">→ Pipeline</div></div>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Activity Feed + Objectifs Hebdo -->
-        <div class="grid-2" style="margin-bottom:14px;">
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title">Activity Feed</div>
-              <div class="live-badge" style="font-size:10px;padding:3px 8px;"><div class="live-dot"></div>Live</div>
-            </div>
-            <div id="activity-feed">
-              <div class="feed-item"><div class="feed-dot" style="background:var(--green)"></div><div class="feed-content"><div class="msg" id="feed-classement">🏆 Classement ambassadeurs — chargement...</div><div class="time" id="feed-classement-time">—</div></div></div>
-            </div>
+        <!-- Activity Feed pleine largeur + Objectifs intégrés -->
+        <div class="card" style="margin-bottom:14px;">
+          <div class="card-header">
+            <div class="card-title">Activity Feed</div>
+            <div class="live-badge" style="font-size:10px;padding:3px 8px;"><div class="live-dot"></div>Live</div>
           </div>
-          <div class="card">
-            <div class="card-header"><div class="card-title">📋 Objectifs Hebdomadaires</div></div>
-            <div style="display:flex;flex-direction:column;gap:14px;">
-              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;"><span>Posts LinkedIn</span><span id="obj-linkedin-label" style="color:var(--orange2);">— / 4 publiés</span></div><div class="progress-bar"><div class="progress-fill" id="obj-linkedin-bar" style="width:0%"></div></div></div>
-              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;"><span>Posts Facebook</span><span id="obj-facebook-label" style="color:var(--orange2);">— / 3 publiés</span></div><div class="progress-bar"><div class="progress-fill green" id="obj-facebook-bar" style="width:0%"></div></div></div>
-              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;"><span>Posts Instagram</span><span id="obj-instagram-label" style="color:var(--orange2);">— / 2 publiés</span></div><div class="progress-bar"><div class="progress-fill" id="obj-instagram-bar" style="width:0%;background:var(--yellow)"></div></div></div>
-              <div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;"><span>Validations Challenge</span><span id="obj-challenge-label" style="color:var(--orange2);">— / 5 traitées</span></div><div class="progress-bar"><div class="progress-fill blue" id="obj-challenge-bar" style="width:0%"></div></div></div>
+          <div id="activity-feed">
+            <div class="feed-item"><div class="feed-dot" style="background:var(--green)"></div><div class="feed-content"><div class="msg" id="feed-classement">🏆 Classement ambassadeurs — chargement...</div><div class="time" id="feed-classement-time">—</div></div></div>
+          </div>
+          <!-- Validations Challenge intégrées sous le feed -->
+          <div style="border-top:1px solid var(--border);margin-top:12px;padding-top:12px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:10px;font-family:'Poppins',sans-serif;">Validations Challenge</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>En attente</span><span id="obj-challenge-label" style="color:var(--orange2);">—</span></div>
+                <div class="progress-bar"><div class="progress-fill" id="obj-challenge-bar" style="width:0%;background:var(--orange)"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-bottom:5px;font-weight:600;"><span>Effectuées</span><span id="obj-challenge-done-label" style="color:var(--green);">—</span></div>
+                <div class="progress-bar"><div class="progress-fill green" id="obj-challenge-done-bar" style="width:0%"></div></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1228,7 +1238,7 @@ body {
               <a href="https://app.socialbee.com/" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:10px;background:var(--navy2);border:1px solid var(--border);border-radius:4px;padding:20px;text-decoration:none;color:var(--text);transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="this.style.borderColor='var(--border)'">
                 <span style="font-size:28px;">📅</span>
                 <div>
-                  <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--white);">Ouvrir le calendrier GA</div>
+                  <div style="font-family:'Poppins',sans-serif;font-size:16px;font-weight:800;color:var(--text);">Ouvrir le calendrier GA</div>
                   <div style="font-size:12px;color:var(--text2);margin-top:3px;">app.socialbee.com</div>
                 </div>
               </a>
@@ -1259,7 +1269,7 @@ body {
               <a href="https://app.socialbee.com/" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:10px;background:var(--navy2);border:1px solid var(--border);border-radius:4px;padding:20px;text-decoration:none;color:var(--text);transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="this.style.borderColor='var(--border)'">
                 <span style="font-size:28px;">📅</span>
                 <div>
-                  <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--white);">Ouvrir le calendrier GES</div>
+                  <div style="font-family:'Poppins',sans-serif;font-size:16px;font-weight:800;color:var(--text);">Ouvrir le calendrier GES</div>
                   <div style="font-size:12px;color:var(--text2);margin-top:3px;">app.socialbee.com</div>
                 </div>
               </a>
@@ -1286,7 +1296,7 @@ body {
               <a href="https://app.socialbee.com/" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:10px;background:var(--navy2);border:1px solid var(--border);border-radius:4px;padding:20px;text-decoration:none;color:var(--text);transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--yellow)'" onmouseout="this.style.borderColor='var(--border)'">
                 <span style="font-size:28px;">📅</span>
                 <div>
-                  <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--white);">Ouvrir le calendrier AOE</div>
+                  <div style="font-family:'Poppins',sans-serif;font-size:16px;font-weight:800;color:var(--text);">Ouvrir le calendrier AOE</div>
                   <div style="font-size:12px;color:var(--text2);margin-top:3px;">app.socialbee.com</div>
                 </div>
               </a>
@@ -1432,10 +1442,10 @@ body {
               <div class="card" style="margin-bottom:12px;">
                 <div class="card-header"><div class="card-title">📊 Résumé Veille GA</div></div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--red);" id="veille-stat-critique">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Gravité haute</div></div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--yellow);" id="veille-stat-encours">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">En cours</div></div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--orange2);" id="veille-stat-action">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Action requise</div></div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--green);" id="veille-stat-pipeline">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">→ Pipeline</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--red);" id="veille-stat-critique">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Gravité haute</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--yellow);" id="veille-stat-encours">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">En cours</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--orange2);" id="veille-stat-action">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Action requise</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--green);" id="veille-stat-pipeline">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">→ Pipeline</div></div>
                 </div>
               </div>
               <div class="card" style="margin-bottom:12px;">
@@ -1468,7 +1478,7 @@ body {
               <div class="card-header"><div class="card-title">🔔 Signaux Actifs — GES</div></div>
               <div style="padding:48px;text-align:center;color:var(--text2);">
                 <div style="font-size:40px;margin-bottom:16px;">🔭</div>
-                <div style="font-weight:700;font-size:15px;margin-bottom:8px;color:var(--white);">Veille GES à configurer</div>
+                <div style="font-weight:700;font-size:15px;margin-bottom:8px;color:var(--text);">Veille GES à configurer</div>
                 <div style="font-size:13px;">Définir les concurrents GES<br>puis connecter le workflow n8n</div>
               </div>
             </div>
@@ -1485,10 +1495,10 @@ body {
               <div class="card">
                 <div class="card-header"><div class="card-title">📊 Résumé</div></div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--red);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Gravité haute</div></div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--orange2);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Action requise</div></div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--yellow);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">En cours</div></div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--green);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">→ Pipeline</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--red);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Gravité haute</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--orange2);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Action requise</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--yellow);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">En cours</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--green);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">→ Pipeline</div></div>
                 </div>
               </div>
             </div>
@@ -1502,7 +1512,7 @@ body {
               <div class="card-header"><div class="card-title">🔔 Signaux Actifs — AOE</div></div>
               <div style="padding:48px;text-align:center;color:var(--text2);">
                 <div style="font-size:40px;margin-bottom:16px;">🔭</div>
-                <div style="font-weight:700;font-size:15px;margin-bottom:8px;color:var(--white);">Veille AOE à configurer</div>
+                <div style="font-weight:700;font-size:15px;margin-bottom:8px;color:var(--text);">Veille AOE à configurer</div>
                 <div style="font-size:13px;">Définir les concurrents AOE<br>puis connecter le workflow n8n</div>
               </div>
             </div>
@@ -1519,10 +1529,10 @@ body {
               <div class="card">
                 <div class="card-header"><div class="card-title">📊 Résumé</div></div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--red);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Gravité haute</div></div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--orange2);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Action requise</div></div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--yellow);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">En cours</div></div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--green);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">→ Pipeline</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--red);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Gravité haute</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--orange2);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Action requise</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--yellow);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">En cours</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--green);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">→ Pipeline</div></div>
                 </div>
               </div>
             </div>
@@ -1537,7 +1547,7 @@ body {
           <h3>👥 Utilisateurs & Accès</h3>
           <div id="users-list"></div>
           <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);">
-            <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:16px;color:var(--white);">+ Ajouter un Utilisateur</div>
+            <div style="font-family:'Poppins',sans-serif;font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:16px;color:var(--text);">+ Ajouter un Utilisateur</div>
             <div class="grid-3">
               <div class="form-field"><label>Nom complet</label><input type="text" id="new-name" placeholder="Prénom Nom" autocomplete="off"></div>
               <div class="form-field"><label>Identifiant</label><input type="text" id="new-user" placeholder="login" autocomplete="off"></div>
@@ -1549,27 +1559,101 @@ body {
         </div>
         <div class="admin-section">
           <h3>⚙️ Configuration Dashboard</h3>
-          <div class="grid-2">
+
+          <!-- Objectifs Followers -->
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:10px;font-family:'Poppins',sans-serif;">Objectifs Followers</div>
+          <div class="grid-3" style="margin-bottom:16px;">
             <div>
-              <div class="form-field"><label>Objectif LinkedIn (followers)</label><input type="number" id="cfg-linkedin-goal" value="10000" inputmode="numeric"></div>
-              <div class="form-field"><label>Objectif Facebook (abonnés)</label><input type="number" id="cfg-fb-goal" value="20000" inputmode="numeric"></div>
-              <div class="form-field"><label>Objectif Instagram (abonnés)</label><input type="number" id="cfg-ig-goal" value="5000" inputmode="numeric"></div>
+              <div style="font-size:11px;font-weight:600;color:var(--text2);margin-bottom:4px;">💼 LinkedIn Groupe</div>
+              <div class="form-field" style="margin-bottom:0;"><input type="number" id="cfg-li-groupe" value="18000" inputmode="numeric"></div>
             </div>
             <div>
-              <div class="form-field"><label>Posts LinkedIn / semaine</label><input type="number" id="cfg-li-posts" value="4" inputmode="numeric"></div>
-              <div class="form-field"><label>Posts Facebook / semaine</label><input type="number" id="cfg-fb-posts" value="3" inputmode="numeric"></div>
-              <div class="form-field"><label>Posts Instagram / semaine</label><input type="number" id="cfg-ig-posts" value="2" inputmode="numeric"></div>
+              <div style="font-size:11px;font-weight:600;color:var(--text2);margin-bottom:4px;">📘 Facebook Groupe</div>
+              <div class="form-field" style="margin-bottom:0;"><input type="number" id="cfg-fb-groupe" value="35000" inputmode="numeric"></div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--text2);margin-bottom:4px;">📸 Instagram Groupe</div>
+              <div class="form-field" style="margin-bottom:0;"><input type="number" id="cfg-ig-groupe" value="10000" inputmode="numeric"></div>
             </div>
           </div>
-          <button class="btn btn-primary" onclick="saveConfig()">Sauvegarder</button>
+
+          <!-- Objectifs par entité LinkedIn -->
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:10px;font-family:'Poppins',sans-serif;">Objectifs LinkedIn par Entité</div>
+          <div class="grid-3" style="margin-bottom:16px;">
+            <div>
+              <div style="font-size:11px;font-weight:600;color:#3b82f6;margin-bottom:4px;">🔵 Globo Afrique</div>
+              <div class="form-field" style="margin-bottom:0;"><input type="number" id="cfg-ga-li" value="10000" inputmode="numeric"></div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--orange);margin-bottom:4px;">🟠 GES</div>
+              <div class="form-field" style="margin-bottom:0;"><input type="number" id="cfg-ges-li" value="5000" inputmode="numeric"></div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--yellow);margin-bottom:4px;">🟡 AOE</div>
+              <div class="form-field" style="margin-bottom:0;"><input type="number" id="cfg-aoe-li" value="3000" inputmode="numeric"></div>
+            </div>
+          </div>
+
+          <!-- Objectifs Facebook par entité -->
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:10px;font-family:'Poppins',sans-serif;">Objectifs Facebook par Entité</div>
+          <div class="grid-3" style="margin-bottom:16px;">
+            <div>
+              <div style="font-size:11px;font-weight:600;color:#3b82f6;margin-bottom:4px;">🔵 Globo Afrique</div>
+              <div class="form-field" style="margin-bottom:0;"><input type="number" id="cfg-ga-fb" value="20000" inputmode="numeric"></div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--orange);margin-bottom:4px;">🟠 GES</div>
+              <div class="form-field" style="margin-bottom:0;"><input type="number" id="cfg-ges-fb" value="10000" inputmode="numeric"></div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--yellow);margin-bottom:4px;">🟡 AOE</div>
+              <div class="form-field" style="margin-bottom:0;"><input type="number" id="cfg-aoe-fb" value="5000" inputmode="numeric"></div>
+            </div>
+          </div>
+
+          <!-- Objectifs Instagram par entité -->
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:10px;font-family:'Poppins',sans-serif;">Objectifs Instagram par Entité</div>
+          <div class="grid-3" style="margin-bottom:16px;">
+            <div>
+              <div style="font-size:11px;font-weight:600;color:#3b82f6;margin-bottom:4px;">🔵 Globo Afrique</div>
+              <div class="form-field" style="margin-bottom:0;"><input type="number" id="cfg-ga-ig" value="5000" inputmode="numeric"></div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--orange);margin-bottom:4px;">🟠 GES</div>
+              <div class="form-field" style="margin-bottom:0;"><input type="number" id="cfg-ges-ig" value="3000" inputmode="numeric"></div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--yellow);margin-bottom:4px;">🟡 AOE</div>
+              <div class="form-field" style="margin-bottom:0;"><input type="number" id="cfg-aoe-ig" value="2000" inputmode="numeric"></div>
+            </div>
+          </div>
+
+          <!-- Objectifs Posts -->
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:10px;font-family:'Poppins',sans-serif;">Objectifs Posts / Mois</div>
+          <div class="grid-3" style="margin-bottom:20px;">
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--text2);margin-bottom:4px;">💼 Posts LinkedIn</div>
+              <div class="form-field" style="margin-bottom:0;"><input type="number" id="cfg-posts-li" value="30" inputmode="numeric"></div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--text2);margin-bottom:4px;">📘 Posts Facebook</div>
+              <div class="form-field" style="margin-bottom:0;"><input type="number" id="cfg-posts-fb" value="12" inputmode="numeric"></div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--text2);margin-bottom:4px;">📸 Posts Instagram</div>
+              <div class="form-field" style="margin-bottom:0;"><input type="number" id="cfg-posts-ig" value="8" inputmode="numeric"></div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" onclick="saveConfig()">Sauvegarder la configuration</button>
         </div>
         <div class="admin-section">
           <h3>🔗 Intégrations</h3>
           <div class="grid-2">
-            <div style="background:var(--navy2);border-radius:3px;padding:14px;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border);"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">🔧</span><div><div style="font-size:13px;font-weight:700;color:var(--white);">n8n Cloud</div><div style="font-size:11px;color:var(--text2);">globocorps-itl.app.n8n.cloud</div></div></div><div style="display:flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-weight:700;"><div class="status-dot active"></div>Connecté</div></div>
-            <div style="background:var(--navy2);border-radius:3px;padding:14px;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border);"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">💬</span><div><div style="font-size:13px;font-weight:700;color:var(--white);">WhatsApp / Twilio</div><div style="font-size:11px;color:var(--text2);">+1 555 718 9862 (actif)</div></div></div><div style="display:flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-weight:700;"><div class="status-dot active"></div>Actif</div></div>
-            <div style="background:var(--navy2);border-radius:3px;padding:14px;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border);"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📊</span><div><div style="font-size:13px;font-weight:700;color:var(--white);">Google Sheets</div><div style="font-size:11px;color:var(--text2);">Challenge · Classement · Historique</div></div></div><div style="display:flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-weight:700;"><div class="status-dot active"></div>Connecté</div></div>
-            <div style="background:var(--navy2);border-radius:3px;padding:14px;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border);"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📣</span><div><div style="font-size:13px;font-weight:700;color:var(--white);">Slack</div><div style="font-size:11px;color:var(--text2);">#challenge-employés-lkdk</div></div></div><div style="display:flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-weight:700;"><div class="status-dot active"></div>Connecté</div></div>
+            <div style="background:var(--card);border-radius:3px;padding:14px;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border);"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">🔧</span><div><div style="font-size:13px;font-weight:700;color:var(--text);">n8n Cloud</div><div style="font-size:11px;color:var(--text2);">globocorps-itl.app.n8n.cloud</div></div></div><div style="display:flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-weight:700;"><div class="status-dot active"></div>Connecté</div></div>
+            <div style="background:var(--navy2);border-radius:3px;padding:14px;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border);"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">💬</span><div><div style="font-size:13px;font-weight:700;color:var(--text);">WhatsApp / Twilio</div><div style="font-size:11px;color:var(--text2);">+1 555 718 9862 (actif)</div></div></div><div style="display:flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-weight:700;"><div class="status-dot active"></div>Actif</div></div>
+            <div style="background:var(--navy2);border-radius:3px;padding:14px;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border);"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📊</span><div><div style="font-size:13px;font-weight:700;color:var(--text);">Google Sheets</div><div style="font-size:11px;color:var(--text2);">Challenge · Classement · Historique</div></div></div><div style="display:flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-weight:700;"><div class="status-dot active"></div>Connecté</div></div>
+            <div style="background:var(--navy2);border-radius:3px;padding:14px;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border);"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:18px;">📣</span><div><div style="font-size:13px;font-weight:700;color:var(--text);">Slack</div><div style="font-size:11px;color:var(--text2);">#challenge-employés-lkdk</div></div></div><div style="display:flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-weight:700;"><div class="status-dot active"></div>Connecté</div></div>
           </div>
         </div>
       </div>
@@ -1921,7 +2005,7 @@ function renderUserRow(u, user, isRemote) {
   var html = '<div class="admin-user-row">' +
     '<div class="admin-user-info">' +
       '<div class="admin-avatar">' + initial + '</div>' +
-      '<div><div style="font-size:13px;font-weight:700;color:var(--white);">' + name + sourceBadge + '</div>' +
+      '<div><div style="font-size:13px;font-weight:700;color:var(--text);">' + name + sourceBadge + '</div>' +
       '<div style="font-size:12px;color:var(--text2);margin-top:2px;">' + u + ' · <span class="admin-role-badge ' + user.role + '">' + roleLabel + '</span></div></div>' +
     '</div>';
   if (u !== 'christopher') {
@@ -1970,7 +2054,42 @@ function renderUsersList() {
     .catch(function() {});
 }
 
-function saveConfig() { showNotif('✅ Configuration sauvegardée'); }
+function getCfg(id, def) { var el = document.getElementById(id); return el ? (parseInt(el.value) || def) : def; }
+function saveConfig() {
+  window.CFG = {
+    li_groupe: getCfg('cfg-li-groupe', 18000),
+    fb_groupe: getCfg('cfg-fb-groupe', 35000),
+    ig_groupe: getCfg('cfg-ig-groupe', 10000),
+    ga_li: getCfg('cfg-ga-li', 10000),
+    ges_li: getCfg('cfg-ges-li', 5000),
+    aoe_li: getCfg('cfg-aoe-li', 3000),
+    ga_fb: getCfg('cfg-ga-fb', 20000),
+    ges_fb: getCfg('cfg-ges-fb', 10000),
+    aoe_fb: getCfg('cfg-aoe-fb', 5000),
+    ga_ig: getCfg('cfg-ga-ig', 5000),
+    ges_ig: getCfg('cfg-ges-ig', 3000),
+    aoe_ig: getCfg('cfg-aoe-ig', 2000),
+    posts_li: getCfg('cfg-posts-li', 30),
+    posts_fb: getCfg('cfg-posts-fb', 12),
+    posts_ig: getCfg('cfg-posts-ig', 8)
+  };
+  try { localStorage.setItem('globo_cfg', JSON.stringify(window.CFG)); } catch(e) {}
+  loadConfig();
+  loadRealData();
+  showNotif('✅ Configuration sauvegardée et appliquée');
+}
+function loadConfig() {
+  try {
+    var saved = localStorage.getItem('globo_cfg');
+    if (saved) {
+      window.CFG = JSON.parse(saved);
+      var fields = ['li_groupe','fb_groupe','ig_groupe','ga_li','ges_li','aoe_li','ga_fb','ges_fb','aoe_fb','ga_ig','ges_ig','aoe_ig','posts_li','posts_fb','posts_ig'];
+      var ids = ['cfg-li-groupe','cfg-fb-groupe','cfg-ig-groupe','cfg-ga-li','cfg-ges-li','cfg-aoe-li','cfg-ga-fb','cfg-ges-fb','cfg-aoe-fb','cfg-ga-ig','cfg-ges-ig','cfg-aoe-ig','cfg-posts-li','cfg-posts-fb','cfg-posts-ig'];
+      fields.forEach(function(f, i) { var el = document.getElementById(ids[i]); if (el && window.CFG[f]) el.value = window.CFG[f]; });
+    }
+  } catch(e) {}
+  if (!window.CFG) window.CFG = { li_groupe:18000,fb_groupe:35000,ig_groupe:10000,ga_li:10000,ges_li:5000,aoe_li:3000,ga_fb:20000,ges_fb:10000,aoe_fb:5000,ga_ig:5000,ges_ig:3000,aoe_ig:2000,posts_li:30,posts_fb:12,posts_ig:8 };
+}
 
 /* ══════════════════════════════
    CALENDAR
@@ -2050,9 +2169,9 @@ function loadRealData() {
       var updFmt = upd ? (function(){ try { var d=new Date(upd); return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'})+' '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}); } catch(e){ return upd; } })() : '—';
 
       // ── GA — Vue Groupe enrichie ──
-      var gaPct = gaLI ? Math.round((gaLI / 10000) * 1000) / 10 : 0;
-      var gaFBPct = gaFB ? Math.round((gaFB / 20000) * 1000) / 10 : 0;
-      var gaIGPct = gaIG ? Math.round((gaIG / 5000) * 1000) / 10 : 0;
+      var gaPct = gaLI ? Math.round((gaLI / (window.CFG?window.CFG.ga_li:10000)) * 1000) / 10 : 0;
+      var gaFBPct = gaFB ? Math.round((gaFB / (window.CFG?window.CFG.ga_fb:20000)) * 1000) / 10 : 0;
+      var gaIGPct = gaIG ? Math.round((gaIG / (window.CFG?window.CFG.ga_ig:5000)) * 1000) / 10 : 0;
       set('groupe-ga-linkedin', gaLI ? gaLI.toLocaleString('fr-FR') : '—');
       set('groupe-ga-facebook', gaFB ? gaFB.toLocaleString('fr-FR') : '—');
       set('groupe-ga-instagram', gaIG ? gaIG.toLocaleString('fr-FR') : '—');
@@ -2085,9 +2204,9 @@ function loadRealData() {
         gesIG = gesFollowers.instagram || 0;
       }
       // ── GES — Vue Groupe enrichie ──
-      var gesPct = gesLI ? Math.round((gesLI/5000)*1000)/10 : 0;
-      var gesFBPct = gesFB ? Math.round((gesFB/10000)*1000)/10 : 0;
-      var gesIGPct = gesIG ? Math.round((gesIG/3000)*1000)/10 : 0;
+      var gesPct = gesLI ? Math.round((gesLI/(window.CFG?window.CFG.ges_li:5000))*1000)/10 : 0;
+      var gesFBPct = gesFB ? Math.round((gesFB/(window.CFG?window.CFG.ges_fb:10000))*1000)/10 : 0;
+      var gesIGPct = gesIG ? Math.round((gesIG/(window.CFG?window.CFG.ges_ig:3000))*1000)/10 : 0;
       set('groupe-ges-linkedin', gesLI ? gesLI.toLocaleString('fr-FR') : '—');
       set('groupe-ges-facebook', gesFB ? gesFB.toLocaleString('fr-FR') : '—');
       set('groupe-ges-instagram', gesIG ? gesIG.toLocaleString('fr-FR') : '—');
@@ -2122,8 +2241,8 @@ function loadRealData() {
         aoeIG = aoeFollowers.instagram || 0;
       }
       // ── AOE — Vue Groupe enrichie ──
-      var aoePct = aoeLI ? Math.round((aoeLI/3000)*1000)/10 : 0;
-      var aoeFBPct = aoeFB ? Math.round((aoeFB/5000)*1000)/10 : 0;
+      var aoePct = aoeLI ? Math.round((aoeLI/(window.CFG?window.CFG.aoe_li:3000))*1000)/10 : 0;
+      var aoeFBPct = aoeFB ? Math.round((aoeFB/(window.CFG?window.CFG.aoe_fb:5000))*1000)/10 : 0;
       var aoeIGPct = aoeIG ? Math.round((aoeIG/2000)*1000)/10 : 0;
       set('groupe-aoe-linkedin', aoeLI ? aoeLI.toLocaleString('fr-FR') : '—');
       set('groupe-aoe-facebook', aoeFB ? aoeFB.toLocaleString('fr-FR') : '—');
@@ -2201,6 +2320,13 @@ function loadRealData() {
       var totalPosts = (gaPosts || 0) + (gesPosts || 0) + (aoePosts || 0);
       set('kpi-posts', totalPosts > 0 ? totalPosts : '—');
       set('kpi-posts-delta', 'GA ' + (gaPosts||0) + ' · GES ' + (gesPosts||0) + ' · AOE ' + (aoePosts||0) + ' · LinkedIn');
+      // Barre objectif 30 posts/mois
+      var objPostsMois = (window.CFG?window.CFG.posts_li:30);
+      var pctPostsMois = Math.min(Math.round((totalPosts/objPostsMois)*100),100);
+      set('kpi-posts-obj-label', totalPosts + ' / ' + objPostsMois);
+      set('kpi-posts-obj-pct', pctPostsMois + '%');
+      var barPostsObj = document.getElementById('kpi-posts-obj-bar');
+      if (barPostsObj) barPostsObj.style.width = pctPostsMois + '%';
       var gesEngage = gesData && gesData.linkedin_stats ? (gesData.linkedin_stats.engagement !== undefined ? gesData.linkedin_stats.engagement : gesData.linkedin_stats.engagement_rate) : undefined;
       var aoeEngage = aoeData && aoeData.linkedin_stats ? (aoeData.linkedin_stats.engagement !== undefined ? aoeData.linkedin_stats.engagement : aoeData.linkedin_stats.engagement_rate) : undefined;
       var engageValues = [gaEngage, gesEngage, aoeEngage].filter(function(v){ return v !== undefined && v !== null; });
@@ -2211,7 +2337,7 @@ function loadRealData() {
       // ── Objectifs Réseaux Sociaux ──────────────────────────────────────────────────
       // LinkedIn Groupe
       var groupeLI = gaLI + gesLI + aoeLI;
-      var groupePct = Math.round((groupeLI/18000)*1000)/10;
+      var groupePct = Math.round((groupeLI/(window.CFG?window.CFG.li_groupe:18000))*1000)/10;
       set('linkedin-10k-label', groupeLI.toLocaleString('fr-FR') + ' / 18 000');
       set('linkedin-10k-pct', groupePct + '%');
       var bar10k = document.getElementById('linkedin-10k-bar'); if (bar10k) bar10k.style.width = Math.min(groupePct,100) + '%';
@@ -2220,23 +2346,41 @@ function loadRealData() {
       set('grp-ga-li-val', gaLI ? gaLI.toLocaleString('fr-FR') : '—');
       set('grp-ges-li-val', gesLI ? gesLI.toLocaleString('fr-FR') : '—');
       set('grp-aoe-li-val', aoeLI ? aoeLI.toLocaleString('fr-FR') : '—');
-      var barGALI2 = document.getElementById('grp-ga-li-bar'); if (barGALI2) barGALI2.style.width = Math.min(Math.round((gaLI/10000)*100),100) + '%';
-      var barGESLI2 = document.getElementById('grp-ges-li-bar2'); if (barGESLI2) barGESLI2.style.width = Math.min(Math.round((gesLI/5000)*100),100) + '%';
-      var barAOELI2 = document.getElementById('grp-aoe-li-bar2'); if (barAOELI2) barAOELI2.style.width = Math.min(Math.round((aoeLI/3000)*100),100) + '%';
+      var barGALI2 = document.getElementById('grp-ga-li-bar'); if (barGALI2) barGALI2.style.width = Math.min(Math.round((gaLI/(window.CFG?window.CFG.ga_li:10000))*100),100) + '%';
+      var barGESLI2 = document.getElementById('grp-ges-li-bar2'); if (barGESLI2) barGESLI2.style.width = Math.min(Math.round((gesLI/(window.CFG?window.CFG.ges_li:5000))*100),100) + '%';
+      var barAOELI2 = document.getElementById('grp-aoe-li-bar2'); if (barAOELI2) barAOELI2.style.width = Math.min(Math.round((aoeLI/(window.CFG?window.CFG.aoe_li:3000))*100),100) + '%';
 
       // Facebook Groupe
       var groupeFB = (gaData&&gaData.followers?gaData.followers.facebook||0:0) + (gesData&&gesData.followers?gesData.followers.facebook||0:0) + (aoeData&&aoeData.followers?aoeData.followers.facebook||0:0);
-      var groupeFBPct = Math.round((groupeFB/35000)*1000)/10;
+      var groupeFBPct = Math.round((groupeFB/(window.CFG?window.CFG.fb_groupe:35000))*1000)/10;
       set('fb-groupe-val', groupeFB.toLocaleString('fr-FR') + ' / 35 000');
       set('fb-groupe-pct', groupeFBPct + '%');
       var barFBG = document.getElementById('fb-groupe-bar'); if (barFBG) barFBG.style.width = Math.min(groupeFBPct,100) + '%';
 
       // Instagram Groupe
       var groupeIG = (gaData&&gaData.followers?gaData.followers.instagram||0:0) + (gesData&&gesData.followers?gesData.followers.instagram||0:0) + (aoeData&&aoeData.followers?aoeData.followers.instagram||0:0);
-      var groupeIGPct = Math.round((groupeIG/10000)*1000)/10;
+      var groupeIGPct = Math.round((groupeIG/(window.CFG?window.CFG.ig_groupe:10000))*1000)/10;
       set('ig-groupe-val', groupeIG.toLocaleString('fr-FR') + ' / 10 000');
       set('ig-groupe-pct', groupeIGPct + '%');
       var barIGG = document.getElementById('ig-groupe-bar'); if (barIGG) barIGG.style.width = Math.min(groupeIGPct,100) + '%';
+
+      // ── Objectifs Hebdomadaires ──────────────────────────────────────────────────
+      // LinkedIn : total posts mois GA + GES + AOE
+      var totalPostsLI = (gaPosts||0) + (gesPosts||0) + (aoePosts||0);
+      var objLI = (window.CFG?window.CFG.posts_li:30);
+      set('obj-linkedin-label', totalPostsLI + ' / ' + objLI);
+      var barObjLI = document.getElementById('obj-linkedin-bar');
+      if (barObjLI) barObjLI.style.width = Math.min(Math.round((totalPostsLI/objLI)*100),100) + '%';
+
+      // Facebook & Instagram : pas de données posts dans data.json — afficher N/A
+      set('obj-facebook-label', '— / 3 publiés');
+      // Validations Challenge
+      var activ = data.activity || [];
+      var nbEffectuees = activ.filter(function(a){ return a.type === 'whatsapp'; }).length;
+      set('obj-challenge-label', '0 en attente');
+      set('obj-challenge-done-label', nbEffectuees + ' validées');
+      var barObjDone = document.getElementById('obj-challenge-done-bar');
+      if (barObjDone) barObjDone.style.width = Math.min(Math.round((nbEffectuees/20)*100),100) + '%';
 
       // Leader Semaine
       var classementSem = data.classement_semaine || data.classement || [];
