@@ -2974,26 +2974,21 @@ function koraThink(question) {
   // Appel API Claude
   var lastQ = question || '';
 
-  fetch('https://api.anthropic.com/v1/messages', {
+  fetch('https://globocorps-itl.app.n8n.cloud/webhook/kora-chat', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'anthropic-dangerous-direct-browser-access': 'true' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-5',
-      max_tokens: 1000,
-      system: 'Tu es Kora, un lion sénégalais sympathique et intelligent, assistant IA du dashboard Globo Corps. Tu parles français avec quelques mots en wolof (waaw=oui, déedéet=non, jërejëf=merci, naka nga def=comment vas-tu, mangi fi=je suis là, ma borom=mon ami). Tu es expert en stratégie réseaux sociaux, challenge ambassadeurs et veille concurrentielle pour Globo Corps (Globo Afrique, GES, AOE). Sois concis, chaleureux, professionnel. Utilise des emojis avec modération. Contexte dashboard actuel:\n' + ctx,
-      messages: [{ role: 'user', content: lastQ }]
-    })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ question: lastQ, ctx: ctx })
   })
   .then(function(r){ return r.json(); })
   .then(function(data) {
     var typing = document.getElementById('kora-typing');
     if (typing) typing.remove();
-    var text = (data.content && data.content[0]) ? data.content[0].text : 'Désolé, je n\'ai pas pu répondre.';
+    var text = data.answer || (data.content && data.content[0] && data.content[0].text) || 'Désolé, je n\'ai pas pu répondre.';
     koraAddMsg(text, 'kora');
     window._koraSending = false;
   })
   .catch(function(err) {
-    console.error('[Kora API error]', err);
+    console.error('[Kora]', err);
     var typing = document.getElementById('kora-typing');
     if (typing) typing.remove();
     koraAddMsg('Bëgg naa fàtt — souci de connexion. Réessaye! 🦁', 'kora');
