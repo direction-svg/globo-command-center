@@ -2933,7 +2933,7 @@ function koraSend() {
   input.value = '';
   koraAddMsg(q, 'user');
   window._koraSending = true;
-  koraThink();
+  koraThink(q);
 }
 
 function koraAddMsg(text, role) {
@@ -2946,7 +2946,7 @@ function koraAddMsg(text, role) {
   return div;
 }
 
-function koraThink() {
+function koraThink(question) {
   var msgs = document.getElementById('kora-messages');
   var typing = document.createElement('div');
   typing.className = 'kora-msg kora kora-typing';
@@ -2972,14 +2972,13 @@ function koraThink() {
   } catch(e) {}
 
   // Appel API Claude
-  var msgs2 = document.querySelectorAll('#kora-messages .kora-msg.user');
-  var lastQ = msgs2[msgs2.length-1] ? msgs2[msgs2.length-1].textContent : '';
+  var lastQ = question || '';
 
   fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'anthropic-dangerous-direct-browser-access': 'true' },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-sonnet-4-5',
       max_tokens: 1000,
       system: 'Tu es Kora, un lion sénégalais sympathique et intelligent, assistant IA du dashboard Globo Corps. Tu parles français avec quelques mots en wolof (waaw=oui, déedéet=non, jërejëf=merci, naka nga def=comment vas-tu, mangi fi=je suis là, ma borom=mon ami). Tu es expert en stratégie réseaux sociaux, challenge ambassadeurs et veille concurrentielle pour Globo Corps (Globo Afrique, GES, AOE). Sois concis, chaleureux, professionnel. Utilise des emojis avec modération. Contexte dashboard actuel:\n' + ctx,
       messages: [{ role: 'user', content: lastQ }]
@@ -2993,10 +2992,11 @@ function koraThink() {
     koraAddMsg(text, 'kora');
     window._koraSending = false;
   })
-  .catch(function() {
+  .catch(function(err) {
+    console.error('[Kora API error]', err);
     var typing = document.getElementById('kora-typing');
     if (typing) typing.remove();
-    koraAddMsg('Bëgg naa fàtt — petit souci de connexion. Réessaye! 🦁', 'kora');
+    koraAddMsg('Bëgg naa fàtt — souci de connexion. Réessaye! 🦁', 'kora');
     window._koraSending = false;
   });
 }
