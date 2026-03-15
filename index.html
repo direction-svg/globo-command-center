@@ -390,7 +390,7 @@ body {
 .kora-panel-face svg { width: 32px; height: 32px; }
 .kora-panel-title { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: #F0F0F0; flex: 1; }
 .kora-panel-sub { font-size: 10px; color: rgba(240,240,240,0.5); }
-.kora-close { background: none; border: none; color: rgba(240,240,240,0.5); font-size: 18px; cursor: pointer; padding: 2px 4px; }
+ { background: none; border: none; color: rgba(240,240,240,0.5); font-size: 18px; cursor: pointer; padding: 2px 4px; }
 .kora-messages {
   flex: 1; overflow-y: auto; padding: 12px;
   display: flex; flex-direction: column; gap: 8px;
@@ -432,6 +432,14 @@ body {
   transition: background .15s; flex-shrink: 0;
 }
 .kora-send:hover { background: #3A9B40; }
+.kora-voice-btn {
+  background: none; border: none; cursor: pointer;
+  font-size: 16px; padding: 4px; border-radius: 50%;
+  transition: transform .15s, opacity .15s;
+  opacity: 0.6; flex-shrink: 0;
+}
+.kora-voice-btn:hover { opacity: 1; transform: scale(1.15); }
+.kora-voice-btn.active { opacity: 1; }
 
 /* Animations Kora F */
 @keyframes koraFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
@@ -2912,11 +2920,55 @@ if (koraMsgEl) {
   }, 3500);
 }
 
+// --- KORA VOICE ---
+window._koraVoiceOn = false;
+
+function toggleKoraVoice() {
+  window._koraVoiceOn = !window._koraVoiceOn;
+  var btn = document.getElementById('kora-voice-btn');
+  if (window._koraVoiceOn) {
+    btn.textContent = '🔊';
+    btn.classList.add('active');
+    // Annonce d'activation
+    koraSpeakText('Voix activée !');
+  } else {
+    btn.textContent = '🔇';
+    btn.classList.remove('active');
+    window.speechSynthesis.cancel();
+  }
+}
+
+function koraSpeakText(text) {
+  if (!window._koraVoiceOn) return;
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  // Nettoyer le texte (retirer emojis et markdown)
+  var clean = text
+    .replace(/[\u{1F300}-\u{1FFFF}]/gu, '')
+    .replace(/\*\*/g, '')
+    .replace(/\*/g, '')
+    .replace(/#{1,6}\s/g, '')
+    .replace(/[-•]\s/g, '')
+    .trim();
+  var utter = new SpeechSynthesisUtterance(clean);
+  utter.lang = 'fr-FR';
+  utter.rate = 1.05;
+  utter.pitch = 1.1;
+  // Choisir une voix française si disponible
+  var voices = window.speechSynthesis.getVoices();
+  var frVoice = voices.find(function(v){ return v.lang === 'fr-FR'; })
+             || voices.find(function(v){ return v.lang.startsWith('fr'); });
+  if (frVoice) utter.voice = frVoice;
+  window.speechSynthesis.speak(utter);
+}
+
 function toggleKora() {
   var panel = document.getElementById('kora-panel');
   panel.classList.toggle('open');
   if (panel.classList.contains('open')) {
     setTimeout(function(){ document.getElementById('kora-input').focus(); }, 200);
+    // Charger les voix au premier ouverture
+    if (window.speechSynthesis) window.speechSynthesis.getVoices();
   }
 }
 
@@ -2985,6 +3037,7 @@ function koraThink(question) {
     if (typing) typing.remove();
     var text = data.answer || (data.content && data.content[0] && data.content[0].text) || 'Désolé, je n\'ai pas pu répondre.';
     koraAddMsg(text, 'kora');
+    koraSpeakText(text);
     window._koraSending = false;
   })
   .catch(function(err) {
@@ -3021,6 +3074,7 @@ function koraThink(question) {
           <div class="kora-panel-title">Kora</div>
           <div class="kora-panel-sub">Assistant Globo Corps · Français & Wolof</div>
         </div>
+        <button class="kora-voice-btn" id="kora-voice-btn" onclick="toggleKoraVoice()" title="Activer/désactiver la voix">🔇</button>
         <button class="kora-close" onclick="toggleKora()">✕</button>
       </div>
       <div class="kora-messages" id="kora-messages">
