@@ -1659,31 +1659,42 @@ body {
         <!-- Veille GES -->
         <div id="veille-tab-ges" style="display:none;">
           <div class="grid-2">
-            <div class="card">
-              <div class="card-header"><div class="card-title">🔔 Signaux Actifs — GES</div></div>
-              <div style="padding:48px;text-align:center;color:var(--text2);">
-                <div style="font-size:40px;margin-bottom:16px;">🔭</div>
-                <div style="font-weight:700;font-size:15px;margin-bottom:8px;color:var(--text);">Veille GES à configurer</div>
-                <div style="font-size:13px;">Définir les concurrents GES<br>puis connecter le workflow n8n</div>
+            <div class="card" style="max-height:720px;overflow-y:auto;">
+              <div class="card-header">
+                <div class="card-title">🔔 Signaux Actifs — GES</div>
+                <div style="display:flex;gap:5px;">
+                  <button onclick="filterVeilleEntite('ges','all')" id="vf-ges-all" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--orange);background:var(--orange);color:white;cursor:pointer;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;">Tous</button>
+                  <button onclick="filterVeilleEntite('ges','nouveau')" id="vf-ges-nouveau" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">Nouveaux</button>
+                  <button onclick="filterVeilleEntite('ges','en_cours')" id="vf-ges-en_cours" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">En cours</button>
+                </div>
               </div>
+              <div id="veille-feed-ges"></div>
             </div>
             <div>
               <div class="card" style="margin-bottom:12px;">
-                <div class="card-header"><div class="card-title">📡 Sources à configurer — GES</div></div>
-                <div style="padding:16px;color:var(--text2);font-size:13px;line-height:1.8;">
-                  <div style="font-weight:700;color:var(--orange2);margin-bottom:8px;">Étapes :</div>
-                  <div>1. Lister les concurrents GES</div>
-                  <div>2. Ajouter dans le workflow Veille n8n</div>
-                  <div>3. Connecter le Google Sheets signaux GES</div>
+                <div class="card-header"><div class="card-title">📊 Résumé Veille GES</div></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--red);" id="veille-ges-critique">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Gravité haute</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--yellow);" id="veille-ges-encours">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">En cours</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--orange2);" id="veille-ges-action">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Action requise</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--green);" id="veille-ges-pipeline">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">→ Pipeline</div></div>
                 </div>
               </div>
               <div class="card">
-                <div class="card-header"><div class="card-title">📊 Résumé</div></div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--red);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Gravité haute</div></div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--orange2);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Action requise</div></div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--yellow);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">En cours</div></div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--green);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">→ Pipeline</div></div>
+                <div class="card-header"><div class="card-title">📡 Sources Surveillées — GES</div></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 ELEC2000</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 ADN Solutions</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 Ndak Tech</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 JAR Sénégal</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 FAB 3S</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 La PIPE</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 Makto Distribution</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 ISOMETA</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 TSG Solutions</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 Petrotec</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 Petroservices</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 SAGAM Electronics</div>
                 </div>
               </div>
             </div>
@@ -1693,31 +1704,39 @@ body {
         <!-- Veille AOE -->
         <div id="veille-tab-aoe" style="display:none;">
           <div class="grid-2">
-            <div class="card">
-              <div class="card-header"><div class="card-title">🔔 Signaux Actifs — AOE</div></div>
-              <div style="padding:48px;text-align:center;color:var(--text2);">
-                <div style="font-size:40px;margin-bottom:16px;">🔭</div>
-                <div style="font-weight:700;font-size:15px;margin-bottom:8px;color:var(--text);">Veille AOE à configurer</div>
-                <div style="font-size:13px;">Définir les concurrents AOE<br>puis connecter le workflow n8n</div>
+            <div class="card" style="max-height:720px;overflow-y:auto;">
+              <div class="card-header">
+                <div class="card-title">🔔 Signaux Actifs — AOE</div>
+                <div style="display:flex;gap:5px;">
+                  <button onclick="filterVeilleEntite('aoe','all')" id="vf-aoe-all" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--orange);background:var(--orange);color:white;cursor:pointer;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;">Tous</button>
+                  <button onclick="filterVeilleEntite('aoe','nouveau')" id="vf-aoe-nouveau" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">Nouveaux</button>
+                  <button onclick="filterVeilleEntite('aoe','en_cours')" id="vf-aoe-en_cours" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">En cours</button>
+                </div>
               </div>
+              <div id="veille-feed-aoe"></div>
             </div>
             <div>
               <div class="card" style="margin-bottom:12px;">
-                <div class="card-header"><div class="card-title">📡 Sources à configurer — AOE</div></div>
-                <div style="padding:16px;color:var(--text2);font-size:13px;line-height:1.8;">
-                  <div style="font-weight:700;color:var(--yellow);margin-bottom:8px;">Étapes :</div>
-                  <div>1. Lister les concurrents AOE</div>
-                  <div>2. Ajouter dans le workflow Veille n8n</div>
-                  <div>3. Connecter le Google Sheets signaux AOE</div>
+                <div class="card-header"><div class="card-title">📊 Résumé Veille AOE</div></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--red);" id="veille-aoe-critique">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Gravité haute</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--yellow);" id="veille-aoe-encours">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">En cours</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--orange2);" id="veille-aoe-action">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Action requise</div></div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--green);" id="veille-aoe-pipeline">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">→ Pipeline</div></div>
                 </div>
               </div>
               <div class="card">
-                <div class="card-header"><div class="card-title">📊 Résumé</div></div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--red);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Gravité haute</div></div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--orange2);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">Action requise</div></div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--yellow);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">En cours</div></div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:12px;text-align:center;border:1px solid var(--border);"><div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:800;color:var(--green);">—</div><div style="font-size:11px;color:var(--text2);font-weight:600;">→ Pipeline</div></div>
+                <div class="card-header"><div class="card-title">📡 Sources Surveillées — AOE</div></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 SEN Engineering</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 GIC</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 ETECS</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 Optima Ingénierie</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 CIRA SAS</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 ICSA Ingénierie</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 Sahel Ingénierie</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 Innov Structures</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 BETA Ingénieurs</div>
                 </div>
               </div>
             </div>
@@ -2703,16 +2722,37 @@ function loadRealData() {
       var signaux = data.signaux || [];
       if (signaux !== undefined) {
         window._signauxData = signaux;
-        renderVeille(signaux, window._veilleFilter||'all');
+        var signauxGA  = signaux.filter(function(s){ return !s.entite || s.entite === 'GA'; });
+        var signauxGES = signaux.filter(function(s){ return s.entite === 'GES'; });
+        var signauxAOE = signaux.filter(function(s){ return s.entite === 'AOE'; });
+        window._signauxDataGA  = signauxGA;
+        window._signauxDataGES = signauxGES;
+        window._signauxDataAOE = signauxAOE;
+        renderVeille(signauxGA, window._veilleFilter||'all');
+        renderVeilleEntite('ges', signauxGES, window._veilleFilterGES||'all');
+        renderVeilleEntite('aoe', signauxAOE, window._veilleFilterAOE||'all');
         set('veille-count-badge', signaux.length+' signaux');
         set('veille-updated','MAJ '+upd);
-        var critique=signaux.filter(function(s){return s.gravite>=4;}).length;
-        var encours=signaux.filter(function(s){return(s.statut||'')==='en_cours';}).length;
-        var action=signaux.filter(function(s){return(s.action_requise||'').toUpperCase()==='OUI';}).length;
+        // Stats GA
+        var critique=signauxGA.filter(function(s){return s.gravite>=4;}).length;
+        var encours=signauxGA.filter(function(s){return(s.statut||'')==='en_cours';}).length;
+        var action=signauxGA.filter(function(s){return(s.action_requise||'').toUpperCase()==='OUI';}).length;
         set('veille-stat-critique',critique);set('veille-stat-encours',encours);set('veille-stat-action',action);
         set('veille-stat-pipeline',window._signauxPipelineCount||0);
         set('grp-veille-critique',critique);set('grp-veille-encours',encours);set('grp-veille-action',action);
         set('grp-veille-pipeline',window._signauxPipelineCount||0);
+        // Stats GES
+        var critGES=signauxGES.filter(function(s){return s.gravite>=4;}).length;
+        var encoursGES=signauxGES.filter(function(s){return(s.statut||'')==='en_cours';}).length;
+        var actionGES=signauxGES.filter(function(s){return(s.action_requise||'').toUpperCase()==='OUI';}).length;
+        set('veille-ges-critique',critGES);set('veille-ges-encours',encoursGES);set('veille-ges-action',actionGES);
+        set('veille-ges-pipeline',0);
+        // Stats AOE
+        var critAOE=signauxAOE.filter(function(s){return s.gravite>=4;}).length;
+        var encoursAOE=signauxAOE.filter(function(s){return(s.statut||'')==='en_cours';}).length;
+        var actionAOE=signauxAOE.filter(function(s){return(s.action_requise||'').toUpperCase()==='OUI';}).length;
+        set('veille-aoe-critique',critAOE);set('veille-aoe-encours',encoursAOE);set('veille-aoe-action',actionAOE);
+        set('veille-aoe-pipeline',0);
       }
 
       // ── Pipeline Globo Afrique ──
@@ -2795,6 +2835,8 @@ function loadRealData() {
    VEILLE
 ══════════════════════════════ */
 window._veilleFilter = 'all';
+window._veilleFilterGES = 'all';
+window._veilleFilterAOE = 'all';
 window._signauxPipelineCount = 0;
 window._signauxStates = {};
 
@@ -2803,6 +2845,65 @@ function graviteStars(g) {
   var html = '<div class="veille-gravite'+cls+'">';
   for (var i=1;i<=4;i++) html += '<span class="'+(i<=g?'active':'')+'"></span>';
   return html + '</div>';
+}
+
+function renderVeilleEntite(entite, signaux, filter) {
+  var feedId = 'veille-feed-' + entite;
+  var feed = document.getElementById(feedId);
+  if (!feed) return;
+  feed.innerHTML = '';
+  if (!signaux || !signaux.length) {
+    feed.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:20px 0;text-align:center;font-weight:600;">Aucun signal — les données arriveront lors du prochain cycle de veille</div>';
+    return;
+  }
+  var filtered = signaux.filter(function(s) {
+    var st = window._signauxStates[s.concurrent] || s.statut || 'nouveau';
+    if (filter==='nouveau') return st==='nouveau';
+    if (filter==='en_cours') return st==='en_cours';
+    return true;
+  });
+  if (!filtered.length) { feed.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:20px 0;text-align:center;font-weight:600;">Aucun signal pour ce filtre</div>'; return; }
+  filtered.forEach(function(s) {
+    var statut = window._signauxStates[s.concurrent] || s.statut || 'nouveau';
+    var item = document.createElement('div'); item.className = 'veille-item statut-'+statut;
+    var g = parseInt(s.gravite)||1;
+    var resume = s.resume || '';
+    var shortResume = resume.length>160 ? resume.substring(0,160)+'...' : resume;
+    var dataEntite = 'data-entite="'+entite+'"';
+    var actionHtml = '';
+    if (statut==='nouveau') { actionHtml='<div class="veille-actions"><button class="veille-btn btn-encours veille-entite-btn" data-action="en_cours" data-concurrent="'+s.concurrent+'" '+dataEntite+'>⏳ En cours</button><button class="veille-btn btn-pipeline veille-entite-btn" data-action="pipeline" data-concurrent="'+s.concurrent+'" '+dataEntite+'>📝 Pipeline</button></div>'; }
+    else if (statut==='en_cours') { actionHtml='<div class="veille-actions"><button class="veille-btn btn-pipeline veille-entite-btn" data-action="pipeline" data-concurrent="'+s.concurrent+'" '+dataEntite+'>📝 Pipeline</button><button class="veille-btn btn-done veille-entite-btn" data-action="traite" data-concurrent="'+s.concurrent+'" '+dataEntite+'>✅ Traité</button></div>'; }
+    var statLabel = statut==='en_cours'?'⏳ En cours':statut==='traite'?'✅ Traité':'';
+    item.innerHTML =
+      '<div class="veille-header">'+
+        '<div><div class="veille-source">'+s.concurrent+' · '+(s.date||'')+'</div>'+
+        '<div class="veille-title">'+shortResume+'</div></div>'+
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">'+graviteStars(g)+
+        (statLabel?'<span class="veille-tag '+statut+'">'+statLabel+'</span>':'')+'</div>'+
+      '</div>'+
+      (s.action_requise&&s.action_requise.toUpperCase()==='OUI'?'<div style="font-size:11px;color:var(--orange2);margin-bottom:6px;font-weight:700;">⚡ Action requise</div>':'')+
+      actionHtml;
+    feed.appendChild(item);
+  });
+  feed.onclick = function(e) {
+    var btn = e.target.closest('.veille-entite-btn'); if (!btn) return;
+    var action=btn.dataset.action, concurrent=btn.dataset.concurrent, ent=btn.dataset.entite;
+    actionVeille(action, concurrent, concurrent);
+    var dataArr = ent==='ges' ? window._signauxDataGES : ent==='aoe' ? window._signauxDataAOE : window._signauxDataGA;
+    renderVeilleEntite(ent, dataArr||[], window['_veilleFilter'+(ent==='ges'?'GES':'AOE')]||'all');
+  };
+}
+
+function filterVeilleEntite(entite, f) {
+  if (entite==='ges') window._veilleFilterGES = f;
+  else if (entite==='aoe') window._veilleFilterAOE = f;
+  ['all','nouveau','en_cours'].forEach(function(b) {
+    var el=document.getElementById('vf-'+entite+'-'+b); if(!el) return;
+    if(b===f){el.style.background='var(--orange)';el.style.color='white';el.style.borderColor='var(--orange)';}
+    else{el.style.background='transparent';el.style.color='var(--text2)';el.style.borderColor='var(--border)';}
+  });
+  var dataArr = entite==='ges' ? window._signauxDataGES : window._signauxDataAOE;
+  renderVeilleEntite(entite, dataArr||[], f);
 }
 
 function renderVeille(signaux, filter) {
@@ -2861,7 +2962,11 @@ function actionVeille(action, concurrent, titre) {
   if (action==='pipeline') { window._signauxPipelineCount=(window._signauxPipelineCount||0)+1; var el=document.getElementById('veille-stat-pipeline');if(el)el.textContent=window._signauxPipelineCount; showNotif('📝 Signal → Pipeline — '+concurrent); }
   else if (action==='traite') { showNotif('✅ Signal traité — '+concurrent); }
   else if (action==='en_cours') { showNotif('⏳ Signal en cours — '+concurrent); }
-  if (window._signauxData) renderVeille(window._signauxData, window._veilleFilter||'all');
+  // Re-render tous les feeds
+  if (window._signauxDataGA) renderVeille(window._signauxDataGA, window._veilleFilter||'all');
+  else if (window._signauxData) renderVeille(window._signauxData, window._veilleFilter||'all');
+  if (window._signauxDataGES) renderVeilleEntite('ges', window._signauxDataGES, window._veilleFilterGES||'all');
+  if (window._signauxDataAOE) renderVeilleEntite('aoe', window._signauxDataAOE, window._veilleFilterAOE||'all');
   var encours=Object.values(window._signauxStates).filter(function(v){return v==='en_cours';}).length;
   var el2=document.getElementById('veille-stat-encours');if(el2)el2.textContent=encours;
   fetch('https://globocorps-itl.app.n8n.cloud/webhook/veille-action',{
