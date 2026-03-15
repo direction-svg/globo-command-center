@@ -1466,11 +1466,8 @@ body {
               </a>
             </div>
             <div class="card">
-              <div class="card-header"><div class="card-title">📊 Pipeline GES — À configurer</div></div>
-              <div style="padding:24px;text-align:center;color:var(--text2);">
-                <div style="font-size:32px;margin-bottom:12px;">📝</div>
-                <div style="font-size:13px;">Connecter le Google Sheet Pipeline GES<br>au workflow Sync Complet</div>
-              </div>
+              <div class="card-header"><div class="card-title" id="pipeline-ges-title">📊 Pipeline GES</div></div>
+              <div id="pipeline-ges-content"><div style="color:var(--text2);font-size:13px;padding:12px 0;text-align:center;">Chargement...</div></div>
             </div>
           </div>
         </div>
@@ -1493,11 +1490,8 @@ body {
               </a>
             </div>
             <div class="card">
-              <div class="card-header"><div class="card-title">📊 Pipeline AOE — À configurer</div></div>
-              <div style="padding:24px;text-align:center;color:var(--text2);">
-                <div style="font-size:32px;margin-bottom:12px;">📝</div>
-                <div style="font-size:13px;">Connecter le Google Sheet Pipeline AOE<br>au workflow Sync Complet</div>
-              </div>
+              <div class="card-header"><div class="card-title" id="pipeline-aoe-title">📊 Pipeline AOE</div></div>
+              <div id="pipeline-aoe-content"><div style="color:var(--text2);font-size:13px;padding:12px 0;text-align:center;">Chargement...</div></div>
             </div>
           </div>
         </div>
@@ -2749,6 +2743,35 @@ function loadRealData() {
         set('pipeline-draft-title', '✏️ Brouillons ('+(counts.draft||0)+')');
         set('pipeline-published-title', '✅ Publiés ('+(counts.published||0)+')');
       }
+
+      // ── Pipeline GES ──
+      function renderPipeSimple(containerId, titleId, entiteLabel, items) {
+        var el = document.getElementById(containerId); if (!el) return;
+        var titleEl = document.getElementById(titleId);
+        if (!items || !items.length) {
+          el.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:12px 0;text-align:center;">Vide</div>';
+          if (titleEl) titleEl.textContent = '📊 Pipeline ' + entiteLabel + ' (0)';
+          return;
+        }
+        if (titleEl) titleEl.textContent = '📊 Pipeline ' + entiteLabel + ' (' + items.length + ')';
+        el.innerHTML = items.map(function(p){
+          var st = (p.Statut||p.statut||'draft').toLowerCase();
+          var badge = st.includes('publ') ? '<span style="background:var(--green);color:#fff;border-radius:3px;padding:1px 6px;font-size:10px;margin-left:6px;">Publié</span>'
+                    : st.includes('plan')||st.includes('sched') ? '<span style="background:#3b82f6;color:#fff;border-radius:3px;padding:1px 6px;font-size:10px;margin-left:6px;">Planifié</span>'
+                    : st.includes('valid')||st.includes('review') ? '<span style="background:var(--orange2);color:#fff;border-radius:3px;padding:1px 6px;font-size:10px;margin-left:6px;">À valider</span>'
+                    : '<span style="background:var(--text3);color:#fff;border-radius:3px;padding:1px 6px;font-size:10px;margin-left:6px;">Brouillon</span>';
+          return '<div style="padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;font-weight:500;">'
+            + (p.Titre||p.titre||p.title||'—') + badge
+            + '<div style="font-size:11px;color:var(--text2);margin-top:3px;">'
+            + (p.Plateforme||p.plateformes||'') + (p.Date_Prevue||p.date?' · '+(p.Date_Prevue||p.date):'')
+            + '</div></div>';
+        }).join('');
+      }
+
+      var pipelineGES = (data.pipeline_ges || []);
+      var pipelineAOE = (data.pipeline_aoe || []);
+      renderPipeSimple('pipeline-ges-content', 'pipeline-ges-title', 'GES', pipelineGES);
+      renderPipeSimple('pipeline-aoe-content', 'pipeline-aoe-title', 'AOE', pipelineAOE);
 
       // ── Utilisateurs distants ──
       if (data.users) {
