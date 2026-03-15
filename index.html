@@ -2892,6 +2892,18 @@ window._veilleFilterAOE = 'all';
 window._signauxPipelineCount = 0;
 window._signauxStates = {};
 
+function getSourceBadge(source) {
+  if (!source) return '<span style="font-size:9px;font-weight:800;padding:2px 7px;border-radius:2px;background:rgba(143,168,184,0.15);color:#8FA8B8;border:1px solid rgba(143,168,184,0.3);margin-left:5px;text-transform:uppercase;letter-spacing:0.05em;">🌐 Site Web</span>';
+  var s = source.toLowerCase();
+  if (s.includes('linkedin.com')) {
+    return '<span style="font-size:9px;font-weight:800;padding:2px 7px;border-radius:2px;background:rgba(0,119,181,0.12);color:#0077b5;border:1px solid rgba(0,119,181,0.3);margin-left:5px;text-transform:uppercase;letter-spacing:0.05em;">💼 LinkedIn</span>';
+  } else if (s.includes('google.com') || s.includes('alerts.google')) {
+    return '<span style="font-size:9px;font-weight:800;padding:2px 7px;border-radius:2px;background:rgba(192,57,43,0.12);color:#C0392B;border:1px solid rgba(192,57,43,0.3);margin-left:5px;text-transform:uppercase;letter-spacing:0.05em;">🔴 Google Alert</span>';
+  } else {
+    return '<span style="font-size:9px;font-weight:800;padding:2px 7px;border-radius:2px;background:rgba(71,174,77,0.12);color:#3A9B40;border:1px solid rgba(71,174,77,0.3);margin-left:5px;text-transform:uppercase;letter-spacing:0.05em;">🟠 Site Web</span>';
+  }
+}
+
 function graviteStars(g) {
   var cls = g>=4?'':g===3?' g3':g===2?' g2':' g1';
   var html = '<div class="veille-gravite'+cls+'">';
@@ -2928,7 +2940,7 @@ function renderVeilleEntite(entite, signaux, filter) {
     var statLabel = statut==='en_cours'?'⏳ En cours':statut==='traite'?'✅ Traité':'';
     item.innerHTML =
       '<div class="veille-header">'+
-        '<div><div class="veille-source">'+s.concurrent+' · '+(s.date||'')+'</div>'+
+        '<div><div class="veille-source">'+s.concurrent+' · '+(s.date||'')+getSourceBadge(s.source||'')+'</div>'+
         '<div class="veille-title">'+shortResume+'</div></div>'+
         '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">'+graviteStars(g)+
         (statLabel?'<span class="veille-tag '+statut+'">'+statLabel+'</span>':'')+'</div>'+
@@ -2982,7 +2994,7 @@ function renderVeille(signaux, filter) {
     var statLabel = statut==='en_cours'?'⏳ En cours':statut==='traite'?'✅ Traité':'';
     item.innerHTML =
       '<div class="veille-header">'+
-        '<div><div class="veille-source">'+s.concurrent+' · '+(s.date||'')+'</div>'+
+        '<div><div class="veille-source">'+s.concurrent+' · '+(s.date||'')+getSourceBadge(s.source||'')+'</div>'+
         '<div class="veille-title">'+shortResume+'</div></div>'+
         '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">'+graviteStars(g)+
         (statLabel?'<span class="veille-tag '+statut+'">'+statLabel+'</span>':'')+'</div>'+
