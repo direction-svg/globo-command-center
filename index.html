@@ -272,7 +272,7 @@ body {
   margin-left: auto; padding: 4px; line-height: 1;
 }
 
-.sidebar-nav { flex: 1; padding: 12px 10px; overflow-y: auto; }
+.sidebar-nav { flex: 1; padding: 12px 10px; overflow-y: auto; min-height: 0; }
 
 .nav-section-label {
   font-size: 10px; font-weight: 700; color: rgba(240,240,240,0.3);
@@ -343,6 +343,122 @@ body {
   backdrop-filter: blur(4px);
 }
 .sidebar-overlay.visible { display: block; }
+
+/* ══ KORA — Avatar IA ══ */
+.kora-wrapper {
+  padding: 16px 12px 8px;
+  border-top: 1px solid rgba(71,174,77,0.2);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.kora-btn {
+  width: 100%; background: none; border: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 8px; border-radius: 8px;
+  transition: background .15s;
+}
+.kora-btn:hover { background: rgba(71,174,77,0.08); }
+.kora-face {
+  width: 80px; height: 90px; flex-shrink: 0;
+  position: relative;
+}
+.kora-face svg { width: 80px; height: 90px; }
+.kora-info { text-align: left; }
+.kora-name { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: #F0F0F0; }
+.kora-status { font-size: 10px; color: #47AE4D; font-weight: 600; letter-spacing: .04em; }
+
+/* Panel Kora */
+.kora-panel {
+  display: none;
+  position: fixed; bottom: 0; left: var(--sidebar-w);
+  width: 320px; max-height: 480px;
+  background: #FFFFFF; border-radius: 12px 12px 0 0;
+  box-shadow: 0 -4px 24px rgba(60,60,59,0.15);
+  border: 1px solid rgba(60,60,59,0.1);
+  z-index: 400; flex-direction: column;
+  overflow: hidden;
+}
+.kora-panel.open { display: flex; }
+.kora-panel-header {
+  background: #3C3C3B; padding: 12px 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.kora-panel-face { width: 32px; height: 32px; flex-shrink: 0; }
+.kora-panel-face svg { width: 32px; height: 32px; }
+.kora-panel-title { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: #F0F0F0; flex: 1; }
+.kora-panel-sub { font-size: 10px; color: rgba(240,240,240,0.5); }
+.kora-close { background: none; border: none; color: rgba(240,240,240,0.5); font-size: 18px; cursor: pointer; padding: 2px 4px; }
+.kora-messages {
+  flex: 1; overflow-y: auto; padding: 12px;
+  display: flex; flex-direction: column; gap: 8px;
+  background: #F8F8F7;
+}
+.kora-msg { max-width: 85%; padding: 8px 11px; border-radius: 8px; font-size: 12px; line-height: 1.5; }
+.kora-msg.kora { background: #3C3C3B; color: #F0F0F0; border-radius: 8px 8px 8px 2px; align-self: flex-start; }
+.kora-msg.user { background: #47AE4D; color: white; border-radius: 8px 8px 2px 8px; align-self: flex-end; }
+.kora-typing { display: flex; gap: 4px; padding: 8px 11px; }
+.kora-typing span { width: 6px; height: 6px; background: rgba(240,240,240,0.4); border-radius: 50%; animation: kbounce 1.2s infinite; }
+.kora-typing span:nth-child(2) { animation-delay: .2s; }
+.kora-typing span:nth-child(3) { animation-delay: .4s; }
+@keyframes kbounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+.kora-suggestions {
+  padding: 6px 10px; display: flex; gap: 6px; flex-wrap: wrap;
+  border-top: 1px solid rgba(60,60,59,0.08); background: white;
+}
+.kora-chip {
+  font-size: 10px; font-weight: 600; color: #5F5F5F;
+  background: #F0F0F0; border: 1px solid rgba(60,60,59,0.1);
+  padding: 4px 9px; border-radius: 20px; cursor: pointer;
+  transition: all .15s; white-space: nowrap;
+}
+.kora-chip:hover { background: #3C3C3B; color: #F0F0F0; }
+.kora-input-row {
+  display: flex; gap: 6px; padding: 10px 12px;
+  border-top: 1px solid rgba(60,60,59,0.08); background: white;
+}
+.kora-input {
+  flex: 1; border: 1px solid rgba(60,60,59,0.15); border-radius: 20px;
+  padding: 7px 12px; font-size: 12px; font-family: 'DM Sans', sans-serif;
+  outline: none; color: #3C3C3B; background: #F8F8F7;
+}
+.kora-input:focus { border-color: #47AE4D; }
+.kora-send {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: #47AE4D; border: none; cursor: pointer;
+  color: white; font-size: 14px; display: flex; align-items: center; justify-content: center;
+  transition: background .15s; flex-shrink: 0;
+}
+.kora-send:hover { background: #3A9B40; }
+
+/* Animations Kora F */
+@keyframes koraFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+@keyframes koraBlink { 0%,88%,100%{transform:scaleY(1)} 92%{transform:scaleY(.05)} }
+@keyframes koraEarL { 0%,100%{transform:rotate(0)} 55%{transform:rotate(-8deg)} }
+@keyframes koraEarR { 0%,100%{transform:rotate(0)} 55%{transform:rotate(8deg)} }
+@keyframes koraPulse { 0%,100%{opacity:.5;r:4} 50%{opacity:1;r:5} }
+@keyframes koraAntDot { 0%,100%{opacity:.5} 50%{opacity:1} }
+@keyframes koraExcite { 0%,100%{transform:translateY(0) rotate(0)} 25%{transform:translateY(-8px) rotate(-3deg)} 75%{transform:translateY(-8px) rotate(3deg)} }
+@keyframes koraAlert { 0%,100%{stroke:#47AE4D} 50%{stroke:#E8C030} }
+@keyframes koraSad { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(.7)} }
+
+.kora-face svg { animation: koraFloat 3s ease-in-out infinite; }
+#kora-ear-l { animation: koraEarL 4s ease-in-out infinite .4s; transform-origin: 12px 32px; }
+#kora-ear-r { animation: koraEarR 4s ease-in-out infinite 1s; transform-origin: 68px 32px; }
+#kora-ant-dot { animation: koraAntDot 2s ease-in-out infinite; }
+#kora-heart-ring { animation: koraPulse 2s ease-in-out infinite; }
+#kora-eye-l { animation: koraBlink 5s ease-in-out infinite; transform-origin: 29px 29px; }
+#kora-eye-r { animation: koraBlink 5s ease-in-out infinite .25s; transform-origin: 51px 29px; }
+
+/* États Kora */
+.kora-excited .kora-face svg { animation: koraExcite .6s ease-in-out 3; }
+.kora-alert #kora-eye-l, .kora-alert #kora-eye-r { stroke: #E8C030 !important; }
+.kora-alert #kora-heart-ring { stroke: #E8C030 !important; }
+
+@media (max-width: 768px) {
+  .kora-panel { left: 0; width: 100%; border-radius: 16px 16px 0 0; }
+}
 
 /* ══════════════════════════════
    MAIN
@@ -881,6 +997,30 @@ body {
 <!-- ══ LOGIN ══ -->
 <div id="login-screen">
   <div class="login-box">
+    <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:12px;">
+      <div style="width:70px;height:78px;animation:koraFloat 3s ease-in-out infinite;">
+        <svg viewBox="0 0 80 90" xmlns="http://www.w3.org/2000/svg" style="width:70px;height:78px;">
+          <rect x="16" y="16" width="48" height="40" rx="10" fill="#3C3C3B" stroke="#47AE4D" stroke-width="1.5"/>
+          <line x1="18" y1="28" x2="62" y2="28" stroke="#47AE4D" stroke-width=".4" opacity=".2"/>
+          <line x1="18" y1="36" x2="62" y2="36" stroke="#47AE4D" stroke-width=".4" opacity=".2"/>
+          <line x1="32" y1="18" x2="32" y2="54" stroke="#47AE4D" stroke-width=".4" opacity=".2"/>
+          <line x1="48" y1="18" x2="48" y2="54" stroke="#47AE4D" stroke-width=".4" opacity=".2"/>
+          <rect x="22" y="24" width="14" height="10" rx="3" fill="none" stroke="#47AE4D" stroke-width="1.5"/>
+          <rect x="24" y="26" width="5" height="3" rx="1" fill="#47AE4D" opacity=".6"/>
+          <rect x="44" y="24" width="14" height="10" rx="3" fill="none" stroke="#47AE4D" stroke-width="1.5"/>
+          <rect x="46" y="26" width="5" height="3" rx="1" fill="#47AE4D" opacity=".6"/>
+          <text x="40" y="48" font-size="7" font-family="monospace" fill="#47AE4D" text-anchor="middle" opacity=".8">:)</text>
+          <rect x="8" y="25" width="8" height="14" rx="2" fill="#3C3C3B" stroke="#47AE4D" stroke-width="1.2"/>
+          <rect x="64" y="25" width="8" height="14" rx="2" fill="#3C3C3B" stroke="#47AE4D" stroke-width="1.2"/>
+          <rect x="20" y="58" width="40" height="26" rx="8" fill="#3C3C3B" stroke="#47AE4D" stroke-width="1.5"/>
+          <text x="40" y="68" font-size="8" font-family="Trebuchet MS" font-weight="800" fill="#47AE4D" text-anchor="middle" letter-spacing="2">GC</text>
+          <circle cx="40" cy="76" r="4" fill="none" stroke="#47AE4D" stroke-width="1.5"/>
+          <circle cx="40" cy="76" r="1.5" fill="#47AE4D"/>
+        </svg>
+      </div>
+      <div style="font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;color:#47AE4D;letter-spacing:.15em;margin-top:4px;">KORA</div>
+      <div id="kora-welcome-msg" style="font-size:11px;color:#8B8D8D;font-style:italic;margin-top:4px;text-align:center;max-width:200px;min-height:16px;transition:opacity .5s;">Waaw! Bienvenue sur Globo Corps 🌍</div>
+    </div>
     <div class="login-logo">
       <div class="login-logo-mark" style="background:white;padding:4px;width:64px;height:64px;"><img src="data:image/jpeg;base64,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" style="width:56px;height:56px;object-fit:contain;border-radius:6px;background:white;padding:3px;" alt="Globo Corps"></div>
       <h1>Globo Corps</h1>
@@ -929,6 +1069,88 @@ body {
       <div class="nav-section-label" style="margin-top:8px;">Administration</div>
       <div class="nav-item admin-only" onclick="showSection('admin')"><span class="nav-icon">⚙️</span>Administration</div>
     </nav>
+    <!-- KORA -->
+    <div class="kora-wrapper">
+      <button class="kora-btn" onclick="toggleKora()">
+        <div class="kora-face">
+          <svg viewBox="0 0 80 90" xmlns="http://www.w3.org/2000/svg" id="kora-svg-main">
+  <defs>
+    <linearGradient id="kgF1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#47AE4D"/>
+      <stop offset="100%" stop-color="#2A7A30"/>
+    </linearGradient>
+  </defs>
+  <g id="kora-body-main">
+    <g id="kora-ant"><line x1="40" y1="8" x2="40" y2="17" stroke="#47AE4D" stroke-width="2" stroke-linecap="round"/><circle cx="40" cy="6" r="3" fill="none" stroke="#47AE4D" stroke-width="2"/><circle cx="40" cy="6" r="1" fill="#47AE4D" id="kora-ant-dot"/></g>
+    <rect x="16" y="16" width="48" height="40" rx="10" fill="#3C3C3B" stroke="#47AE4D" stroke-width="1.5"/>
+    <line x1="18" y1="28" x2="62" y2="28" stroke="#47AE4D" stroke-width=".4" opacity=".2"/>
+    <line x1="18" y1="36" x2="62" y2="36" stroke="#47AE4D" stroke-width=".4" opacity=".2"/>
+    <line x1="18" y1="44" x2="62" y2="44" stroke="#47AE4D" stroke-width=".4" opacity=".2"/>
+    <line x1="32" y1="18" x2="32" y2="54" stroke="#47AE4D" stroke-width=".4" opacity=".2"/>
+    <line x1="48" y1="18" x2="48" y2="54" stroke="#47AE4D" stroke-width=".4" opacity=".2"/>
+    <g id="kora-eye-l"><rect x="22" y="24" width="14" height="10" rx="3" fill="none" stroke="#47AE4D" stroke-width="1.5"/><rect x="24" y="26" width="5" height="3" rx="1" fill="#47AE4D" opacity=".6"/></g>
+    <g id="kora-eye-r"><rect x="44" y="24" width="14" height="10" rx="3" fill="none" stroke="#47AE4D" stroke-width="1.5"/><rect x="46" y="26" width="5" height="3" rx="1" fill="#47AE4D" opacity=".6"/></g>
+    <text x="40" y="48" font-size="7" font-family="monospace" fill="#47AE4D" text-anchor="middle" opacity=".8" id="kora-mouth">:)</text>
+    <rect x="8" y="25" width="8" height="14" rx="2" fill="#3C3C3B" stroke="#47AE4D" stroke-width="1.2" id="kora-ear-l"/>
+    <rect x="64" y="25" width="8" height="14" rx="2" fill="#3C3C3B" stroke="#47AE4D" stroke-width="1.2" id="kora-ear-r"/>
+    <rect x="20" y="58" width="40" height="26" rx="8" fill="#3C3C3B" stroke="#47AE4D" stroke-width="1.5"/>
+    <text x="40" y="68" font-size="8" font-family="Trebuchet MS" font-weight="800" fill="#47AE4D" text-anchor="middle" letter-spacing="2">GC</text>
+    <line x1="26" y1="71" x2="54" y2="71" stroke="#47AE4D" stroke-width=".8" opacity=".4"/>
+    <circle cx="40" cy="76" r="4" fill="none" stroke="#47AE4D" stroke-width="1.5" id="kora-heart-ring"/>
+    <circle cx="40" cy="76" r="1.5" fill="#47AE4D" id="kora-heart-dot"/>
+    <rect x="24" y="83" width="10" height="6" rx="2" fill="#3C3C3B" stroke="#47AE4D" stroke-width="1.2"/>
+    <rect x="46" y="83" width="10" height="6" rx="2" fill="#3C3C3B" stroke="#47AE4D" stroke-width="1.2"/>
+  </g>
+</svg>
+        </div>
+        <div class="kora-info" style="text-align:center;">
+          <div class="kora-name">Kora</div>
+          <div class="kora-status" id="kora-status-label">● En ligne</div>
+        </div>
+      </button>
+    </div>
+
+    <!-- PANEL KORA -->
+    <div class="kora-panel" id="kora-panel">
+      <div class="kora-panel-header">
+        <div class="kora-panel-face">
+          <svg viewBox="0 0 80 90" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="kgFs" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#47AE4D"/><stop offset="100%" stop-color="#2A7A30"/></linearGradient></defs>
+  <g>
+    <rect x="16" y="16" width="48" height="40" rx="10" fill="#3C3C3B" stroke="#47AE4D" stroke-width="1.5"/>
+    <rect x="22" y="24" width="14" height="10" rx="3" fill="none" stroke="#47AE4D" stroke-width="1.5"/>
+    <rect x="24" y="26" width="5" height="3" rx="1" fill="#47AE4D" opacity=".6"/>
+    <rect x="44" y="24" width="14" height="10" rx="3" fill="none" stroke="#47AE4D" stroke-width="1.5"/>
+    <rect x="46" y="26" width="5" height="3" rx="1" fill="#47AE4D" opacity=".6"/>
+    <text x="40" y="48" font-size="7" font-family="monospace" fill="#47AE4D" text-anchor="middle" opacity=".8">:)</text>
+    <rect x="20" y="58" width="40" height="26" rx="8" fill="#3C3C3B" stroke="#47AE4D" stroke-width="1.5"/>
+    <text x="40" y="68" font-size="8" font-family="Trebuchet MS" font-weight="800" fill="#47AE4D" text-anchor="middle" letter-spacing="2">GC</text>
+    <circle cx="40" cy="76" r="4" fill="none" stroke="#47AE4D" stroke-width="1.5"/>
+    <circle cx="40" cy="76" r="1.5" fill="#47AE4D"/>
+  </g>
+</svg>
+        </div>
+        <div>
+          <div class="kora-panel-title">Kora</div>
+          <div class="kora-panel-sub">Assistant Globo Corps · Français & Wolof</div>
+        </div>
+        <button class="kora-close" onclick="toggleKora()">✕</button>
+      </div>
+      <div class="kora-messages" id="kora-messages">
+        <div class="kora-msg kora">Waaw! Mangi fi, ma borom. Je suis Kora, votre assistant Globo Corps. Comment puis-je vous aider aujourd'hui? 🦁</div>
+      </div>
+      <div class="kora-suggestions" id="kora-chips">
+        <div class="kora-chip" onclick="koraAsk('Qui est en tête du challenge?')">🏆 Leader</div>
+        <div class="kora-chip" onclick="koraAsk('Résume la veille')">🔭 Veille</div>
+        <div class="kora-chip" onclick="koraAsk('Stats réseaux sociaux')">📊 Stats</div>
+        <div class="kora-chip" onclick="koraAsk('Naka nga def?')">🇸🇳 Wolof</div>
+      </div>
+      <div class="kora-input-row">
+        <input class="kora-input" id="kora-input" placeholder="Demandez à Kora..." onkeydown="if(event.key==='Enter')koraSend()">
+        <button class="kora-send" onclick="koraSend()">➤</button>
+      </div>
+    </div>
+
     <div class="sidebar-footer">
       <div class="user-card">
         <div class="user-avatar" id="sidebar-avatar">C</div>
@@ -2150,6 +2372,12 @@ function loadRealData() {
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (!data) return;
+      // Réactions Kora
+      var prevData = window._lastData || {};
+      var prevLeader = window._koraLastLeader || '';
+      var prevSignaux = window._koraLastSignaux || 0;
+
+      window._lastData = data;
       var upd = data.updated || '';
       var set = function(id, val) { var el = document.getElementById(id); if (el) el.textContent = val; };
 
@@ -2269,6 +2497,22 @@ function loadRealData() {
         set('groupe-aoe-li-shares', asShares !== undefined ? asShares : '—');
       }
 
+
+      // ── Réactions Kora aux nouvelles données ──────────────────────────────────
+      var newLeader = '';
+      var semR = data.classement_semaine || [];
+      if (semR.length > 0) newLeader = ((semR[0].Prenom||'') + ' ' + (semR[0].Nom||'')).trim();
+      var newSignaux = (data.signaux||[]).filter(function(s){ return s.gravite >= 4; }).length;
+
+      if (newLeader && newLeader !== prevLeader && prevLeader !== '') {
+        koraReact('newleader');
+      } else if (newSignaux > prevSignaux && prevSignaux > 0) {
+        koraReact('alert');
+      } else if (upd !== (prevData.updated||'')) {
+        koraReact('refresh');
+      }
+      window._koraLastLeader = newLeader;
+      window._koraLastSignaux = newSignaux;
 
       // ── Baselines followers (15 mars 2026) ──────────────────────────────────────────
       var BASELINE = {
@@ -2640,6 +2884,162 @@ function initDashboard() {
   buildCalendar();
   loadRealData();
   setInterval(loadRealData, 15000);
+
+  // ══ KORA — Réactions données ══
+  window._koraSending = false;
+  window._koraLastLeader = '';
+  window._koraLastSignaux = 0;
+
+  function koraReact(type) {
+    var wrapper = document.querySelector('.kora-wrapper');
+    var mouth = document.getElementById('kora-mouth');
+    var statusLabel = document.getElementById('kora-status-label');
+    if (!wrapper) return;
+
+    wrapper.classList.remove('kora-excited','kora-alert');
+
+    if (type === 'newleader') {
+      wrapper.classList.add('kora-excited');
+      if (mouth) mouth.textContent = ':D';
+      if (statusLabel) statusLabel.textContent = '🏆 Nouveau leader!';
+      setTimeout(function() {
+        wrapper.classList.remove('kora-excited');
+        if (mouth) mouth.textContent = ':)';
+        if (statusLabel) statusLabel.textContent = '● En ligne';
+      }, 4000);
+    } else if (type === 'alert') {
+      wrapper.classList.add('kora-alert');
+      if (mouth) mouth.textContent = ':o';
+      if (statusLabel) statusLabel.textContent = '⚠️ Signal veille!';
+      setTimeout(function() {
+        wrapper.classList.remove('kora-alert');
+        if (mouth) mouth.textContent = ':)';
+        if (statusLabel) statusLabel.textContent = '● En ligne';
+      }, 5000);
+    } else if (type === 'refresh') {
+      if (mouth) mouth.textContent = ':)';
+      if (statusLabel) statusLabel.textContent = '↻ Actualisation...';
+      setTimeout(function() {
+        if (statusLabel) statusLabel.textContent = '● En ligne';
+      }, 2000);
+    }
+  }
+
+  // Messages Kora sur la page login
+  var koraMessages = [
+    'Waaw! Bienvenue sur Globo Corps 🌍',
+    'Naka nga def? Prêt à analyser! 📊',
+    'Jërejëf de vous connecter 🙏',
+    'Mangi fi — les données sont fraîches ✅',
+    'Teranga numérique au service du groupe 🦁'
+  ];
+  var koraMsgEl = document.getElementById('kora-welcome-msg');
+  if (koraMsgEl) {
+    var mi = 0;
+    setInterval(function() {
+      koraMsgEl.style.opacity = '0';
+      setTimeout(function() {
+        mi = (mi + 1) % koraMessages.length;
+        koraMsgEl.textContent = koraMessages[mi];
+        koraMsgEl.style.opacity = '1';
+      }, 500);
+    }, 3500);
+  }
+
+  function toggleKora() {
+    var panel = document.getElementById('kora-panel');
+    panel.classList.toggle('open');
+    if (panel.classList.contains('open')) {
+      setTimeout(function(){ document.getElementById('kora-input').focus(); }, 200);
+    }
+  }
+
+  function koraAsk(q) {
+    document.getElementById('kora-input').value = q;
+    koraSend();
+  }
+
+  function koraSend() {
+    if (window._koraSending) return;
+    var input = document.getElementById('kora-input');
+    var q = (input.value || '').trim();
+    if (!q) return;
+    input.value = '';
+    koraAddMsg(q, 'user');
+    window._koraSending = true;
+    koraThink();
+  }
+
+  function koraAddMsg(text, role) {
+    var msgs = document.getElementById('kora-messages');
+    var div = document.createElement('div');
+    div.className = 'kora-msg ' + role;
+    div.textContent = text;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+    return div;
+  }
+
+  function koraThink() {
+    var msgs = document.getElementById('kora-messages');
+    var typing = document.createElement('div');
+    typing.className = 'kora-msg kora kora-typing';
+    typing.id = 'kora-typing';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    msgs.appendChild(typing);
+    msgs.scrollTop = msgs.scrollHeight;
+
+    // Préparer le contexte du dashboard
+    var ctx = '';
+    try {
+      var d = window._lastData || {};
+      var sem = (d.classement_semaine||[]).filter(function(e){return (e.Points||0)>0;});
+      var ann = (d.classement_annuel||[]).filter(function(e){return (e.Total_Points||0)>0;});
+      var signaux = (d.signaux||[]).slice(0,5);
+      ctx = 'Données dashboard Globo Corps:\n';
+      if (sem.length) ctx += '- Leader semaine: ' + (sem[0].Prenom||'') + ' ' + (sem[0].Nom||'') + ' (' + (sem[0].Points||0) + ' pts)\n';
+      if (ann.length) ctx += '- Leader annuel: ' + (ann[0].Prenom||'') + ' ' + (ann[0].Nom||'') + ' (' + (ann[0].Total_Points||0) + ' pts)\n';
+      ctx += '- Participants actifs semaine: ' + sem.length + '/' + (d.nb_employes||43) + '\n';
+      if (signaux.length) ctx += '- Signaux veille: ' + signaux.map(function(s){return s.concurrent;}).join(', ') + '\n';
+      var ga = (d.entites||{}).globo_afrique || {};
+      if (ga.followers) ctx += '- GA followers: LI ' + (ga.followers.linkedin||0) + ', FB ' + (ga.followers.facebook||0) + ', IG ' + (ga.followers.instagram||0) + '\n';
+    } catch(e) {}
+
+    // Appel API Claude
+    var msgs2 = document.querySelectorAll('#kora-messages .kora-msg.user');
+    var lastQ = msgs2[msgs2.length-1] ? msgs2[msgs2.length-1].textContent : '';
+
+    fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: 'Tu es Kora, un lion sénégalais sympathique et intelligent, assistant IA du dashboard Globo Corps. Tu parles français avec quelques mots en wolof (waaw=oui, déedéet=non, jërejëf=merci, naka nga def=comment vas-tu, mangi fi=je suis là, ma borom=mon ami). Tu es expert en stratégie réseaux sociaux, challenge ambassadeurs et veille concurrentielle pour Globo Corps (Globo Afrique, GES, AOE). Sois concis, chaleureux, professionnel. Utilise des emojis avec modération. Contexte dashboard actuel:\n' + ctx,
+        messages: [{ role: 'user', content: lastQ }]
+      })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(data) {
+      var typing = document.getElementById('kora-typing');
+      if (typing) typing.remove();
+      var text = (data.content && data.content[0]) ? data.content[0].text : 'Désolé, je n\'ai pas pu répondre.';
+      koraAddMsg(text, 'kora');
+      window._koraSending = false;
+    })
+    .catch(function() {
+      var typing = document.getElementById('kora-typing');
+      if (typing) typing.remove();
+      koraAddMsg('Bëgg naa fàtt — petit souci de connexion. Réessaye! 🦁', 'kora');
+      window._koraSending = false;
+    });
+  }
+
+  // Sauvegarder les données pour Kora
+  var _origLoadReal = loadRealData;
+  loadRealData = function() {
+    _origLoadReal();
+  };
   setInterval(updateDate, 60000);
 }
 </script>
