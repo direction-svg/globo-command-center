@@ -1654,6 +1654,31 @@ body {
               </div>
             </div>
           </div>
+          <!-- Tableau LinkedIn Concurrents GA -->
+          <div class="card" style="margin-top:16px;">
+            <div class="card-header">
+              <div class="card-title">💼 Activité LinkedIn — Concurrents GA</div>
+              <span id="linkedin-ga-updated" style="font-size:11px;color:var(--text3);font-weight:600;"></span>
+            </div>
+            <div style="overflow-x:auto;">
+              <table style="width:100%;border-collapse:collapse;font-size:12px;" id="linkedin-ga-table">
+                <thead>
+                  <tr style="border-bottom:2px solid var(--border);">
+                    <th style="padding:8px 12px;text-align:left;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;font-size:10px;">#</th>
+                    <th style="padding:8px 12px;text-align:left;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;font-size:10px;">Entreprise</th>
+                    <th style="padding:8px 12px;text-align:right;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;font-size:10px;">Followers</th>
+                    <th style="padding:8px 12px;text-align:right;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;font-size:10px;">Posts</th>
+                    <th style="padding:8px 12px;text-align:right;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;font-size:10px;">Likes moy</th>
+                    <th style="padding:8px 12px;text-align:right;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;font-size:10px;">Total likes</th>
+                    <th style="padding:8px 12px;text-align:left;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;font-size:10px;">Meilleur post</th>
+                  </tr>
+                </thead>
+                <tbody id="linkedin-ga-tbody">
+                  <tr><td colspan="7" style="padding:20px;text-align:center;color:var(--text3);">Chargement...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
         <!-- Veille GES -->
@@ -2716,6 +2741,33 @@ function loadRealData() {
             fc.appendChild(msg); fc.appendChild(time); fi.appendChild(dot); fi.appendChild(fc); feedEl.appendChild(fi);
           });
         }
+      }
+
+      // ── LinkedIn Concurrents GA ──
+      var liGA = data.concurrents_linkedin_ga;
+      if (liGA && liGA.data) {
+        var tbody = document.getElementById('linkedin-ga-tbody');
+        if (tbody) {
+          tbody.innerHTML = liGA.data.map(function(c, i) {
+            var isGlobo = c.name.toLowerCase().includes('globo');
+            var bg = isGlobo ? 'background:rgba(71,174,77,0.08);' : '';
+            var bold = isGlobo ? 'font-weight:800;' : '';
+            var bestPostHtml = c.best_post_url
+              ? '<a href="' + c.best_post_url + '" target="_blank" style="color:var(--orange2);text-decoration:none;font-size:11px;">' + (c.best_post || '').substring(0,60) + (c.best_post && c.best_post.length>60?'...':'') + ' (' + c.best_post_likes + ' 👍)</a>'
+              : '<span style="color:var(--text3);font-size:11px;">—</span>';
+            return '<tr style="border-bottom:1px solid var(--border);' + bg + '">' +
+              '<td style="padding:8px 12px;' + bold + 'color:var(--text3);">' + (i+1) + '</td>' +
+              '<td style="padding:8px 12px;' + bold + 'color:var(--text);">' + c.name + '</td>' +
+              '<td style="padding:8px 12px;text-align:right;' + bold + 'color:var(--text);">' + c.followers.toLocaleString() + '</td>' +
+              '<td style="padding:8px 12px;text-align:right;color:var(--text2);">' + (c.posts || '—') + '</td>' +
+              '<td style="padding:8px 12px;text-align:right;color:' + (c.likes_moy > 15 ? 'var(--green)' : c.likes_moy > 5 ? 'var(--yellow)' : 'var(--text2)') + ';font-weight:700;">' + (c.likes_moy || '—') + '</td>' +
+              '<td style="padding:8px 12px;text-align:right;color:var(--text2);">' + (c.likes_total || '—') + '</td>' +
+              '<td style="padding:8px 12px;max-width:200px;">' + bestPostHtml + '</td>' +
+              '</tr>';
+          }).join('');
+        }
+        var upd = liGA.updated ? new Date(liGA.updated).toLocaleDateString('fr-FR') : '';
+        set('linkedin-ga-updated', 'MAJ ' + upd);
       }
 
       // ── Signaux Veille ──
