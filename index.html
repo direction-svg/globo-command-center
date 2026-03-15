@@ -1110,46 +1110,6 @@ body {
       </button>
     </div>
 
-    <!-- PANEL KORA -->
-    <div class="kora-panel" id="kora-panel">
-      <div class="kora-panel-header">
-        <div class="kora-panel-face">
-          <svg viewBox="0 0 80 90" xmlns="http://www.w3.org/2000/svg">
-  <defs><linearGradient id="kgFs" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#47AE4D"/><stop offset="100%" stop-color="#2A7A30"/></linearGradient></defs>
-  <g>
-    <rect x="16" y="16" width="48" height="40" rx="10" fill="#3C3C3B" stroke="#47AE4D" stroke-width="1.5"/>
-    <rect x="22" y="24" width="14" height="10" rx="3" fill="none" stroke="#47AE4D" stroke-width="1.5"/>
-    <rect x="24" y="26" width="5" height="3" rx="1" fill="#47AE4D" opacity=".6"/>
-    <rect x="44" y="24" width="14" height="10" rx="3" fill="none" stroke="#47AE4D" stroke-width="1.5"/>
-    <rect x="46" y="26" width="5" height="3" rx="1" fill="#47AE4D" opacity=".6"/>
-    <text x="40" y="48" font-size="7" font-family="monospace" fill="#47AE4D" text-anchor="middle" opacity=".8">:)</text>
-    <rect x="20" y="58" width="40" height="26" rx="8" fill="#3C3C3B" stroke="#47AE4D" stroke-width="1.5"/>
-    <text x="40" y="68" font-size="8" font-family="Trebuchet MS" font-weight="800" fill="#47AE4D" text-anchor="middle" letter-spacing="2">GC</text>
-    <circle cx="40" cy="76" r="4" fill="none" stroke="#47AE4D" stroke-width="1.5"/>
-    <circle cx="40" cy="76" r="1.5" fill="#47AE4D"/>
-  </g>
-</svg>
-        </div>
-        <div>
-          <div class="kora-panel-title">Kora</div>
-          <div class="kora-panel-sub">Assistant Globo Corps · Français & Wolof</div>
-        </div>
-        <button class="kora-close" onclick="toggleKora()">✕</button>
-      </div>
-      <div class="kora-messages" id="kora-messages">
-        <div class="kora-msg kora">Waaw! Mangi fi, ma borom. Je suis Kora, votre assistant Globo Corps. Comment puis-je vous aider aujourd'hui? 🦁</div>
-      </div>
-      <div class="kora-suggestions" id="kora-chips">
-        <div class="kora-chip" onclick="koraAsk('Qui est en tête du challenge?')">🏆 Leader</div>
-        <div class="kora-chip" onclick="koraAsk('Résume la veille')">🔭 Veille</div>
-        <div class="kora-chip" onclick="koraAsk('Stats réseaux sociaux')">📊 Stats</div>
-        <div class="kora-chip" onclick="koraAsk('Naka nga def?')">🇸🇳 Wolof</div>
-      </div>
-      <div class="kora-input-row">
-        <input class="kora-input" id="kora-input" placeholder="Demandez à Kora..." onkeydown="if(event.key==='Enter')koraSend()">
-        <button class="kora-send" onclick="koraSend()">➤</button>
-      </div>
-    </div>
 
     <div class="sidebar-footer">
       <div class="user-card">
@@ -1884,7 +1844,50 @@ body {
   </div><!-- /main -->
 
   <!-- BOTTOM NAV -->
-  <div class="bottom-nav" id="bottom-nav">
+    <!-- PANEL KORA -->
+    <div class="kora-panel" id="kora-panel">
+      <div class="kora-panel-header">
+        <div class="kora-panel-face">
+          <svg viewBox="0 0 80 90" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="kgFs" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#47AE4D"/><stop offset="100%" stop-color="#2A7A30"/></linearGradient></defs>
+  <g>
+    <rect x="16" y="16" width="48" height="40" rx="10" fill="#3C3C3B" stroke="#47AE4D" stroke-width="1.5"/>
+    <rect x="22" y="24" width="14" height="10" rx="3" fill="none" stroke="#47AE4D" stroke-width="1.5"/>
+    <rect x="24" y="26" width="5" height="3" rx="1" fill="#47AE4D" opacity=".6"/>
+    <rect x="44" y="24" width="14" height="10" rx="3" fill="none" stroke="#47AE4D" stroke-width="1.5"/>
+    <rect x="46" y="26" width="5" height="3" rx="1" fill="#47AE4D" opacity=".6"/>
+    <text x="40" y="48" font-size="7" font-family="monospace" fill="#47AE4D" text-anchor="middle" opacity=".8">:)</text>
+    <rect x="20" y="58" width="40" height="26" rx="8" fill="#3C3C3B" stroke="#47AE4D" stroke-width="1.5"/>
+    <text x="40" y="68" font-size="8" font-family="Trebuchet MS" font-weight="800" fill="#47AE4D" text-anchor="middle" letter-spacing="2">GC</text>
+    <circle cx="40" cy="76" r="4" fill="none" stroke="#47AE4D" stroke-width="1.5"/>
+    <circle cx="40" cy="76" r="1.5" fill="#47AE4D"/>
+  </g>
+</svg>
+        </div>
+        <div>
+          <div class="kora-panel-title">Kora</div>
+          <div class="kora-panel-sub">Assistant Globo Corps · Français & Wolof</div>
+        </div>
+        <button class="kora-close" onclick="toggleKora()">✕</button>
+      </div>
+      <div class="kora-messages" id="kora-messages">
+        <div class="kora-msg kora">Waaw! Mangi fi, ma borom. Je suis Kora, votre assistant Globo Corps. Comment puis-je vous aider aujourd'hui? 🦁</div>
+      </div>
+      <div class="kora-suggestions" id="kora-chips">
+        <div class="kora-chip" onclick="koraAsk('Qui est en tête du challenge?')">🏆 Leader</div>
+        <div class="kora-chip" onclick="koraAsk('Résume la veille')">🔭 Veille</div>
+        <div class="kora-chip" onclick="koraAsk('Stats réseaux sociaux')">📊 Stats</div>
+        <div class="kora-chip" onclick="koraAsk('Naka nga def?')">🇸🇳 Wolof</div>
+      </div>
+      <div class="kora-input-row">
+        <input class="kora-input" id="kora-input" placeholder="Demandez à Kora..." onkeydown="if(event.key==='Enter')koraSend()">
+        <button class="kora-send" onclick="koraSend()">➤</button>
+      </div>
+    </div>
+
+
+  <div class="bottom-nav"
+ id="bottom-nav">
     <div class="bottom-nav-inner">
       <button class="bnav-item active" id="bnav-overview" onclick="showSection('overview')"><span class="bnav-icon">🌍</span><span class="bnav-label">Home</span></button>
       <button class="bnav-item" id="bnav-challenge" onclick="showSection('challenge')"><span class="bnav-icon">🏆</span><span class="bnav-label">Challenge</span></button>
