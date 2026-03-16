@@ -1614,11 +1614,12 @@ body {
           <div class="grid-2">
             <div class="card" style="max-height:720px;overflow-y:auto;">
               <div class="card-header">
-                <div class="card-title">🔔 Signaux Actifs — Globo Afrique</div>
-                <div style="display:flex;gap:5px;">
+                <div class="card-title">🔔 Signaux — Globo Afrique</div>
+                <div style="display:flex;gap:5px;flex-wrap:wrap;">
                   <button onclick="filterVeille('all')" id="vf-all" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--orange);background:var(--orange);color:white;cursor:pointer;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;">Tous</button>
                   <button onclick="filterVeille('nouveau')" id="vf-nouveau" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">Nouveaux</button>
                   <button onclick="filterVeille('en_cours')" id="vf-en_cours" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">En cours</button>
+                  <button onclick="filterVeille('traite')" id="vf-traite" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">✅ Traités</button>
                 </div>
               </div>
               <div id="veille-feed"></div>
@@ -1686,11 +1687,12 @@ body {
           <div class="grid-2">
             <div class="card" style="max-height:720px;overflow-y:auto;">
               <div class="card-header">
-                <div class="card-title">🔔 Signaux Actifs — GES</div>
-                <div style="display:flex;gap:5px;">
+                <div class="card-title">🔔 Signaux — GES</div>
+                <div style="display:flex;gap:5px;flex-wrap:wrap;">
                   <button onclick="filterVeilleEntite('ges','all')" id="vf-ges-all" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--orange);background:var(--orange);color:white;cursor:pointer;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;">Tous</button>
                   <button onclick="filterVeilleEntite('ges','nouveau')" id="vf-ges-nouveau" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">Nouveaux</button>
                   <button onclick="filterVeilleEntite('ges','en_cours')" id="vf-ges-en_cours" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">En cours</button>
+                  <button onclick="filterVeilleEntite('ges','traite')" id="vf-ges-traite" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">✅ Traités</button>
                 </div>
               </div>
               <div id="veille-feed-ges"></div>
@@ -1732,11 +1734,12 @@ body {
           <div class="grid-2">
             <div class="card" style="max-height:720px;overflow-y:auto;">
               <div class="card-header">
-                <div class="card-title">🔔 Signaux Actifs — AOE</div>
-                <div style="display:flex;gap:5px;">
+                <div class="card-title">🔔 Signaux — AOE</div>
+                <div style="display:flex;gap:5px;flex-wrap:wrap;">
                   <button onclick="filterVeilleEntite('aoe','all')" id="vf-aoe-all" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--orange);background:var(--orange);color:white;cursor:pointer;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;">Tous</button>
                   <button onclick="filterVeilleEntite('aoe','nouveau')" id="vf-aoe-nouveau" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">Nouveaux</button>
                   <button onclick="filterVeilleEntite('aoe','en_cours')" id="vf-aoe-en_cours" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">En cours</button>
+                  <button onclick="filterVeilleEntite('aoe','traite')" id="vf-aoe-traite" style="font-size:10px;padding:4px 10px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">✅ Traités</button>
                 </div>
               </div>
               <div id="veille-feed-aoe"></div>
@@ -2903,6 +2906,8 @@ window._veilleFilterGES = 'all';
 window._veilleFilterAOE = 'all';
 window._signauxPipelineCount = 0;
 window._signauxStates = {};
+window._signauxTraiteDates = {};
+window._signauxEnCoursDates = {};
 
 function getSourceBadge(source) {
   var s = (source || '').toLowerCase().trim();
@@ -2922,6 +2927,46 @@ function graviteStars(g) {
   return html + '</div>';
 }
 
+function buildSignalCard(s, statut, dataEntite, isEntiteBtn) {
+  var g = parseInt(s.gravite)||1;
+  var resume = s.resume || '';
+  var actionSugg = s.action_requise || s.action_suggeree || s.Action_suggeree || '';
+  var dateTraite = window._signauxTraiteDates[s.concurrent] || '';
+  var dateEncours = window._signauxEnCoursDates[s.concurrent] || '';
+  var btnClass = isEntiteBtn ? 'veille-entite-btn' : 'veille-btn';
+  var actionHtml = '';
+  if (statut==='nouveau') {
+    actionHtml='<div class="veille-actions">'+
+      '<button class="veille-btn btn-encours '+btnClass+'" data-action="en_cours" data-concurrent="'+s.concurrent+'" '+dataEntite+'>⏳ En cours</button>'+
+      '<button class="veille-btn btn-pipeline '+btnClass+'" data-action="pipeline" data-concurrent="'+s.concurrent+'" '+dataEntite+'>📝 Pipeline</button>'+
+      '</div>';
+  } else if (statut==='en_cours') {
+    actionHtml='<div class="veille-actions">'+
+      '<button class="veille-btn btn-pipeline '+btnClass+'" data-action="pipeline" data-concurrent="'+s.concurrent+'" '+dataEntite+'>📝 Pipeline</button>'+
+      '<button class="veille-btn btn-done '+btnClass+'" data-action="traite" data-concurrent="'+s.concurrent+'" '+dataEntite+'>✅ Traité</button>'+
+      '</div>';
+  }
+  var statLabel = statut==='en_cours'?'⏳ En cours':statut==='traite'?'✅ Traité':'';
+  var dateInfo = '';
+  if (statut==='traite' && dateTraite) dateInfo = '<div style="font-size:10px;color:var(--green);margin-top:4px;font-weight:600;">✅ Traité le '+dateTraite+'</div>';
+  else if (statut==='en_cours' && dateEncours) dateInfo = '<div style="font-size:10px;color:var(--yellow);margin-top:4px;font-weight:600;">⏳ En cours depuis le '+dateEncours+'</div>';
+  var sourceHtml = s.source ? ' · <a href="'+s.source+'" target="_blank" style="color:var(--blue);font-size:10px;text-decoration:none;font-weight:700;">🔗 Source</a>' : '';
+  return '<div class="veille-item statut-'+statut+'">'+
+    '<div class="veille-header">'+
+      '<div style="flex:1;">'+
+        '<div class="veille-source">'+s.concurrent+' · '+(s.date||'')+sourceHtml+'</div>'+
+        '<div class="veille-title" style="font-size:13px;line-height:1.5;color:var(--text);margin-top:5px;">'+resume+'</div>'+
+      '</div>'+
+      '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;">'+graviteStars(g)+
+      (statLabel?'<span class="veille-tag '+statut+'">'+statLabel+'</span>':'')+'</div>'+
+    '</div>'+
+    (s.action_requise&&s.action_requise.toUpperCase()==='OUI'?'<div style="font-size:11px;color:var(--orange2);margin:6px 0;font-weight:700;">⚡ Action requise</div>':'')+
+    (actionSugg?'<div style="font-size:11px;color:var(--text2);margin:5px 0;padding:6px 8px;background:var(--navy3);border-radius:3px;border-left:2px solid var(--orange);">💡 '+actionSugg+'</div>':'')+
+    dateInfo+
+    actionHtml+
+  '</div>';
+}
+
 function renderVeilleEntite(entite, signaux, filter) {
   var feedId = 'veille-feed-' + entite;
   var feed = document.getElementById(feedId);
@@ -2935,31 +2980,14 @@ function renderVeilleEntite(entite, signaux, filter) {
     var st = window._signauxStates[s.concurrent] || s.statut || 'nouveau';
     if (filter==='nouveau') return st==='nouveau';
     if (filter==='en_cours') return st==='en_cours';
+    if (filter==='traite') return st==='traite';
     return true;
   });
   if (!filtered.length) { feed.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:20px 0;text-align:center;font-weight:600;">Aucun signal pour ce filtre</div>'; return; }
-  filtered.forEach(function(s) {
+  feed.innerHTML = filtered.map(function(s) {
     var statut = window._signauxStates[s.concurrent] || s.statut || 'nouveau';
-    var item = document.createElement('div'); item.className = 'veille-item statut-'+statut;
-    var g = parseInt(s.gravite)||1;
-    var resume = s.resume || '';
-    var shortResume = resume.length>160 ? resume.substring(0,160)+'...' : resume;
-    var dataEntite = 'data-entite="'+entite+'"';
-    var actionHtml = '';
-    if (statut==='nouveau') { actionHtml='<div class="veille-actions"><button class="veille-btn btn-encours veille-entite-btn" data-action="en_cours" data-concurrent="'+s.concurrent+'" '+dataEntite+'>⏳ En cours</button><button class="veille-btn btn-pipeline veille-entite-btn" data-action="pipeline" data-concurrent="'+s.concurrent+'" '+dataEntite+'>📝 Pipeline</button></div>'; }
-    else if (statut==='en_cours') { actionHtml='<div class="veille-actions"><button class="veille-btn btn-pipeline veille-entite-btn" data-action="pipeline" data-concurrent="'+s.concurrent+'" '+dataEntite+'>📝 Pipeline</button><button class="veille-btn btn-done veille-entite-btn" data-action="traite" data-concurrent="'+s.concurrent+'" '+dataEntite+'>✅ Traité</button></div>'; }
-    var statLabel = statut==='en_cours'?'⏳ En cours':statut==='traite'?'✅ Traité':'';
-    item.innerHTML =
-      '<div class="veille-header">'+
-        '<div><div class="veille-source">'+s.concurrent+' · '+(s.date||'')+getSourceBadge(s.source||'')+'</div>'+
-        '<div class="veille-title">'+shortResume+'</div></div>'+
-        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">'+graviteStars(g)+
-        (statLabel?'<span class="veille-tag '+statut+'">'+statLabel+'</span>':'')+'</div>'+
-      '</div>'+
-      (s.action_requise&&s.action_requise.toUpperCase()==='OUI'?'<div style="font-size:11px;color:var(--orange2);margin-bottom:6px;font-weight:700;">⚡ Action requise</div>':'')+
-      actionHtml;
-    feed.appendChild(item);
-  });
+    return buildSignalCard(s, statut, 'data-entite="'+entite+'"', true);
+  }).join('');
   feed.onclick = function(e) {
     var btn = e.target.closest('.veille-entite-btn'); if (!btn) return;
     var action=btn.dataset.action, concurrent=btn.dataset.concurrent, ent=btn.dataset.entite;
@@ -2972,7 +3000,7 @@ function renderVeilleEntite(entite, signaux, filter) {
 function filterVeilleEntite(entite, f) {
   if (entite==='ges') window._veilleFilterGES = f;
   else if (entite==='aoe') window._veilleFilterAOE = f;
-  ['all','nouveau','en_cours'].forEach(function(b) {
+  ['all','nouveau','en_cours','traite'].forEach(function(b) {
     var el=document.getElementById('vf-'+entite+'-'+b); if(!el) return;
     if(b===f){el.style.background='var(--orange)';el.style.color='white';el.style.borderColor='var(--orange)';}
     else{el.style.background='transparent';el.style.color='var(--text2)';el.style.borderColor='var(--border)';}
@@ -2989,64 +3017,57 @@ function renderVeille(signaux, filter) {
     var st = window._signauxStates[s.concurrent] || s.statut || 'nouveau';
     if (filter==='nouveau') return st==='nouveau';
     if (filter==='en_cours') return st==='en_cours';
+    if (filter==='traite') return st==='traite';
     return true;
   });
   if (!filtered.length) { feed.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:20px 0;text-align:center;font-weight:600;">Aucun signal pour ce filtre</div>'; return; }
-  filtered.forEach(function(s) {
+  feed.innerHTML = filtered.map(function(s) {
     var statut = window._signauxStates[s.concurrent] || s.statut || 'nouveau';
-    var item = document.createElement('div'); item.className = 'veille-item statut-'+statut;
-    var g = parseInt(s.gravite)||1;
-    var resume = s.resume || '';
-    var shortResume = resume.length>160 ? resume.substring(0,160)+'...' : resume;
-    var idx = window._signauxData ? window._signauxData.indexOf(s) : -1;
-    var actionHtml = '';
-    if (statut==='nouveau') { actionHtml='<div class="veille-actions"><button class="veille-btn btn-encours" data-action="en_cours" data-idx="'+idx+'">⏳ En cours</button><button class="veille-btn btn-pipeline" data-action="pipeline" data-idx="'+idx+'">📝 Pipeline</button></div>'; }
-    else if (statut==='en_cours') { actionHtml='<div class="veille-actions"><button class="veille-btn btn-pipeline" data-action="pipeline" data-idx="'+idx+'">📝 Pipeline</button><button class="veille-btn btn-done" data-action="traite" data-idx="'+idx+'">✅ Traité</button></div>'; }
-    var statLabel = statut==='en_cours'?'⏳ En cours':statut==='traite'?'✅ Traité':'';
-    item.innerHTML =
-      '<div class="veille-header">'+
-        '<div><div class="veille-source">'+s.concurrent+' · '+(s.date||'')+getSourceBadge(s.source||'')+'</div>'+
-        '<div class="veille-title">'+shortResume+'</div></div>'+
-        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">'+graviteStars(g)+
-        (statLabel?'<span class="veille-tag '+statut+'">'+statLabel+'</span>':'')+'</div>'+
-      '</div>'+
-      (s.action_requise&&s.action_requise.toUpperCase()==='OUI'?'<div style="font-size:11px;color:var(--orange2);margin-bottom:6px;font-weight:700;">⚡ Action requise</div>':'')+
-      actionHtml;
-    feed.appendChild(item);
-  });
+    return buildSignalCard(s, statut, '', false);
+  }).join('');
   feed.onclick = function(e) {
     var btn = e.target.closest('.veille-btn'); if (!btn) return;
-    var action=btn.dataset.action, idx=parseInt(btn.dataset.idx);
-    if (isNaN(idx)||!window._signauxData[idx]) return;
-    actionVeille(action, window._signauxData[idx].concurrent, (window._signauxData[idx].resume||'').substring(0,80));
+    var action=btn.dataset.action, concurrent=btn.dataset.concurrent;
+    if (!concurrent) return;
+    actionVeille(action, concurrent, concurrent);
   };
 }
 
 function filterVeille(f) {
   window._veilleFilter = f;
-  ['all','nouveau','en_cours'].forEach(function(b) {
+  ['all','nouveau','en_cours','traite'].forEach(function(b) {
     var el=document.getElementById('vf-'+b); if(!el) return;
     if(b===f){el.style.background='var(--orange)';el.style.color='white';el.style.borderColor='var(--orange)';}
     else{el.style.background='transparent';el.style.color='var(--text2)';el.style.borderColor='var(--border)';}
   });
-  if (window._signauxData) renderVeille(window._signauxData, f);
+  if (window._signauxDataGA) renderVeille(window._signauxDataGA, f);
+  else if (window._signauxData) renderVeille(window._signauxData, f);
 }
 
 function actionVeille(action, concurrent, titre) {
-  window._signauxStates[concurrent] = action==='pipeline'?'en_cours':action;
-  if (action==='pipeline') { window._signauxPipelineCount=(window._signauxPipelineCount||0)+1; var el=document.getElementById('veille-stat-pipeline');if(el)el.textContent=window._signauxPipelineCount; showNotif('📝 Signal → Pipeline — '+concurrent); }
-  else if (action==='traite') { showNotif('✅ Signal traité — '+concurrent); }
-  else if (action==='en_cours') { showNotif('⏳ Signal en cours — '+concurrent); }
+  var now = new Date().toLocaleDateString('fr-FR');
+  var finalAction = action==='pipeline' ? 'en_cours' : action;
+  window._signauxStates[concurrent] = finalAction;
+  if (finalAction==='traite') {
+    window._signauxTraiteDates[concurrent] = now;
+    showNotif('✅ Signal traité — '+concurrent);
+  } else if (finalAction==='en_cours') {
+    window._signauxEnCoursDates[concurrent] = now;
+    if (action==='pipeline') { window._signauxPipelineCount=(window._signauxPipelineCount||0)+1; showNotif('📝 Signal → Pipeline — '+concurrent); }
+    else showNotif('⏳ Signal en cours — '+concurrent);
+  }
   // Re-render tous les feeds
   if (window._signauxDataGA) renderVeille(window._signauxDataGA, window._veilleFilter||'all');
   else if (window._signauxData) renderVeille(window._signauxData, window._veilleFilter||'all');
   if (window._signauxDataGES) renderVeilleEntite('ges', window._signauxDataGES, window._veilleFilterGES||'all');
   if (window._signauxDataAOE) renderVeilleEntite('aoe', window._signauxDataAOE, window._veilleFilterAOE||'all');
+  // Mise à jour stats
   var encours=Object.values(window._signauxStates).filter(function(v){return v==='en_cours';}).length;
   var el2=document.getElementById('veille-stat-encours');if(el2)el2.textContent=encours;
+  var el3=document.getElementById('veille-stat-pipeline');if(el3)el3.textContent=window._signauxPipelineCount||0;
   fetch('https://globocorps-itl.app.n8n.cloud/webhook/veille-action',{
     method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({action:(action==='pipeline'?'en_cours':action),concurrent:concurrent,titre:titre})
+    body:JSON.stringify({action:finalAction,concurrent:concurrent,titre:titre})
   }).catch(function(err){console.warn('[Veille] webhook inaccessible:',err);});
 }
 
