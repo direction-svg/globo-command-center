@@ -2790,6 +2790,15 @@ function loadRealData() {
       var signaux = data.signaux || [];
       if (signaux !== undefined) {
         window._signauxData = signaux;
+        // Indexer resume, entite, action_suggeree par concurrent pour le webhook
+        window._signauxResumes = {};
+        window._signauxEntites = {};
+        window._signauxActionsSugg = {};
+        signaux.forEach(function(s) {
+          window._signauxResumes[s.concurrent] = s.resume || '';
+          window._signauxEntites[s.concurrent] = s.entite || 'GA';
+          window._signauxActionsSugg[s.concurrent] = s.action_requise || s.action_suggeree || '';
+        });
         var signauxGA  = signaux.filter(function(s){ return !s.entite || s.entite === 'GA'; });
         var signauxGES = signaux.filter(function(s){ return s.entite === 'GES'; });
         var signauxAOE = signaux.filter(function(s){ return s.entite === 'AOE'; });
@@ -3067,7 +3076,14 @@ function actionVeille(action, concurrent, titre) {
   var el3=document.getElementById('veille-stat-pipeline');if(el3)el3.textContent=window._signauxPipelineCount||0;
   fetch('https://globocorps-itl.app.n8n.cloud/webhook/veille-action',{
     method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({action:finalAction,concurrent:concurrent,titre:titre})
+    body:JSON.stringify({
+      action:finalAction,
+      concurrent:concurrent,
+      titre:titre,
+      resume: window._signauxResumes ? (window._signauxResumes[concurrent]||'') : '',
+      entite: window._signauxEntites ? (window._signauxEntites[concurrent]||'GA') : 'GA',
+      action_suggeree: window._signauxActionsSugg ? (window._signauxActionsSugg[concurrent]||'') : ''
+    })
   }).catch(function(err){console.warn('[Veille] webhook inaccessible:',err);});
 }
 
