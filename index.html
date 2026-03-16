@@ -390,7 +390,7 @@ body {
 .kora-panel-face svg { width: 32px; height: 32px; }
 .kora-panel-title { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: #F0F0F0; flex: 1; }
 .kora-panel-sub { font-size: 10px; color: rgba(240,240,240,0.5); }
- { background: none; border: none; color: rgba(240,240,240,0.5); font-size: 18px; cursor: pointer; padding: 2px 4px; }
+.kora-close { background: none; border: none; color: rgba(240,240,240,0.5); font-size: 18px; cursor: pointer; padding: 2px 4px; }
 .kora-messages {
   flex: 1; overflow-y: auto; padding: 12px;
   display: flex; flex-direction: column; gap: 8px;
@@ -1714,10 +1714,9 @@ body {
                   <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 JAR Sénégal</div>
                   <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 FAB 3S</div>
                   <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 La PIPE</div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 CEFI</div>
                   <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 Makto Distribution</div>
                   <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 ISOMETA</div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 TSG</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 TSG Solutions</div>
                   <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 Petrotec</div>
                   <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 Petroservices</div>
                   <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 SAGAM Electronics</div>
@@ -2892,8 +2891,6 @@ function loadRealData() {
         Object.keys(remoteUsers).forEach(function(u) { if (PROTECTED.indexOf(u)===-1) USERS[u]=Object.assign({},remoteUsers[u],{remote:true}); });
         if (currentUser && (currentUser.role==='superadmin'||currentUser.role==='admin')) renderUsersList();
       }
-    })
-    .catch(function(e) { console.log('[Globo] chargement données indisponible:', e); });
   }).catch(function(e) { console.log('[Globo] Promise.all error:', e); });
 }
 
