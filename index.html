@@ -1714,9 +1714,10 @@ body {
                   <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 JAR Sénégal</div>
                   <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 FAB 3S</div>
                   <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 La PIPE</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 CEFI</div>
                   <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 Makto Distribution</div>
                   <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 ISOMETA</div>
-                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 TSG Solutions</div>
+                  <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 TSG</div>
                   <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 Petrotec</div>
                   <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 Petroservices</div>
                   <div style="background:var(--navy2);border-radius:3px;padding:8px;font-size:12px;font-weight:600;border:1px solid var(--border);">🔍 SAGAM Electronics</div>
@@ -1982,8 +1983,8 @@ function _doLoginInner() {
     return;
   }
 
-  // Compte inconnu : chercher dans data.json (comptes créés via Admin)
-  fetch('https://direction-svg.github.io/globo-command-center/data.json?t=' + Date.now())
+  // Compte inconnu : chercher dans users.json (comptes créés via Admin)
+  fetch('https://direction-svg.github.io/globo-command-center/users.json?t=' + Date.now())
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (data && data.users) {
@@ -2255,8 +2256,8 @@ function renderUsersList() {
     html += renderUserRow(u, USERS[u], USERS[u].remote || false);
   });
   list.innerHTML = html || '<div style="color:var(--text2);font-size:13px;">Chargement...</div>';
-  // Puis charger data.json pour afficher les comptes distants non encore en mémoire
-  fetch('https://direction-svg.github.io/globo-command-center/data.json?t=' + Date.now())
+  // Puis charger users.json pour afficher les comptes distants non encore en mémoire
+  fetch('https://direction-svg.github.io/globo-command-center/users.json?t=' + Date.now())
     .then(function(r) { return r.json(); })
     .then(function(data) {
       if (!data || !data.users) return;
@@ -2377,10 +2378,22 @@ function updateDate() {
 function refreshData() { loadRealData(); showNotif('↻ Actualisation en cours...'); }
 
 function loadRealData() {
-  fetch('https://direction-svg.github.io/globo-command-center/data.json?t=' + Date.now())
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      if (!data) return;
+  var base = 'https://direction-svg.github.io/globo-command-center/';
+  var t = Date.now();
+  Promise.all([
+    fetch(base + 'data.json?t=' + t).then(function(r) { return r.json(); }).catch(function() { return {}; }),
+    fetch(base + 'linkedin.json?t=' + t).then(function(r) { return r.json(); }).catch(function() { return null; }),
+    fetch(base + 'challenge.json?t=' + t).then(function(r) { return r.json(); }).catch(function() { return null; }),
+    fetch(base + 'users.json?t=' + t).then(function(r) { return r.json(); }).catch(function() { return null; })
+  ]).then(function(results) {
+    var data = results[0];
+    var linkedinData = results[1];
+    var challengeData = results[2];
+    var usersData = results[3];
+    if (linkedinData && linkedinData.concurrents_linkedin_ga) data.concurrents_linkedin_ga = linkedinData.concurrents_linkedin_ga;
+    if (challengeData && challengeData.classement_semaine) data.classement_semaine = challengeData.classement_semaine;
+    if (usersData && usersData.users) data.users = usersData.users;
+    if (!data) return;
       // Réactions Kora
       var prevData = window._lastData || {};
       var prevLeader = window._koraLastLeader || '';
@@ -2880,7 +2893,8 @@ function loadRealData() {
         if (currentUser && (currentUser.role==='superadmin'||currentUser.role==='admin')) renderUsersList();
       }
     })
-    .catch(function(e) { console.log('[Globo] data.json indisponible:', e); });
+    .catch(function(e) { console.log('[Globo] chargement données indisponible:', e); });
+  }).catch(function(e) { console.log('[Globo] Promise.all error:', e); });
 }
 
 /* ══════════════════════════════
