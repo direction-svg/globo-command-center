@@ -3077,7 +3077,7 @@ function actionVeille(action, concurrent, titre) {
   fetch('https://globocorps-itl.app.n8n.cloud/webhook/veille-action',{
     method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({
-      action:finalAction,
+      action: action,
       concurrent:concurrent,
       titre:titre,
       resume: window._signauxResumes ? (window._signauxResumes[concurrent]||'') : '',
