@@ -2905,11 +2905,10 @@ window._signauxPipelineCount = 0;
 window._signauxStates = {};
 
 function getSourceBadge(source) {
-  if (!source || source.trim() === '') return '';
-  var s = source.toLowerCase().trim();
-  if (s.includes('linkedin.com') || s === 'linkedin' || s.includes('linkedin')) {
+  var s = (source || '').toLowerCase().trim();
+  if (s.includes('linkedin.com')) {
     return '<span style="font-size:9px;font-weight:800;padding:2px 7px;border-radius:2px;background:rgba(0,119,181,0.12);color:#0077b5;border:1px solid rgba(0,119,181,0.3);margin-left:5px;text-transform:uppercase;letter-spacing:0.05em;">💼 LinkedIn</span>';
-  } else if (s.includes('google.com') || s.includes('alerts.google') || s === 'google alert' || s.includes('google')) {
+  } else if (s === '' || s.includes('google.com') || s.includes('alerts.google')) {
     return '<span style="font-size:9px;font-weight:800;padding:2px 7px;border-radius:2px;background:rgba(192,57,43,0.12);color:#C0392B;border:1px solid rgba(192,57,43,0.3);margin-left:5px;text-transform:uppercase;letter-spacing:0.05em;">🔴 Google Alert</span>';
   } else {
     return '<span style="font-size:9px;font-weight:800;padding:2px 7px;border-radius:2px;background:rgba(143,168,184,0.15);color:#5F5F5F;border:1px solid rgba(143,168,184,0.3);margin-left:5px;text-transform:uppercase;letter-spacing:0.05em;">🌐 Site Web</span>';
